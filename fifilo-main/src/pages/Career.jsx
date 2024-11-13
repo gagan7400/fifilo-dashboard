@@ -335,15 +335,11 @@ export default function Career() {
   return (
     <>
       <Helmet>
-        <title>Careers at FIFILO Designs | Join Our Creative Team</title>
-        <meta
-          name="description"
-          content="Explore exciting career opportunities at FIFILO Designs. Join a dynamic team where talent meets opportunity, and contribute to innovative UI/UX design, web development, and digital marketing projects."
-        />
-        <meta
-          name="keywords"
-          content="careers at FIFILO Designs, join our team, design jobs, UI/UX design careers, web development jobs, digital marketing positions, creative career opportunities, design studio jobs"
-        />
+        <title>{(!publishedcareerloading && publishedcareerdata) && publishedcareerdata.seoSection.title.trim()}</title>
+        {(!publishedcareerloading && publishedcareerdata) ? publishedcareerdata.seoSection.meta.map((v, i) => {
+          return <meta key={i} name={v.name.trim()} content={v.content.trim()} />
+        }) : ""}
+
       </Helmet>
       <div className="comn__bnr service__bnr">
         <div className="container">

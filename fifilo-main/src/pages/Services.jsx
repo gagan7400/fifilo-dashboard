@@ -23,8 +23,20 @@ export default function Services() {
 
   useEffect(() => {
     if (location.hash) {
-      const section = document.getElementById(location.hash.slice(1));
-      section.scrollIntoView({ behavior: 'smooth' });
+      const sectionId = location.hash.replace('#', '').toLowerCase(); // Convert to lowercase for case-insensitive matching
+
+      const observer = new MutationObserver(() => {
+        // Use querySelector with [id] to match section id case-insensitively
+        const sectionElement = document.querySelector(`[id="${sectionId}"], [id="${location.hash.replace('#', '')}"]`);
+        if (sectionElement) {
+          sectionElement.scrollIntoView({ behavior: 'smooth' });
+          observer.disconnect(); // Stop observing once the element is found
+        }
+      });
+
+      observer.observe(document.body, { childList: true, subtree: true });
+
+      return () => observer.disconnect(); // Cleanup
     }
   }, [location]);
 
@@ -46,15 +58,11 @@ export default function Services() {
   return (
     <>
       <Helmet>
-        <title>Our Services | Custom UI/UX Design, Development & Digital Marketing Solutions</title>
-        <meta
-          name="description"
-          content="Explore the range of services offered by FIFILO Designs, including custom UI/UX design, web development, and digital marketing solutions. Tailored to meet your unique needs, our services combine creativity and technical expertise to drive results."
-        />
-        <meta
-          name="keywords"
-          content="UI/UX design services, web development solutions, digital marketing services, custom design solutions, creative design agency, professional web design, digital marketing strategies, UI/UX and development services"
-        />
+        <title>{(!publishedServiceLoading && publishedServicePage) && publishedServicePage.seoSection.title.trim()}</title>
+        {(!publishedServiceLoading && publishedServicePage) ? publishedServicePage.seoSection.meta.map((v, i) => {
+          return <meta key={i} name={v.name.trim()} content={v.content.trim()} />
+        }) : ""}
+
       </Helmet>
       <div className="comn__bnr service__bnr">
         <div className="container">
@@ -1400,7 +1408,7 @@ export default function Services() {
 
 
       {!publishedServiceLoading && publishedServicePage ? publishedServicePage.servicesCards.map((v, i) => {
-        return <div key={i + 1} className={`comn__serviceBox ${v.cardName}  ${Number(i) % 2 == 0 ? "lite__bnr" : "dark__bnr"} rn__section__gapTop  `} id="Branding">
+        return <div key={i + 1} className={`comn__serviceBox ${v.cardName}  ${Number(i) % 2 == 0 ? "lite__bnr" : "dark__bnr"} rn__section__gapTop  `} id={v.cardId}>
           <div className="container">
             <div className="row">
               <div className="col-lg-7 col-md-6">

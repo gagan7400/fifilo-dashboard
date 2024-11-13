@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import AOS from 'aos';
+import { Helmet } from "react-helmet";
 import Spinner from 'react-bootstrap/Spinner';
 import 'aos/dist/aos.css';
 import DOMPurify from 'dompurify';
@@ -115,6 +116,13 @@ export default function ContactUs() {
 
   return (
     <>
+      <Helmet>
+        <title>{(!publishedcontactloading && publishedcontactdata) && publishedcontactdata.seoSection.title.trim()}</title>
+        {(!publishedcontactloading && publishedcontactdata) ? publishedcontactdata.seoSection.meta.map((v, i) => {
+          return <meta key={i} name={v.name.trim()} content={v.content.trim()} />
+        }) : ""}
+
+      </Helmet>
       <div className="contact__bnr bg__dark">
         <div className="container">
           <div className="row justify-content-center">

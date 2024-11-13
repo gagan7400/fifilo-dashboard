@@ -137,8 +137,6 @@ export default function Home() {
     };
   }, []);
 
-
-
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -154,15 +152,11 @@ export default function Home() {
   return (
     <>
       <Helmet>
-        <title>Top UI/UX Design, Web Development, and Digital Marketing Services | FIFILO Designs</title>
-        <meta
-          name="description"
-          content="FIFILO Designs offers expert UI/UX design, web development, and digital marketing services. Elevate your brand with our creative and tech-savvy team. Contact us today!"
-        />
-        <meta
-          name="keywords"
-          content="ui ux design agency,ui ux design company,ui ux design firm,ui ux studio,ui ux design services,user interface design,best ui ux design agency,top ux design firms,best user experience companies,best company for ux designer,top ux design firms"
-        />
+        <title>{(!loading && publishedhomepage) && publishedhomepage.seoSection.title.trim()}</title>
+        {(!loading && publishedhomepage) ? publishedhomepage.seoSection.meta.map((v, i) => {
+          return <meta key={i} name={v.name.trim()} content={v.content.trim()} />
+        }) : ""}
+
       </Helmet>
       <div className="hero__bnr dark__bnr">
         {loading && <Loader />}
@@ -301,7 +295,7 @@ export default function Home() {
                         <h2>{service.heading}</h2>
                         <div className="service__inr">
                           <h6> {service.description}</h6>
-                          <NavLink to={`/services#${service.heading}`} className="btn btn__primary">
+                          <NavLink to={`/services#${service.heading.split(" ").join("-")}`} className="btn btn__primary">
                             Learn more <img src="assets/img/arrow-up-right.svg" alt="home" />
                           </NavLink>
                         </div>

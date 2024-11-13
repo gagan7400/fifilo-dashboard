@@ -304,15 +304,11 @@ export default function About() {
   return (
     <>
       <Helmet>
-        <title>About Us | FIFILO Designs | Innovative UI/UX Design Studio</title>
-        <meta
-          name="description"
-          content="Discover the story behind FIFILO Designs, a creative UI/UX design studio founded by Mohsin Khan and Abhishek Joshi. Learn about our mission, vision, values, and how we deliver exceptional digital experiences through innovative design solutions."
-        />
-        <meta
-          name="keywords"
-          content="UI/UX design studio, about FIFILO Designs, creative design agency, UI/UX design team, digital design experts, Mohsin Khan Abhishek Joshi, design studio story, innovative design studio"
-        />
+        <title>{(!publishedLoading && publishedData) && publishedData.seoSection.title.trim()}</title>
+        {(!publishedLoading && publishedData) ? publishedData.seoSection.meta.map((v, i) => {
+          return <meta key={i} name={v.name.trim()} content={v.content.trim()} />
+        }) : ""}
+
       </Helmet>
       <div className="comn__bnr about__bnr">
         <div className="container">

@@ -39,12 +39,12 @@ const publishfaqPage = async (req, res) => {
         const publishedData = await faqModel.findByIdAndUpdate(newPublishedId, { $set: { published: true } }, { new: true });
         res.send({ data: publishedData });
     } catch (err) {
-        res.status(400).send(err);
+        res.status(400).send({ data: null, err });
     }
 };
 const updatefaqPage = async (req, res) => {
     try {
-        const publishedData = await faqModel.findByIdAndUpdate(req.params.id, { $set: req.body } );
+        const publishedData = await faqModel.findByIdAndUpdate(req.params.id, { $set: req.body });
         res.send({ data: publishedData });
     } catch (err) {
         res.status(400).send(err);

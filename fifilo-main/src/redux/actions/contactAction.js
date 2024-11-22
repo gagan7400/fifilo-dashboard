@@ -8,7 +8,7 @@ export const contactus = (Contactdata) => async (dispatch) => {
                 "x-auth-token": localStorage.getItem("token")
             }
         };
-        const { data } = await axios.post('http://localhost:5000/admin/contactus/',
+        const { data } = await axios.post('http://localhost:5000/admin/contactus',
             Contactdata,
             config
         );

@@ -44,7 +44,10 @@ const jobSchema = new mongoose.Schema({
 const careerpageSchema = new mongoose.Schema({
     heroSection: {
         heading: String,
-        subHeading: String
+        subHeading: String,
+        heroButtons: {
+            CTA1: { url: String, name: String }
+        }
     },
     cardsSection: [
         {
@@ -66,6 +69,13 @@ const careerpageSchema = new mongoose.Schema({
     jobSection: {
         heading: String,
         subHeading: String
+    },
+
+    seoSection: {
+        title: String,
+        keywords: String,
+        description: String,
+        seoImg: { filename: String, path: String }
     },
     published: {
         type: Boolean,

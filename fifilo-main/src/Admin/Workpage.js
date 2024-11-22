@@ -1,6 +1,5 @@
 import React from 'react';
 import Sidebar from './Sidebar';
-import './adminstyle.css'
 const Workpage = () => {
     return (
         <div className='dashboard-main'>

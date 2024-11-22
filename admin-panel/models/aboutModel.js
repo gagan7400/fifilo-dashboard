@@ -5,7 +5,10 @@ const mongoose = require("mongoose");
 const aboutpageSchema = new mongoose.Schema({
     heroSection: {
         heading: String,
-        subHeading: String
+        subHeading: String,
+        heroButtons: {
+            CTA1: { url: String, name: String }
+        }
     },
     aboutSection: {
         preHeading: String,
@@ -19,7 +22,17 @@ const aboutpageSchema = new mongoose.Schema({
             {
                 _id: false,
                 heading: String,
-                description: String
+                description: String,
+                icon: {
+                    filename: {
+                        type: String,
+                        required: true,
+                    },
+                    path: {
+                        type: String,
+                        required: true,
+                    },
+                }
             }
         ]
     },
@@ -42,13 +55,17 @@ const aboutpageSchema = new mongoose.Schema({
                 path: {
                     type: String,
                     required: true,
-                },
-                membernumber: {
-                    type: Number,
                 }
+
             }
         }
     ],
+    seoSection: {
+        title: String,
+        keywords: String,
+        description: String,
+        seoImg: { filename: String, path: String }
+    },
     published: {
         type: Boolean,
         default: false

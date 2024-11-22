@@ -37,9 +37,9 @@ export default function Job({ job }) {
                 </NavLink>
 
             </div>
-            <button onClick={toggleDetails} className="btn btn__secondary">
+            {/* <button onClick={toggleDetails} className="btn btn__secondary">
                 {isExpanded ? 'Show Less' : 'More Details'}
-            </button>
+            </button> */}
         </div>
     )
 }

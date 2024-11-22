@@ -3,17 +3,27 @@ const mongoose = require("mongoose");
 let servicesSchema = new mongoose.Schema({
     heroSection: {
         heading: String,
-        subHeading: String
+        subHeading: String,
+        heroButtons: {
+            CTA1: { url: String, name: String }
+        }
     },
     servicesCards: [
         {
             _id: false,
             cardName: String,
             cardDescription: [String, String],
-            cardList: [String, String],
-            serviceImg: { filename: String, path: String }
+            cardList: String,
+            serviceImg: { filename: String, path: String },
+            cardId: { type: String }
         }
     ],
+    seoSection: {
+        title: String,
+        keywords: String,
+        description: String,
+        seoImg: { filename: String, path: String }
+    },
     toolSection: {
         heading: String,
         toolsLogo: [{

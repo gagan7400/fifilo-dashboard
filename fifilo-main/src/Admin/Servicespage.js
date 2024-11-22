@@ -1,25 +1,29 @@
 import React, { useState } from 'react';
 import Sidebar from './Sidebar';
-import './adminstyle.css'
+import { Editor } from "@tinymce/tinymce-react";
 import { useDispatch, useSelector } from 'react-redux';
 import { updateServicePageAction } from '../redux/actions/servicesAction';
 import ServicepageServicecard from './ServicepageServicecard';
 import ToolSection from './ToolSection';
+import SeoImg from './SeoImg';
+import { NavLink } from 'react-router-dom';
+import HomepageuploadSection from './HomepageuploadSection';
 const ServicesForm = () => {
     let dispatch = useDispatch();
-
     const { pageData } = useSelector((state) => state.page);
     const [heroSection, setHeroSection] = useState({
         heading: pageData ? pageData.heroSection.heading : "",
-        subHeading: pageData ? pageData.heroSection.subHeading : ""
+        subHeading: pageData ? pageData.heroSection.subHeading : "",
+        heroButtons: pageData ? { ...pageData.heroSection.heroButtons } : {
+            CTA1: { name: "", url: "" },
+        }
     });
     const [servicesCards, setServicesCards] = useState(
         pageData ? pageData.servicesCards.map(card => ({
             ...card,
             cardDescription: [...card.cardDescription],
-            cardList: [...card.cardList]
         })) : [{
-            cardName: '', cardDescription: [''], cardList: [''], serviceImg: { filename: '', path: '', }
+            cardName: '', cardDescription: [''], cardList: '', serviceImg: { filename: '', path: '', }, cardId: ""
         }]);
     const [toolSection, setToolSection] = useState({
         heading: pageData ? pageData.toolSection.heading : "",
@@ -27,7 +31,16 @@ const ServicesForm = () => {
     });
     const [toolsLogo, setToolsLogo] = useState(
         pageData ? pageData.toolSection.toolsLogo.map(tool => ({ ...tool })) : [{ filename: '', path: '' }]
-    );
+    ); //seo handlers
+
+    const [seoSection, setSeoSection] = useState(
+        pageData ? { ...pageData.seoSection } : {
+            title: "",
+            keywords: "",
+            description: "",
+            seoImg: { filename: "", path: "" }
+        });
+
     // Handle input change for hero section
     const handleHeroChange = (e) => {
         const { name, value } = e.target;
@@ -42,7 +55,7 @@ const ServicesForm = () => {
         const values = servicesCards.map((card) => ({
             ...card,
             cardDescription: [...card.cardDescription],
-            cardList: [...card.cardList]
+            cardList: ''
         }));
         if (event === 'serviceImg') {
             values[index]['serviceImg'] = { ...data };
@@ -50,7 +63,6 @@ const ServicesForm = () => {
             values[index][event.target.name] = event.target.value;
         }
         setServicesCards(values);
-
     };
     // Handle input for cardDescription
     const handleCardDescriptionChange = (index, descIndex, e) => {
@@ -58,22 +70,31 @@ const ServicesForm = () => {
         const newServicesCards = servicesCards.map((card) => ({
             ...card,
             cardDescription: [...card.cardDescription],
-            cardList: [...card.cardList]
+            cardList: ""
         }));
         // const newServicesCards = [...servicesCards];
         newServicesCards[index].cardDescription[descIndex] = value;
         setServicesCards(newServicesCards);
     };
     // Handle input for CardList
-    const handleCardListChange = (index, listIndex, e) => {
-        const { value } = e.target;
-        // const newServicesCards = [...servicesCards];
+    // const handleCardListChange = (index, listIndex, e) => {
+    //     const { value } = e.target;
+    //     // const newServicesCards = [...servicesCards];
+    //     const newServicesCards = servicesCards.map((card) => ({
+    //         ...card,
+    //         cardDescription: [...card.cardDescription],
+    //         cardList: card.cardList
+    //     }));
+    //     newServicesCards[index].cardList = value;
+    //     setServicesCards(newServicesCards);
+    // };
+    const handleCardListChange = (index, newContent) => {
         const newServicesCards = servicesCards.map((card) => ({
             ...card,
             cardDescription: [...card.cardDescription],
-            cardList: [...card.cardList]
+            cardList: card.cardList
         }));
-        newServicesCards[index].cardList[listIndex] = value;
+        newServicesCards[index].cardList = newContent;
         setServicesCards(newServicesCards);
     };
     // Add new cardDescription entry
@@ -84,12 +105,12 @@ const ServicesForm = () => {
         setServicesCards(newServicesCards);
     };
     // Add new CardList entry
-    const addCardList = (index) => {
-        const newServicesCards = servicesCards.map((card, i) =>
-            i === index ? { ...card, cardList: [...card.cardList, ""] } : card
-        );
-        setServicesCards(newServicesCards);
-    };
+    // const addCardList = (index) => {
+    //     const newServicesCards = servicesCards.map((card, i) =>
+    //         i === index ? { ...card, cardList: [...card.cardList, ""] } : card
+    //     );
+    //     setServicesCards(newServicesCards);
+    // };
     const removeCardList = (cardIndex, listIndex) => {
         const newServicesCards = servicesCards.map((card, i) => {
             if (i === cardIndex) {
@@ -104,11 +125,9 @@ const ServicesForm = () => {
         setServicesCards(newServicesCards);
     };
 
-
-
     // Add a new service card
     const addServiceCard = () => {
-        setServicesCards([...servicesCards, { cardName: '', cardDescription: [''], cardList: [''], serviceImg: { filename: "", path: "" } }]);
+        setServicesCards([...servicesCards, { cardId: "", cardName: '', cardDescription: [''], cardList: [''], cardId: "", serviceImg: { filename: "", path: "" } }]);
     };
 
     let removeCardDescription = (cardIndex, descriptionIndex) => {
@@ -127,8 +146,10 @@ const ServicesForm = () => {
 
     // Remove a service card
     const removeServiceCard = (index) => {
-        const updatedCards = servicesCards.filter((_, cardIndex) => cardIndex !== index);
-        setServicesCards(updatedCards);
+        if (window.confirm("Are You Sure ,You Want To This Delete This")) {
+            const updatedCards = servicesCards.filter((_, cardIndex) => cardIndex !== index);
+            setServicesCards(updatedCards);
+        }
     };
 
     const addTools = () => {
@@ -145,7 +166,6 @@ const ServicesForm = () => {
         );
         setToolsLogo(updatedTools);
     };
-
 
     // Handle input change for toolSection heading
     const handleToolSectionChange = (e) => {
@@ -166,164 +186,327 @@ const ServicesForm = () => {
     // Submit form data to API
     const handleSubmit = async (e) => {
         e.preventDefault();
-        dispatch(updateServicePageAction({ servicedata: { heroSection, servicesCards, toolSection: { ...toolSection, toolsLogo } }, id: pageData._id }));
+        dispatch(updateServicePageAction({ servicedata: { heroSection, seoSection, servicesCards, toolSection: { ...toolSection, toolsLogo } }, id: pageData._id }));
         alert("servicePage updated successfully");
 
     };
 
+    console.log(servicesCards, pageData ? pageData.servicesCards : "");
     return (
         <>
             <Sidebar titles="Services  Page" />
             <div className="main__content">
-                <div className="card__box" style={{ display: "block" }}>
-                    <form onSubmit={handleSubmit}>
-                        <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                            <li className="nav-item" role="presentation">
-                                <button className="nav-link active" id="pills-hero-tab" data-bs-toggle="pill" data-bs-target="#pills-hero" type="button"
-                                    role="tab" aria-controls="pills-hero" aria-selected="true">Hero Section</button>
-                            </li>
-                            <li className="nav-item" role="presentation">
-                                <button className="nav-link" id="pills-ServicesCards-tab" data-bs-toggle="pill" data-bs-target="#pills-ServicesCards" type="button"
-                                    role="tab" aria-controls="pills-ServicesCards" aria-selected="false">ServicesCards Section </button>
-                            </li>
+                <div className="page__editors">
+                    <nav aria-label="breadcrumb">
+                        <ol className="breadcrumb">
+                            <li className="breadcrumb-item"><NavLink to="/pages">Pages</NavLink></li>
+                            <li className="breadcrumb-item"><img src="assets/imgs/chevron-right.svg" alt="" /></li>
+                            <li className="breadcrumb-item active">Services Page</li>
+                        </ol>
+                    </nav>
 
-                            <li className="nav-item" role="presentation">
-                                <button className="nav-link" id="pills-Tools-tab" data-bs-toggle="pill" data-bs-target="#pills-Tools" type="button"
-                                    role="tab" aria-controls="pills-Tools" aria-selected="false">Tools Section</button>
-                            </li>
+                    <div className="page__title">
+                        <h5>Services Page</h5>
+                    </div>
 
+                    <div className="page__editContent">
+                        <ul className="nav nav-pills" id="pills-tab" role="tablist">
+                            <li className="nav-item" role="presentation">
+                                <button className="nav-link active" id="pills-hero-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-hero" type="button" role="tab" aria-controls="pills-hero"
+                                    aria-selected="true">Hero</button>
+                            </li>
+                            <li className="nav-item" role="presentation">
+                                <button className="nav-link" id="pills-servicesCards-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-servicesCards" type="button" role="tab" aria-controls="pills-servicesCards"
+                                    aria-selected="true">Services Cards</button>
+                            </li>
+                            <li className="nav-item" role="presentation">
+                                <button className="nav-link" id="pills-tools-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-tools" type="button" role="tab" aria-controls="pills-tools"
+                                    aria-selected="true">Tools</button>
+                            </li>
+                            <li className="nav-item" role="presentation">
+                                <button className="nav-link" id="pills-seo-tab" data-bs-toggle="pill" data-bs-target="#pills-seo"
+                                    type="button" role="tab" aria-controls="pills-seo" aria-selected="false">SEO</button>
+                            </li>
                         </ul>
-
                         <div className="tab-content" id="pills-tabContent">
-                            <div className="tab-pane fade show active" id="pills-hero" role="tabpanel" aria-labelledby="pills-hero-tab">
-                                <div className="mb-3">
-                                    <label htmlFor="heading" className="form-label"> heading </label>
-                                    <input required
-                                        name="heading"
-                                        type="text"
-                                        placeholder="Heading"
-                                        onChange={handleHeroChange}
-                                        value={heroSection.heading}
-                                        className="form-control"
-                                        id="heading"
-                                    />
-                                </div>
-                                <div className="mb-3">
-                                    <label htmlFor="headingSpan" className="form-label"> Subheading </label>
-                                    <input required
-                                        type="text"
-                                        className="form-control"
-                                        value={heroSection.subHeading}
-                                        onChange={handleHeroChange}
-                                        placeholder="Subheading"
-                                        name="subHeading"
-                                        id="headingSpan"
-                                    />
-                                </div>
-                                <button className='btn btn-primary' type="submit">Update</button>
-                            </div>
-                            <div className="tab-pane fade" id="pills-ServicesCards" role="tabpanel" aria-labelledby="pills-ServicesCards-tab">
-                                {servicesCards.map((card, index) => (
-                                    <div key={index} className='border p-4'>
-                                        <span>Card {index + 1}</span>
-                                        <button type="button" className="btn btn-danger float-end" onClick={() => removeServiceCard(index)} >X</button>
-                                        <div className="mb-3">
-                                            <label htmlFor={`cardName${index}`} className="form-label"> CardName </label>
-                                            <input required
-                                                id={`cardName${index}`}
-                                                type="text"
-                                                name="cardName"
-                                                value={card.cardName}
-                                                onChange={(e) => handleServiceCardChange(index, e)}
-                                                placeholder="Card Name"
-                                                className="form-control"
-                                            />
-                                        </div>
-                                        <div className="mb-3 border p-3">
-                                            <span className="form-label"> cardDescription  </span>  <br />
-                                            {card.cardDescription.map((desc, descIndex) => (
-                                                // <div key={descIndex}>
-                                                <div className="input-group mb-3" key={descIndex} >
-                                                    <textarea rows={3} required
-                                                        name="carddescription"
-                                                        type="text"
-                                                        value={desc}
-                                                        onChange={(e) => handleCardDescriptionChange(index, descIndex, e)}
-                                                        placeholder="Card Description"
-                                                        className="form-control"
-                                                    />
-                                                    <button type="button" className='btn btn-danger' onClick={() => removeCardDescription(index, descIndex)}>  X</button>
-                                                </div>
-
-                                            ))}<br />
-                                            <button type="button" className='btn btn-info' onClick={() => addCardDescription(index)}>
-                                                Add More Description
-                                            </button>
-                                        </div>
-                                        <div className="mb-3 border p-3">
-                                            <span className="form-label"> CardList </span> <br />
-                                            {card.cardList.map((item, listIndex) => (
-                                                // <div key={listIndex}>
-                                                <div className="input-group mb-3" key={listIndex} style={{ width: "fit-content" }}>
+                            <div className="tab-pane fade show active" id="pills-hero" role="tabpanel"
+                                aria-labelledby="pills-hero-tab">
+                                <div className="edit__tools">
+                                    <div className="card__block">
+                                        <div className="row">
+                                            <div className="col-lg-12">
+                                                <div className="input__inr">
+                                                    <label htmlFor="heading">Heading</label>
                                                     <input required
-                                                        name="cardlist"
+                                                        name="heading"
                                                         type="text"
-                                                        value={item}
-                                                        onChange={(e) => handleCardListChange(index, listIndex, e)}
-                                                        placeholder="Card List Item"
+                                                        placeholder="Enter Heading"
+                                                        onChange={handleHeroChange}
+                                                        value={heroSection.heading}
+                                                        className="form-control"
+                                                        id="heading"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="col-lg-12">
+                                                <div className="input__inr">
+                                                    <label htmlFor="headingSpan">Sub Text</label>
+                                                    <input required
+                                                        type="text"
+                                                        className="form-control"
+                                                        value={heroSection.subHeading}
+                                                        onChange={handleHeroChange}
+                                                        placeholder="Enter Sub text"
+                                                        name="subHeading"
+                                                        id="headingSpan"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="col-lg-6 col-md-6">
+                                                <div className="input__inr">
+                                                    <label htmlFor="CTA1name">CTA Button 01</label>
+                                                    <input required type="text"
+                                                        id="CTA1name"
+                                                        name="CTA1name"
+                                                        className="form-control"
+                                                        value={heroSection.heroButtons.CTA1.name}
+                                                        onChange={(e) => setHeroSection({ ...heroSection, heroButtons: { ...heroSection.heroButtons, CTA1: { ...heroSection.heroButtons.CTA1, name: e.target.value } } })}
+                                                        placeholder="Enter Button Text" />
+                                                </div>
+                                            </div>
+                                            <div className="col-lg-6 col-md-6">
+                                                <div className="input__inr">
+                                                    <label htmlFor="CTA1url">CTA Button Url</label>
+                                                    <input required type="text"
+                                                        id="CTA1url"
+                                                        name="CTA1url"
+                                                        className="form-control"
+                                                        value={heroSection.heroButtons.CTA1.url}
+                                                        onChange={(e) => setHeroSection({ ...heroSection, heroButtons: { ...heroSection.heroButtons, CTA1: { ...heroSection.heroButtons.CTA1, url: e.target.value } } })}
+                                                        placeholder="Enter Button Url"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="update__block">
+                                            <button className="btn btn__update" type="button" onClick={handleSubmit}>Update</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="tab-pane fade" id="pills-servicesCards" role="tabpanel" aria-labelledby="pills-servicesCards-tab">
+                                <div className="edit__tools">
+                                    {servicesCards.map((card, index) => (
+                                        <div className="card__block">
+                                            <div className="testimonial__box">
+                                                <div className="top__heading">
+                                                    <p>Service {index + 1}</p>
+                                                    <button className="btn" onClick={() => removeServiceCard(index)}><img src="assets/imgs/trash.svg" alt="trash icon" />Delete</button>
+                                                </div>
+                                                <div className="row">
+                                                    <ServicepageServicecard card={card} index={index} handleServiceCardChange={handleServiceCardChange} />
+                                                    <div className="col-lg-12">
+                                                        <div className="input__inr">
+                                                            <label htmlFor={`cardId${index}`} className="form-label">Service Id</label>
+                                                            <input required
+                                                                id={`cardId${index}`}
+                                                                type="text"
+                                                                name="cardId"
+                                                                value={card.cardId}
+                                                                onChange={(e) => handleServiceCardChange(index, e)}
+                                                                placeholder="Enter Service Id"
+                                                                className="form-control"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-lg-12">
+                                                        <div className="input__inr">
+                                                            <label htmlFor={`cardName${index}`} className="form-label">Service Name</label>
+                                                            <input required
+                                                                id={`cardName${index}`}
+                                                                type="text"
+                                                                name="cardName"
+                                                                value={card.cardName}
+                                                                onChange={(e) => handleServiceCardChange(index, e)}
+                                                                placeholder="Enter Service Name"
+                                                                className="form-control"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-lg-12">
+                                                        <label htmlFor={`servicesdescription${index}`}>Description</label>
+                                                        <div className="row">
+
+                                                            {card.cardDescription.map((desc, descIndex) => (
+                                                                <div className="col-lg-12">
+                                                                    <div className="input__inr">
+
+                                                                        <textarea rows={3} required
+                                                                            name="carddescription"
+                                                                            type="text"
+                                                                            value={desc}
+                                                                            onChange={(e) => handleCardDescriptionChange(index, descIndex, e)}
+                                                                            placeholder="Enter Description"
+                                                                            className="form-control"
+                                                                        />
+                                                                        <button type="button" className='btn btn__delete' onClick={() => removeCardDescription(index, descIndex)}>
+                                                                            <img src="assets/imgs/trash.svg"></img></button>
+                                                                    </div>
+                                                                </div>
+                                                            ))}
+                                                            <div className="add__review">
+                                                                <button className="btn" onClick={() => addCardDescription(index)}><img src="assets/imgs/plus.svg" alt="" />Add New Paragraph</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-lg-12">
+                                                        <div className="input__inr">
+                                                            <label htmlFor={`servicesCardList${index}`}>Unordered List</label>
+                                                            {console.log(card)}
+                                                            <Editor
+                                                                value={card.cardList}
+                                                                apiKey="jd3e97w8li70lbzue44vverzarnpb6y52c1aht6swqstquwz"
+                                                                init={{
+                                                                    height: 400,
+                                                                    menubar: true,
+                                                                    plugins: [
+                                                                        "advlist",
+                                                                        "lists",
+                                                                        "link", "image", "charmap", "preview", "anchor", // Optional additional features
+                                                                        "searchreplace", "visualblocks", "code", "fullscreen",
+                                                                        "insertdatetime", "media", "table", "paste", "help", "wordcount"
+                                                                    ],
+                                                                    toolbar:
+                                                                        "undo redo | formatselect | bold italic backcolor  | \ alignleft aligncenter alignright alignjustify | \ bullist numlist | removeformat | help",
+                                                                }}
+                                                                onEditorChange={(newContent) => handleCardListChange(index, newContent)}
+                                                            />
+                                                            {/* {card.cardList.map((item, listIndex) => (
+                                                                <div className="input-group mb-3" key={listIndex} style={{ width: "fit-content" }}>
+                                                                    <input required
+                                                                        name="cardlist"
+                                                                        type="text"
+                                                                        value={item}
+                                                                        onChange={(e) => handleCardListChange(index, listIndex, e)}
+                                                                        placeholder="Enter List"
+                                                                        className="form-control"
+                                                                    />
+                                                                    <button type="button" className='btn btn-danger' onClick={() => removeCardList(index, listIndex)}>  X</button>
+                                                                </div>
+                                                            ))} */}
+                                                            {/* <button type="button" className='btn btn-info' onClick={() => addCardList(index)}>
+                                                                Add More List Items
+                                                            </button> */}
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                    <div className="add__review">
+                                        <button className="btn" onClick={addServiceCard}><img src="assets/imgs/plus.svg" alt="" />Add New Service</button>
+                                    </div>
+                                    <div className="update__block">
+                                        <button className="btn btn__update" onClick={handleSubmit}>Update</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="tab-pane fade" id="pills-tools" role="tabpanel"
+                                aria-labelledby="pills-tools-tab">
+                                <div className="edit__tools">
+                                    <div className="card__block">
+                                        <div className="row">
+                                            <div className="col-lg-6 col-md-6">
+                                                <div className="input__inr">
+                                                    <label htmlFor="toolheading">Headline</label>
+                                                    <input required
+                                                        id="toolheading"
+                                                        type="text"
+                                                        name="heading"
+                                                        value={toolSection.heading}
+                                                        onChange={handleToolSectionChange}
+                                                        placeholder="Enter Headline"
                                                         className="form-control"
                                                     />
-                                                    <button type="button" className='btn btn-danger' onClick={() => removeCardList(index, listIndex)}>  X</button>
                                                 </div>
-
-                                            ))}
-                                            <br />
-                                            <button type="button" className='btn btn-info' onClick={() => addCardList(index)}>
-                                                Add More List Items
-                                            </button>
-                                        </div>
-                                        <ServicepageServicecard card={card} index={index} handleServiceCardChange={handleServiceCardChange} />
-                                    </div>
-                                ))}
-                                <br />
-                                <button type="button" className="btn btn-primary" onClick={addServiceCard}   >  Add More Service </button>
-                                <br />
-                                <br />
-                                <button className='btn btn-primary' type="submit">Update</button>
-                            </div>
-
-                            <div className="tab-pane fade" id="pills-Tools" role="tabpanel" aria-labelledby="pills-Tools-tab">
-                                <div className="mb-3">
-                                    <div className="mb-3">
-                                        <label htmlFor="toolheading" className="form-label"> toolheading </label>
-                                        <input required
-                                            id="toolheading"
-                                            type="text"
-                                            name="heading"
-                                            value={toolSection.heading}
-                                            onChange={handleToolSectionChange}
-                                            placeholder="Tool Section Heading"
-                                            className="form-control"
-                                        />
-                                    </div>
-                                    <div style={{ display: "flex", gap: "30px", flexWrap: "wrap" }}>
-                                        {toolsLogo.map((tool, index) => (
-                                            <div key={index} className="mb-3  border" style={{ width: "fit-content", minWidth: "150px" }}>
-                                                <button type="button" className='btn btn-danger float-end' onClick={() => { removeTools(index) }}> X </button>
-                                                <ToolSection tool={tool} index={index} handleTools={handleTools} />
                                             </div>
-                                        )
-                                        )}
+                                        </div>
                                     </div>
-                                    <button type="button" className='btn btn-primary' onClick={addTools}> Add More Tool </button>
+                                    <div className="card__block">
+                                        <HomepageuploadSection setToolsLogo={setToolsLogo} toolsLogo={toolsLogo} />
+                                        <div className="uploaded__images">
+                                            {toolsLogo.map((tool, index) => (
+                                                <ToolSection tool={tool} index={index} handleTools={handleTools} removeTools={removeTools} />
+                                            ))}
+                                        </div>
+                                        <div className="update__block">
+                                            <button className="btn btn__update" onClick={handleSubmit}>Update</button>
+                                        </div>
+                                    </div>
                                 </div>
-                                <button className='btn btn-primary' type="submit">Update</button>
+                            </div>
+                            <div className="tab-pane fade" id="pills-seo" role="tabpanel" aria-labelledby="pills-seo-tab">
+                                <div className="edit__tools">
+                                    <div className="card__block">
+                                        <div className="row">
+                                            <div className="col-lg-12">
+                                                <div className="input__inr">
+                                                    <label htmlFor="seotitle">Page Title</label>
+                                                    <input required
+                                                        type="text"
+                                                        name="seotitle"
+                                                        id="seotitle"
+                                                        value={seoSection.title}
+                                                        onChange={(e) => setSeoSection({ ...seoSection, title: e.target.value })}
+                                                        placeholder="Enter Page Title"
+                                                        className="form-control"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="col-lg-12">
+                                                <div className="seo__card">
+                                                    <div className="card__block">
+                                                        <div className="row">
+                                                            <div className="col-lg-12">
+                                                                <div className="input__inr">
+                                                                    <label htmlFor="keywords">Keywords</label>
+                                                                    <input type="text" id="keywords" className="form-control"
+                                                                        value={seoSection.keywords}
+                                                                        onChange={(e) => setSeoSection({ ...seoSection, keywords: e.target.value })}
+                                                                        placeholder="Enter Keywords" />
+                                                                </div>
+                                                            </div>
+                                                            <div className="col-lg-12">
+                                                                <div className="input__inr">
+                                                                    <label htmlFor="Description">Meta Description</label>
+                                                                    <textarea rows="4" className="form-control"
+                                                                        value={seoSection.description}
+                                                                        id="Description"
+                                                                        onChange={(e) => setSeoSection({ ...seoSection, description: e.target.value })}
+                                                                        placeholder="Enter Meta Description"></textarea>
+                                                                </div>
+                                                            </div>
+                                                            <SeoImg seoSection={seoSection} setSeoSection={setSeoSection} />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="update__block">
+                                            <button className="btn btn__update" onClick={handleSubmit}>Update</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </form>
-                </div>
-            </div >
-        </ >
+                    </div>
+                </div >
+            </div>
+        </>
     );
 };
 export default ServicesForm;

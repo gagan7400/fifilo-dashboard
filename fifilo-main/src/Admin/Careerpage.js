@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import Sidebar from './Sidebar';
-import './adminstyle.css'
 import Accordion from 'react-bootstrap/Accordion';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateCareerPageAction } from '../redux/actions/careeraction';
 import CareerCardSection from './CareerCardSection';
-
+import { NavLink } from 'react-router-dom';
+import SeoImg from './SeoImg';
 const Careerpage = () => {
     const { pageData } = useSelector((state) => state.page);
     let dispatch = useDispatch();
     //  career page states 
     const [heroSection, setHeroSection] = useState({
         heading: pageData ? pageData.heroSection.heading : "",
-        subHeading: pageData ? pageData.heroSection.subHeading : ""
+        subHeading: pageData ? pageData.heroSection.subHeading : "",
+        heroButtons: pageData ? { ...pageData.heroSection.heroButtons } : { CTA1: { url: "", name: "" } }
+
     });
     const [jobSection, setJobSection] = useState({
         heading: pageData ? pageData.jobSection.heading : "",
@@ -22,6 +24,16 @@ const Careerpage = () => {
         pageData ? pageData.cardsSection.map(card => ({ ...card, cardImg: { ...card.cardImg } }))
             : [{ cardHeading: '', cardDescription: '', cardImg: { filename: "", path: "" } }]
     );
+    //seo handlers
+
+    const [seoSection, setSeoSection] = useState(pageData ? { ...pageData.seoSection } :
+        {
+            title: "",
+            keywords: "",
+            description: "",
+            seoImg: { filename: "", path: "" }
+        });
+    console.log(seoSection)
     const handleCardChange = (index, event, data) => {
         const values = cardsSection.map((card) => ({ ...card, }));
         // const values = [...cardsSection];
@@ -40,16 +52,17 @@ const Careerpage = () => {
         ]);
     };
     const handleRemoveCard = (index) => {
-        const values = [...cardsSection];
-        values.splice(index, 1); // Remove the card at the given index
-        setCardsSection(values);
+        if (window.confirm("Are You Sure ,You Want To Delete This")) {
+            const values = [...cardsSection];
+            values.splice(index, 1); // Remove the card at the given index
+            setCardsSection(values);
+        }
     };
 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        dispatch(updateCareerPageAction({ careerdata: { heroSection, jobSection, cardsSection }, id: pageData._id }));
+        dispatch(updateCareerPageAction({ careerdata: { heroSection, jobSection, seoSection, cardsSection }, id: pageData._id }));
         alert("careerPage updated successfully");
     };
 
@@ -58,110 +71,244 @@ const Careerpage = () => {
         <>
             <Sidebar titles="Career Page" />
             <div className="main__content" >
-                <div className="card__box" style={{ display: "block" }}>
-  
-                    <form onSubmit={handleSubmit}>
-                        <Accordion defaultActiveKey={['0']} alwaysOpen>
-                            <Accordion.Item eventKey="0">
-                                <Accordion.Header>Hero Section</Accordion.Header>
-                                <Accordion.Body>
-                                    <div className="mb-3">
-                                        <label htmlFor="heroheading" className="form-label">Heading </label>
-                                        <input required type="text"
-                                            id="heroheading"
-                                            name="heroSection.heading"
-                                            className="form-control"
-                                            value={heroSection.heading}
-                                            onChange={(e) => setHeroSection({ ...heroSection, heading: e.target.value })}
-                                            placeholder="Hero Heading"
-                                        />
-                                    </div>
-                                    <div className="mb-3">
-                                        <label htmlFor="herosubHeading" className="form-label">subHeading </label>
-                                        <input required type="text"
-                                            id="herosubHeading"
-                                            name="heroSection.subHeading"
-                                            className="form-control"
-                                            value={heroSection.subHeading}
-                                            onChange={(e) => setHeroSection({ ...heroSection, subHeading: e.target.value })}
-                                            placeholder="Hero Subheading"
-                                        />
-                                    </div>
-                                </Accordion.Body>
-                            </Accordion.Item>
-                            <Accordion.Item eventKey="1">
-                                <Accordion.Header>Cards Sectionn</Accordion.Header>
-                                <Accordion.Body>
-                                    <div className="mb-3">
-                                        <h5>Cards Section</h5>
-                                        {cardsSection.map((card, index) => (
-                                            <div key={index} className='border my-3 p-3'>
-                                                <button type="button" className='btn btn-danger float-end' onClick={() => handleRemoveCard(index)}> X </button>
-                                                <h5>Card {index + 1}</h5>
-                                                <div className="mb-3">
-                                                    <span className="form-label">cardHeading </span>
+                <div class="page__editors">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><NavLink to="/pages">Pages</NavLink></li>
+                            <li class="breadcrumb-item"><img src="/assets/imgs/chevron-right.svg" alt="" /></li>
+                            <li class="breadcrumb-item active">Career Page</li>
+                        </ol>
+                    </nav>
+
+                    <div class="page__title">
+                        <h5>Career Page</h5>
+                    </div>
+
+                    <div class="page__editContent">
+                        <ul class="nav nav-pills" id="pills-tab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="pills-hero-tab" data-bs-toggle="pill" data-bs-target="#pills-hero" type="button" role="tab" aria-controls="pills-hero"
+                                    aria-selected="true">Hero</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="pills-cards-tab" data-bs-toggle="pill" data-bs-target="#pills-cards" type="button" role="tab" aria-controls="pills-cards"
+                                    aria-selected="false">What Sets Us Apart</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="pills-job-tab" data-bs-toggle="pill" data-bs-target="#pills-job" type="button" role="tab" aria-controls="pills-job"
+                                    aria-selected="false">Job</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="pills-seo-tab" data-bs-toggle="pill" data-bs-target="#pills-seo" type="button" role="tab" aria-controls="pills-seo"
+                                    aria-selected="false">SEO</button>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="pills-tabContent">
+                            <div class="tab-pane fade show active" id="pills-hero" role="tabpanel" aria-labelledby="pills-hero-tab">
+                                <div class="edit__tools">
+                                    <div class="card__block">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="input__inr">
+                                                    <label for="heroheading">Main Heading</label>
                                                     <input required type="text"
+                                                        id="heroheading"
+                                                        name="heroSection.heading"
                                                         className="form-control"
-                                                        name="cardHeading"
-                                                        value={card.cardHeading}
-                                                        onChange={(event) => handleCardChange(index, event)}
-                                                        placeholder="Card Heading"
+                                                        value={heroSection.heading}
+                                                        onChange={(e) => setHeroSection({ ...heroSection, heading: e.target.value })}
+                                                        placeholder="Enter Main Heading"
                                                     />
                                                 </div>
-                                                <div className="mb-3">
-                                                    <span className="form-label">cardDescription </span>
-                                                    <textarea rows={4}
-                                                        name="cardDescription"
-                                                        value={card.cardDescription}
-                                                        onChange={(event) => handleCardChange(index, event)}
-                                                        placeholder="Card Description"
-                                                        className="form-control"
-                                                        required
-                                                    ></textarea>
-                                                </div>
-                                                <CareerCardSection handleCardChange={handleCardChange} card={card} index={index} />
                                             </div>
-                                        ))}
+                                            <div class="col-lg-12">
+                                                <div class="input__inr">
+                                                    <label for="herosubHeading">Sub Text</label>
+                                                    <input required type="text"
+                                                        id="herosubHeading"
+                                                        rows="4"
+                                                        name="heroSection.subHeading"
+                                                        className="form-control"
+                                                        value={heroSection.subHeading}
+                                                        onChange={(e) => setHeroSection({ ...heroSection, subHeading: e.target.value })}
+                                                        placeholder="Enter Sub Heading"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="col-lg-6 col-md-6">
+                                                <div className="input__inr">
+                                                    <label htmlFor="CTA1name">CTA Button 01</label>
+                                                    <input required type="text"
+                                                        id="CTA1name"
+                                                        name="CTA1name"
+                                                        className="form-control"
+                                                        value={heroSection.heroButtons.CTA1.name}
+                                                        onChange={(e) => setHeroSection({ ...heroSection, heroButtons: { ...heroSection.heroButtons, CTA1: { ...heroSection.heroButtons.CTA1, name: e.target.value } } })}
+                                                        placeholder="Enter Button Text" />
+                                                </div>
+                                            </div>
+                                            <div className="col-lg-6 col-md-6">
+                                                <div className="input__inr">
+                                                    <label htmlFor="CTA1url">CTA Button Url</label>
+                                                    <input required type="text"
+                                                        id="CTA1url"
+                                                        name="CTA1url"
+                                                        className="form-control"
+                                                        value={heroSection.heroButtons.CTA1.url}
+                                                        onChange={(e) => setHeroSection({ ...heroSection, heroButtons: { ...heroSection.heroButtons, CTA1: { ...heroSection.heroButtons.CTA1, url: e.target.value } } })}
+                                                        placeholder="Enter Button Url"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="update__block">
+                                            <button class="btn btn__update" onClick={handleSubmit}>Update</button>
+                                        </div>
                                     </div>
-                                    <br></br>
-                                    <br></br>
-                                    <button type="button" onClick={handleAddCard} className="btn btn-secondary">Add New Card</button>
-                                    <br></br>
-                                </Accordion.Body>
-                            </Accordion.Item>
-                            <Accordion.Item eventKey="2">
-                                <Accordion.Header>Job Section</Accordion.Header>
-                                <Accordion.Body>
-                                    <div className="mb-3">
-                                        <label htmlFor="Jobheading" className="form-label">JobHeading </label>
-                                        <input required type="text"
-                                            id="Jobheading"
-                                            name="jobSection.heading"
-                                            className="form-control"
-                                            value={jobSection.heading}
-                                            onChange={(e) => setJobSection({ ...jobSection, heading: e.target.value })}
-                                            placeholder="Job Heading"
-                                        />
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-cards" role="tabpanel" aria-labelledby="pills-cards-tab">
+                                <div class="edit__tools">
+                                    {cardsSection.map((card, index) => (
+                                        <div class="card__block" key={index}>
+                                            <div class="testimonial__box">
+                                                <div class="top__heading">
+                                                    <p>Card {index + 1}</p>
+                                                    <button class="btn" onClick={() => handleRemoveCard(index)}><img src="/assets/imgs/trash.svg" alt="" />Delete</button>
+                                                </div>
+                                                <div class="row">
+                                                    <CareerCardSection handleCardChange={handleCardChange} card={card} index={index} />
+                                                    <div class="col-lg-12">
+                                                        <div class="input__inr">
+                                                            <label for="cardHeading">Heading</label>
+                                                            <input required type="text"
+                                                                className="form-control"
+                                                                name="cardHeading"
+                                                                value={card.cardHeading}
+                                                                onChange={(event) => handleCardChange(index, event)}
+                                                                placeholder="Enter Heading"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="input__inr">
+                                                            <label for="cardDescription">Description</label>
+                                                            <textarea rows={4}
+                                                                name="cardDescription"
+                                                                value={card.cardDescription}
+                                                                onChange={(event) => handleCardChange(index, event)}
+                                                                placeholder="Enter Description"
+                                                                className="form-control"
+                                                                required
+                                                            ></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                    <div class="add__review">
+                                        <button class="btn" onClick={handleAddCard}><img src="/assets/imgs/plus.svg" alt="" />Add New Section</button>
                                     </div>
-                                    <div className="mb-3">
-                                        <label htmlFor="jobSectionsubHeading" className="form-label">subHeading </label>
-                                        <input required type="text"
-                                            id="jobSectionsubHeading"
-                                            name="jobSection.subHeading"
-                                            className="form-control"
-                                            value={jobSection.subHeading}
-                                            onChange={(e) => setJobSection({ ...jobSection, subHeading: e.target.value })}
-                                            placeholder="Job Subheading"
-                                        />
+                                    <div class="update__block">
+                                        <button class="btn btn__update" onClick={handleSubmit}>Update</button>
                                     </div>
-                                </Accordion.Body>
-                            </Accordion.Item>
-
-                        </Accordion>
-                        <hr />
-                        <button className='btn btn-primary' type="submit">Update</button>
-                    </form >
-
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-job" role="tabpanel" aria-labelledby="pills-job-tab">
+                                <div class="edit__tools">
+                                    <div class="card__block">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="input__inr">
+                                                    <label for="Jobheading">Main Heading</label>
+                                                    <input required type="text"
+                                                        id="Jobheading"
+                                                        name="jobSection.heading"
+                                                        className="form-control"
+                                                        value={jobSection.heading}
+                                                        onChange={(e) => setJobSection({ ...jobSection, heading: e.target.value })}
+                                                        placeholder="Enter Main Heading"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="input__inr">
+                                                    <label for="jobSectionsubHeading">Sub Heading</label>
+                                                    <textarea required
+                                                        rows={4}
+                                                        id="jobSectionsubHeading"
+                                                        name="jobSection.subHeading"
+                                                        className="form-control"
+                                                        value={jobSection.subHeading}
+                                                        onChange={(e) => setJobSection({ ...jobSection, subHeading: e.target.value })}
+                                                        placeholder="Enter Sub Heading"
+                                                    >
+                                                    </textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="update__block">
+                                            <button class="btn btn__update" onClick={handleSubmit}>Update</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="tab-pane fade" id="pills-seo" role="tabpanel" aria-labelledby="pills-seo-tab">
+                                <div className="edit__tools">
+                                    <div className="card__block">
+                                        <div className="row">
+                                            <div className="col-lg-12">
+                                                <div className="input__inr">
+                                                    <label htmlFor="seotitle">Page Title</label>
+                                                    <input required
+                                                        type="text"
+                                                        name="seotitle"
+                                                        id="seotitle"
+                                                        value={seoSection.title}
+                                                        onChange={(e) => setSeoSection({ ...seoSection, title: e.target.value })}
+                                                        placeholder="Enter Page Title"
+                                                        className="form-control"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="col-lg-12">
+                                                <div className="seo__card">
+                                                    <div className="card__block">
+                                                        <div className="row">
+                                                            <div className="col-lg-12">
+                                                                <div className="input__inr">
+                                                                    <label htmlFor="keywords">Keywords</label>
+                                                                    <input type="text" id="keywords" className="form-control"
+                                                                        value={seoSection.keywords}
+                                                                        onChange={(e) => setSeoSection({ ...seoSection, keywords: e.target.value })}
+                                                                        placeholder="Enter Keywords" />
+                                                                </div>
+                                                            </div>
+                                                            <div className="col-lg-12">
+                                                                <div className="input__inr">
+                                                                    <label htmlFor="Description">Meta Description</label>
+                                                                    <textarea rows="4" className="form-control"
+                                                                        value={seoSection.description}
+                                                                        id="Description"
+                                                                        onChange={(e) => setSeoSection({ ...seoSection, description: e.target.value })}
+                                                                        placeholder="Enter Meta Description"></textarea>
+                                                                </div>
+                                                            </div>
+                                                            <SeoImg seoSection={seoSection} setSeoSection={setSeoSection} />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="update__block">
+                                            <button className="btn btn__update" onClick={handleSubmit}>Update</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </>

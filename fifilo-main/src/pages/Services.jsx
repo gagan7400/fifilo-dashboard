@@ -59,22 +59,20 @@ export default function Services() {
     <>
       <Helmet>
         <title>{(!publishedServiceLoading && publishedServicePage) && publishedServicePage.seoSection.title.trim()}</title>
-        {(!publishedServiceLoading && publishedServicePage) ? publishedServicePage.seoSection.meta.map((v, i) => {
-          return <meta key={i} name={v.name.trim()} content={v.content.trim()} />
-        }) : ""}
-
+        <meta name="keywords" content={(!publishedServiceLoading && publishedServicePage) && publishedServicePage.seoSection.keywords.trim()} />
+        <meta name="description" content={(!publishedServiceLoading && publishedServicePage) && publishedServicePage.seoSection.description.trim()} />
       </Helmet>
+
       <div className="comn__bnr service__bnr">
         <div className="container">
           <div className="bnr__content">
             <div className="left__bx" data-aos="fade-up" data-aos-duration="800">
-              <h2 dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(!publishedServiceLoading && publishedServicePage ? publishedServicePage.heroSection.heading : "hello world") }} />
-              <h6 dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(!publishedServiceLoading && publishedServicePage ? publishedServicePage.heroSection.subHeading : "hello world") }} />
+              <h2 dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(!publishedServiceLoading && publishedServicePage ? publishedServicePage.heroSection.heading : "") }} />
+              <h6 dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(!publishedServiceLoading && publishedServicePage ? publishedServicePage.heroSection.subHeading : "") }} />
             </div>
             <div data-aos="fade-up" data-aos-duration="800">
-              <NavLink to="/contact-us/" className="btn">
-                Lets Connect <span></span>
-              </NavLink>
+              <NavLink to={!publishedServiceLoading && publishedServicePage ? publishedServicePage.heroSection.heroButtons.CTA1.url : "/contactus"} className="btn">{!publishedServiceLoading && publishedServicePage ? publishedServicePage.heroSection.heroButtons.CTA1.name : "Lets's Talk"}<span></span></NavLink>
+
             </div>
             <div className="animation-wrapper">
               <div className="main-wrapper">
@@ -1421,7 +1419,6 @@ export default function Services() {
                   </div>
 
                   <div className={`shapes shapes-${i + 1}`}></div>
-
                 </div>
               </div>
               <div className="col-lg-5 col-md-6">
@@ -1433,15 +1430,10 @@ export default function Services() {
                       }} />
                   })}
 
-                  <div className="listing__bx" data-aos="fade-up" data-aos-duration="800">
-                    <ul>
-                      {v.cardList.map((value, index) => {
-                        return <li dangerouslySetInnerHTML={{
-                          __html: DOMPurify.sanitize(value)
-                        }} key={index + 1} />
-                      })}
-                    </ul>
-                  </div>
+                  <div className="listing__bx" data-aos="fade-up" data-aos-duration="800"
+                    dangerouslySetInnerHTML={{
+                      __html: DOMPurify.sanitize(v.cardList)
+                    }} />
                 </div>
               </div>
             </div>
@@ -1462,7 +1454,7 @@ export default function Services() {
             {!publishedServiceLoading && publishedServicePage ? publishedServicePage.toolSection.toolsLogo.map((img, index) => {
               return <div className="col-lg-3 col-md-4 col-6">
                 <div className="card__bx">
-                  <img src={"http://localhost:5000/images/" + img.filename} data-aos="zoom-in" alt="card__bx" />
+                  <img src={img && img.filename ? `http://localhost:5000/images/${img.filename}` : ''} data-aos="zoom-in" alt="card__bx" />
                 </div>
               </div>
             }) : ""}

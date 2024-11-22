@@ -17,22 +17,26 @@ export default function ServicepageServicecard({ card, index, handleServiceCardC
         handleServiceCardChange(index, "serviceImg", { filename: image.filename, path: image.filePath })
         setIsModalOpen(false); // Close the modal
     };
+    // let deleteImg = () => {
+    //     handleServiceCardChange(index, "serviceImg", { filename: "", path: "" })
+    // }
     return (
-        <div className="mb-3">
-            <span className="form-label">serviceImg </span> <br />
-            <div className="imgbx"  >
-                <img src={`http://localhost:5000/images/${card.serviceImg.filename}`} alt="Avatar" className="image" />
-                <div className="overlay" >
-                    <i className="icon"><button type="button" className='btn btn-info' onClick={() => { openMediaLibrary() }}>&#9998;</button></i>
+        <div className="col-lg-12">
+            <div className="profile__block">
+                <div className="image__block">
+                    <img src={card.serviceImg.filename ? `http://localhost:4000/images/${card.serviceImg.filename}` : "assets/imgs/avatar.svg"} alt="" />
+                </div>
+                <div className="btn__grp">
+                    <button className="btn"><img src="assets/imgs/edit-05.svg" alt="" onClick={() => { openMediaLibrary() }} /></button>
+                    {/* <button className="btn"><img src="assets/imgs/trash-03.svg" alt="" onClick={() => { deleteImg() }} /></button> */}
                 </div>
             </div>
-
-            {/* <img src={`http://localhost:5000/images/${card.serviceImg.filename}`} width="50" /> */}
             <MediaLibraryModal
                 isOpen={isModalOpen}
                 onClose={closeMediaLibrary}
                 onSelectImage={handleImageSelect} // Pass the image selection handler
             />
         </div>
+
     )
 }

@@ -18,11 +18,7 @@ const ContactusSchema = new mongoose.Schema({
         type: String,
         required: [true, "Please Enter Your Password"],
     },
-    servicerequired: {
-        type: String,
-        required: [true, "Please Enter Your Password"],
-    },
-    date: {
+     date: {
         type: Date,
         default: Date.now()
     }
@@ -31,7 +27,7 @@ const ContactusSchema = new mongoose.Schema({
 let contactPageSchema = new mongoose.Schema({
     heroSection: {
         heading: String,
-        subHeading: String
+        subHeading: String,
     },
     cardSection: {
         heading: String,
@@ -41,7 +37,12 @@ let contactPageSchema = new mongoose.Schema({
     published: {
         type: Boolean,
         default: false
-    }
+    }, seoSection: {
+        title: String,
+        keywords: String,
+        description: String,
+        seoImg: { filename: String, path: String }
+    },
 
 }, { timestamps: true })
 let Contactus = mongoose.model("contact", ContactusSchema)

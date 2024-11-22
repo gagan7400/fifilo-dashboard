@@ -14,7 +14,7 @@ import Footer from '../layout/Footer';
 import Navbar from '../layout/Navbar';
 const Login = () => {
     let nav = useNavigate();
-    const { isAuthenticated } = useSelector((state) => state.user);
+    const { isAuthenticated, error } = useSelector((state) => state.user);
     let dispatch = useDispatch();
     const heroBnrRef = useRef(null);
     const heroBnrImgWrapRef = useRef(null);
@@ -31,7 +31,7 @@ const Login = () => {
             newErrors.email = 'Email address is invalid';
         }
         if (!Password) {
-            newErrors.number = 'Password  is required';
+            newErrors.password = 'Password  is required';
         }
         return newErrors;
     };
@@ -81,19 +81,35 @@ const Login = () => {
         e.preventDefault();
         const validationErrors = validate();
         if (Object.keys(validationErrors).length > 0) {
+            console.log(validationErrors)
             setErrors(validationErrors);
             setShowErrors(true);
-            toast.error("Error Notification !", {
-                position: "top-center"
-            });
+            if (validationErrors.email) {
+                toast.error(validationErrors.email, {
+                    position: "top-center", zIndex: 100
+                });
+            }
+            if (validationErrors.password) {
+                toast.error(validationErrors.password, {
+                    position: "top-center", zIndex: 100
+                });
+            }
 
         } else {
             setErrors({});
             setShowErrors(false);
             dispatch(login(Email, Password))
         }
-    }
 
+    }
+    useEffect(() => {
+        if (error) {
+            setShowErrors(true);
+            toast.error(error, {
+                position: "top-center", zIndex: 100
+            });
+        }
+    }, [error])
     useEffect(() => {
         dispatch(loaduser())
         if (isAuthenticated) {
@@ -113,33 +129,19 @@ const Login = () => {
                             <div className="contact__form" data-aos="fade-up" data-aos-duration="800">
                                 <div className="inr__input" >
                                     <span><img src="assets/img/mail-02.svg" alt="contact__form" /></span>
-                                    <input
-                                        type="email"
-                                        name="Email"
-                                        value={Email}
-                                        onChange={(e) => { setEmail(e.target.value) }}
-                                        className="form-control"
-                                        placeholder="Your E-mail"
-                                        autoComplete='false'
-                                    />
+                                    <input type="email" name="Email" value={Email} onChange={(e) => { setEmail(e.target.value) }}
+                                        className="form-control" placeholder="Your E-mail" autoComplete='false' />
                                     {errors.email && <div className="error text-danger position-absolute" style={{ color: "#f0f1f1" }} >{errors.email}</div>}
                                 </div>
                                 <div className="inr__input" >
                                     <span><img src="assets/img/mail-02.svg" alt="contact__form" /></span>
-                                    <input
-                                        type="password"
-                                        name="Password"
-                                        value={Password}
-                                        onChange={(e) => { setPassword(e.target.value) }}
-                                        className="form-control"
-                                        placeholder="Your password"
-                                        autoComplete='false'
-                                    />
+                                    <input type="password" name="Password" value={Password}
+                                        onChange={(e) => { setPassword(e.target.value) }} className="form-control" placeholder="Your password" autoComplete='false' />
                                     {errors.password && <div className="error text-danger position-absolute" style={{ color: "#f0f1f1" }} >{errors.password}</div>}
                                 </div>
 
                                 <div>
-                                    <button className="btn btn__primary" type="submit" >Submit <img src="assets/img/arrow-up-right.svg" alt="contact__form" /></button>
+                                    <button className="btn btn__primary" type="submit" >Login<img src="assets/img/arrow-up-right.svg" alt="contact__form" /></button>
                                 </div>
                             </div>
                         </div>

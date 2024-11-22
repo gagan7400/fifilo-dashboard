@@ -199,6 +199,7 @@ export default function TribeStays() {
         </div>
       </div>
 
+      {/* design process for mobile version */}
       <div className="our__process rn__section__gapTop bg__dark d-block d-lg-none">
         <div className="container">
           <div className="main__heading" data-aos="fade-up" data-aos-duration="800">
@@ -299,6 +300,7 @@ export default function TribeStays() {
           </div>
         </div>
       </div>
+
 
       <div className="caseStudies__overview bottom__overview">
         <div className="container">

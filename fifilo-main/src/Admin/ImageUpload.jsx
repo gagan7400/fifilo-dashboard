@@ -15,7 +15,7 @@ const ImageUpload = () => {
         formData.append("altText", altText);
 
         try {
-            const response = await axios.post("http://localhost:5000/api/media/upload", formData, {
+            const response = await axios.post("http://localhost:4000/api/media/upload", formData, {
                 headers: { "Content-Type": "multipart/form-data" },
             });
             // onUploadSuccess(response.data.image);
@@ -26,10 +26,16 @@ const ImageUpload = () => {
     };
 
     return (
-        <div style={{ width: "400px", height: "400px" }}>
-            <input type="file" onChange={handleFileChange} />
-            <label htmlFor="imgmedia"> Alt text for the image</label>
-            <input type="text" id="imgmedia" value={altText} onChange={(e) => { setAltText(e.target.value) }}></input>
+        <div style={{ width: "100%", height: "auto" }}>
+            <div className="m-2">
+                <label htmlFor="Img" className="form-label">Image Upload</label><br />
+                <input type="file" name="Img" onChange={handleFileChange} />
+            </div>
+            <br />
+            <div className="m-2">
+                <label htmlFor="imgmedia" className="form-label">Alt text</label>  <br />
+                <input type="text" className="form-input" id="imgmedia" value={altText} onChange={(e) => { setAltText(e.target.value) }}></input>
+            </div>
             <button onClick={handleUpload} disabled={!file}>Upload</button>
         </div>
     );

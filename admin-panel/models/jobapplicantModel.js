@@ -12,16 +12,9 @@ const jobapplicantSchema = new mongoose.Schema({
     },
     phonenumber: {
         type: Number,
-        required: [true, "Please Enter Your Password"],
+        required: [true, "Please Enter Your number"],
     },
-    resume: {
-        type: String,
-        required: [true, "Please Attach Your Resume"],
-    },
-    jobrole: {
-        type: String,
-        required: [true, "Please Enter Your Password"],
-    },
+     
     date: {
         type: String,
         default: Date.now()

@@ -7,7 +7,12 @@ const homepageSchema = new mongoose.Schema({
     },
     heroSection: {
         heading: String,
-        subHeading: String
+        subHeading: String,
+        heroButtons: {
+            CTA1: { name: String, url: String },
+            CTA2: { name: String, url: String },
+            CTA3: { name: String, url: String },
+        }
     },
     aboutSection: String,
     servicesSection: {
@@ -19,7 +24,9 @@ const homepageSchema = new mongoose.Schema({
         servicePointList: [],
         heading: String,
         description: String,
-        serviceImgs: { filename: String, path: String }
+        serviceImgs: { filename: String, path: String },
+        buttonText: String,
+        buttonUrl: String
     }],
     testimonialSection: {
         preHeading: String,
@@ -38,6 +45,12 @@ const homepageSchema = new mongoose.Schema({
         clientLogos: [
             { filename: String, path: String }
         ]
+    },
+    seoSection: {
+        title: String,
+        keywords: String,
+        description: String,
+        seoImg: { filename: String, path: String }
     },
     published: {
         type: Boolean,

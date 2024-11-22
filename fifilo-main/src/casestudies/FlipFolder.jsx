@@ -302,7 +302,6 @@ export default function TribeStays() {
               <div className="content__box" data-aos="fade-up" data-aos-duration="800">
                 <h3>Style Guide and Key Components</h3>
                 <p>We developed a comprehensive style guide that focused on clear typography, engaging visuals, and a harmonious color palette. Key components included simplified navigation buttons, responsive layouts, and a focus on delivering essential information prominently.</p>
-
               </div>
 
               <div className="color__palette flipFolder__color" data-aos="fade-up" data-aos-duration="800">

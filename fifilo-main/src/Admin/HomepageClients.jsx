@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import MediaLibraryModal from "./MediaLibraryModal";
 
-export default function HomepageClients({ client, index, handleClients }) {
+export default function HomepageClients({ client, index, handleClients, removeClients }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
 
@@ -18,19 +18,20 @@ export default function HomepageClients({ client, index, handleClients }) {
         setIsModalOpen(false); // Close the modal
     };
     return (
-        <div className="mb-3 p-2">
-            <span className="form-label">client {index + 1} </span> <br />
-            <div className="imgbx" style={{ height: "100px" }}>
-                <img src={`http://localhost:5000/images/${client.filename}`} alt="Avatar" className="image" />
-                <div className="overlay" >
-                    <i className="icon"><button type="button" className='btn btn-info' onClick={() => { openMediaLibrary() }}>&#9998;</button></i>
-                </div>
+        <div className="image__block">
+            <div className="single__img">
+                <img src={client.filename ? `http://localhost:4000/images/${client.filename}` : "assets/imgs/avatar.svg"} alt="" />
+            </div>
+            <div className="btn__grp">
+                <button className="btn" onClick={() => { openMediaLibrary() }}><img src="assets/imgs/edit-05.svg" alt="" /></button>
+                <button className="btn" onClick={() => { removeClients(index) }}><img src="assets/imgs/trash-03.svg" alt="" /></button>
             </div>
             <MediaLibraryModal
                 isOpen={isModalOpen}
                 onClose={closeMediaLibrary}
-                onSelectImage={handleImageSelect} // Pass the image selection handler
+                onSelectImage={handleImageSelect}
             />
         </div>
+
     )
 }

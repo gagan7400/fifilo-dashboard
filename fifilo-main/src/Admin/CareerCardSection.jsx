@@ -17,22 +17,27 @@ export default function CareerCardSection({ card, index, handleCardChange }) {
         handleCardChange(index, "cardImg", { filename: image.filename, path: image.filePath })
         setIsModalOpen(false); // Close the modal
     };
+    let deleteImg = () => {
+        handleCardChange(index, "cardImg", { filename: "", path: "" })
+
+    }
     return (
-        <div className="mb-3" style={{ height: "150px", width: "100px" }}>
-            <span className="form-label">cardImg </span> <br />
-            <div className="imgbx"  >
-                <img src={`http://localhost:5000/images/${card.cardImg.filename}`} alt="Avatar" className="image" />
-                <div className="overlay" >
-                    <i className="icon"><button type="button" className='btn btn-info' onClick={() => { openMediaLibrary() }}>&#9998;</button></i>
+        <div class="col-lg-12">
+            <div class="profile__block">
+                <div class="image__block">
+                    <img src={card.cardImg.filename ? `http://localhost:4000/images/${card.cardImg.filename}` : "/assets/imgs/avatar.svg"} alt="" />
+                </div>
+                <div class="btn__grp">
+                    <button class="btn" onClick={() => { openMediaLibrary() }}><img src="/assets/imgs/edit-05.svg" alt="" /></button>
+                    <button class="btn" onClick={() => { deleteImg() }}><img src="/assets/imgs/trash-03.svg" alt="" /></button>
                 </div>
             </div>
-
-            {/* <img src={`http://localhost:5000/images/${card.cardImg.filename}`} width="50" /> */}
             <MediaLibraryModal
                 isOpen={isModalOpen}
                 onClose={closeMediaLibrary}
                 onSelectImage={handleImageSelect} // Pass the image selection handler
             />
         </div>
+
     )
 }

@@ -23,7 +23,7 @@ const ContentEditor = () => {
             {selectedImageUrl && (
                 <div>
                     <p>Selected Image:</p>
-                    <img src={`http://localhost:5000/images/${selectedImageUrl.filename}`} alt="Selected" width="200" />
+                    <img src={`http://localhost:4000/images/${selectedImageUrl.filename}`} alt="Selected" width="200" />
                 </div>
             )}
             {section ?

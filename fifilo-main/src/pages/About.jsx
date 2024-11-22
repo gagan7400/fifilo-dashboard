@@ -305,10 +305,8 @@ export default function About() {
     <>
       <Helmet>
         <title>{(!publishedLoading && publishedData) && publishedData.seoSection.title.trim()}</title>
-        {(!publishedLoading && publishedData) ? publishedData.seoSection.meta.map((v, i) => {
-          return <meta key={i} name={v.name.trim()} content={v.content.trim()} />
-        }) : ""}
-
+        <meta name="keywords" content={(!publishedLoading && publishedData) && publishedData.seoSection.keywords.trim()}></meta>
+        <meta name="description" content={(!publishedLoading && publishedData) && publishedData.seoSection.description.trim()}></meta>
       </Helmet>
       <div className="comn__bnr about__bnr">
         <div className="container">
@@ -325,9 +323,7 @@ export default function About() {
             </div>
 
             <div data-aos="fade-up" data-aos-duration="800">
-              <NavLink to="/contact-us/" className="btn">
-                Lets Connect <span></span>
-              </NavLink>
+              <NavLink to={`${!publishedLoading && publishedData ? publishedData.heroSection.heroButtons.CTA1.url : "/contactus"}`} className="btn">{!publishedLoading && publishedData ? publishedData.heroSection.heroButtons.CTA1.name : 'Lets Conect'} <span></span ></NavLink>
             </div>
 
             <div id="canvas-about" className="animation-wrapper">
@@ -349,7 +345,7 @@ export default function About() {
             <div className="col-12">
               <div className="top__bx" data-aos="fade-up" data-aos-duration="800">
                 <h6 dangerouslySetInnerHTML={{
-                  __html: DOMPurify.sanitize(!publishedLoading && publishedData ? publishedData.aboutSection.description : `Founded by the visionary duo Mohsin Khan and Abhishek Joshi, FIFILO Designs is where creativity meets technology. Inspired by our roots in design innovation, we infuse every project with a unique blend of artistic flair and strategic insight. Whether you're launching a startup or enhancing an established brand, we transform your vision into memorable digital experiences. From pixel-perfect UI/UX design to advanced web development and impactful digital marketing, we create solutions that not only work but truly shine.`)
+                  __html: DOMPurify.sanitize(!publishedLoading && publishedData ? publishedData.aboutSection.description : ``)
                 }} />
               </div>
             </div>
@@ -360,9 +356,8 @@ export default function About() {
       <div className="our__process rn__section__gapTop dark__bnr">
         <div className="container">
           <div className="main__heading" data-aos="fade-up" data-aos-duration="800">
-            <p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(!publishedLoading && publishedData ? publishedData.processSection.preHeading : "Process") }} />
-            <h2 dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(!publishedLoading && publishedData ? publishedData.processSection.heading : "Our Work <span>Process</span>") }} />
-
+            <p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(!publishedLoading && publishedData ? publishedData.processSection.preHeading : "") }} />
+            <h2 dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(!publishedLoading && publishedData ? publishedData.processSection.heading : "") }} />
           </div>
 
           <div className="inner__gapTop row justify-content-center">
@@ -373,7 +368,7 @@ export default function About() {
                     <div className="col-lg-1 col-md-1 col-2 center__bx">
                       <div className="border-section">
                         <div className="stroke-circle">
-                          <img src="assets/img/stars-02.svg" alt="icon" />
+                          <img src={(v.icon && v.icon.filename) ? `http://localhost:4000/images/${v.icon.filename}` : ""} alt="icon" />
                         </div>
                         <div className="stroke-border">
                           <div className="arrow-down">
@@ -387,9 +382,7 @@ export default function About() {
                         <h5>{v.heading ? v.heading : "Program Inception"}</h5>
                         <p>{v.description ? v.description : `Program inception sets the stage for aligning your vision with our UI/UX expertise, laying the
                           groundwork for innovative design solutions`}</p>
-                        {/* <h5>Discovery:</h5>
-                            <p>We start by understanding your goals and challenges. This helps us align our expertise in design, development, and digital marketing with your vision.</p> */}
-                      </div>
+                        </div>
                     </div>
                   </>
                     :
@@ -406,7 +399,7 @@ export default function About() {
                       <div className="col-lg-1 col-2 center__bx">
                         <div className="border-section">
                           <div className="stroke-circle">
-                            <img src="assets/img/search-refraction.svg" alt="icon" />
+                          <img src={(v.icon && v.icon.filename) ? `http://localhost:4000/images/${v.icon.filename}` : ""} alt="icon" />
                           </div>
                           <div className="stroke-border">
                             <div className="arrow-down">
@@ -439,10 +432,10 @@ export default function About() {
               </div>
             </div>
             {(!publishedLoading && publishedData) && publishedData.membersCard.map((member, index) => {
-              return <div className="col-lg-3 col-md-6 col-6">
+              return <div className="col-lg-3 col-md-6 col-6" key={index+1}>
                 <div className="team__card" data-aos="fade-up" data-aos-duration="800">
                   <div className="img__team">
-                    <img src={"http://localhost:4000/images/" + member.memberImg.filename} alt="our-team" />
+                    <img src={member.memberImg && member.memberImg ? "http://localhost:4000/images/" + member.memberImg.filename:"assets/imgs/avatar.svg"} alt="our-team" />
                   </div>
                   <div className="team__detail">
                     <div>

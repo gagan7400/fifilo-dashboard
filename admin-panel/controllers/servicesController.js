@@ -30,7 +30,6 @@ const publishService = async (req, res) => {
     }
 };
 
-
 const deleteServicePage = async (req, res) => {
 
     try {
@@ -93,21 +92,10 @@ const createService = async (req, res) => {
     }
 };
 
-
 const updateService = async (req, res) => {
     try {
-        const { id } = req.params; // Assuming we're updating the servicepage by ID
-        // const { heroSection, servicesCards, toolSection } = req.body;
-        const { heroSection, servicesCards, toolSection } = req.body;
-        // Handling image uploads
-        // const toolsLogo = req.files['toolsLogo'] ? req.files['toolsLogo'].map(file => ({
-        //     filename: file.filename,
-        //     path: file.path
-        // })) : [];
-        // const serviceImg = req.files['serviceImg'] ? req.files['serviceImg'].map(file => ({
-        //     filename: file.filename,
-        //     path: file.path
-        // })) : [];
+        const { id } = req.params;
+        const { heroSection, servicesCards, seoSection, toolSection } = req.body;
 
         // Find the existing servicepage by ID
         const servicePage = await servicesModel.findById(id);
@@ -123,18 +111,26 @@ const updateService = async (req, res) => {
                 ...heroSection
             };
         }
+        if (seoSection) {
+            servicePage.seoSection = {
+                ...servicePage.seoSection,
+                ...seoSection
+            };
+        }
         // Update services card section (with image handling)
         if (servicesCards) {
             servicePage.servicesCards = servicesCards.map((card, index) => ({
                 cardDescription: card.cardDescription || servicePage.servicesCards[index]?.cardDescription || [],
-                cardList: card.cardList || servicePage.servicesCards[index]?.cardList || [],
+                cardList: card.cardList || servicePage.servicesCards[index]?.cardList ||"",
                 cardName: card.cardName || servicePage.servicesCards[index]?.cardName || "Default cardName",
-                serviceImg: card.serviceImg || servicePage.servicesCards[index]?.serviceImg || {}
+                cardId: card.cardId || servicePage.servicesCards[index]?.cardId || "Default cardId",
+                serviceImg: card.serviceImg || servicePage.servicesCards[index]?.serviceImg || {},
+
             }));
         }
         //toolsection
         if (toolSection) {
-             servicePage.toolSection = {
+            servicePage.toolSection = {
                 ...servicePage.toolSection,
                 heading: toolSection.heading || servicePage.toolSection?.heading || "Default cardName",
                 toolsLogo: toolSection.toolsLogo || servicePage.toolSection?.toolsLogo || []
@@ -153,8 +149,6 @@ const updateService = async (req, res) => {
         res.status(500).json({ success: false, message: err.message });
     }
 };
-
-
 
 module.exports = {
     createService,

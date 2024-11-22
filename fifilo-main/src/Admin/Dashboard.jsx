@@ -3,7 +3,7 @@ import Sidebar from './Sidebar';
 export default function Dashboard() {
     return (
         <>
-            <Sidebar titles="Dashboard" />
+            <Sidebar></Sidebar>
             <div className="main__content">
                 <div id="dashboard" className="card__box">
                     <h2>Welcome to the Dashboard</h2>

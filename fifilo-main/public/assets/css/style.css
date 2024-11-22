@@ -3095,29 +3095,40 @@ ul li {
   z-index: -1;
 }
 
+.contact_formModal .contact__form,
 .contact__bnr .contact__form {
   display: flex;
   flex-direction: column;
   gap: 40px;
 }
 
+.contact_formModal .contact__form .inr__input,
 .contact__bnr .contact__form .inr__input {
   position: relative;
 }
 
-.contact__bnr .contact__form .inr__input span {
+.contact_formModal .contact__form .inr__input:last-child,
+.contact__bnr .contact__form .inr__input:last-child {
+  width: fit-content;
+}
+
+.contact_formModal .contact__form .inr__input .icon,
+.contact__bnr .contact__form .inr__input .icon {
   position: absolute;
   left: 0;
   top: 0;
   display: flex;
+  z-index: 1;
 }
 
+.contact_formModal .contact__form .inr__input span img,
 .contact__bnr .contact__form .inr__input span img {
   width: 24px;
   height: auto;
   transition: 0.4s all ease-out;
 }
 
+.contact_formModal .contact__form .form-control,
 .contact__bnr .contact__form .form-control {
   border: none;
   border-bottom: 1px solid #94969c;
@@ -3126,9 +3137,15 @@ ul li {
   padding: 0 0 16px 32px;
   font: normal normal 400 16px/145% var(--font);
   color: #f0f1f1;
+  width: 100%;
   transition: 0.4s all ease-out;
 }
 
+.contact_formModal .contact__form .form-control {
+  color: rgba(148, 150, 156, 1);
+}
+
+.contact_formModal .contact__form .form-control::placeholder,
 .contact__bnr .contact__form .form-control::placeholder {
   color: #94969c;
   opacity: 1;
@@ -3500,13 +3517,17 @@ select:autofill:focus {
   color: #fff;
 } */
 
-.career__modal .modal-dialog {
+/* .career__modal .modal-dialog {
   max-width: 100%;
-}
+} */
 
 .career__modal .modal-content {
   background-color: transparent;
   border: none;
+  margin: auto;
+  background: #fff;
+  padding: 40px;
+  border-radius: 24px;
 }
 
 .career__modal .modal-dialog iframe {
@@ -3929,4 +3950,13 @@ ul li {
 .main__content .table tr td .btn img {
   width: 20px;
   height: auto;
+}
+
+.career__modal .modal-header {
+  padding: 0 0 32px;
+  border: none;
+}
+
+.contact_formModal .contact__form .inr__input .error {
+  color: #0e0e0e  !important;
 }

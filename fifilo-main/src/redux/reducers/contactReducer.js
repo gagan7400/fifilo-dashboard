@@ -1,5 +1,5 @@
 
-export const contactReducer = (state = { contact: {} }, action) => {
+export const contactReducer = (state = { loading: false, success: false }, action) => {
     switch (action.type) {
         case "CONTACT_REQUEST":
             return {

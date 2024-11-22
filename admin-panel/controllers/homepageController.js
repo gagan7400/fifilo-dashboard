@@ -12,11 +12,6 @@ const createHomePage = async (req, res) => {
             path: file.path          // Use path from Multer
         })) : [];
 
-        // const clientImgs = req.files['clientImgs'] ? req.files['clientImgs'].map(file => ({
-        //     filename: file.filename, // Use filename from Multer
-        //     path: file.path          // Use path from Multer
-        // })) : [];
-
         //serivcecard section
         const newServicesCardSection = servicesCardSection.map((card, index) => ({
             servicePointList: card.servicePointList,
@@ -119,7 +114,7 @@ const deleteHomePage = async (req, res) => {
 const updateHomePage = async (req, res) => {
     try {
         const { id } = req.params; // Assuming we're updating the homepage by ID
-        const { heroSection, servicesSection, aboutSection, servicesCardSection, testimonialSection, reviewsSection, clientSection } = req.body;
+        const { heroSection, servicesSection, seoSection, aboutSection, servicesCardSection, testimonialSection, reviewsSection, clientSection } = req.body;
 
         // Find the existing homepage by ID
         const homePage = await homepageModel.findById(id);
@@ -133,6 +128,13 @@ const updateHomePage = async (req, res) => {
             homePage.heroSection = {
                 ...homePage.heroSection,
                 ...heroSection
+            };
+        }
+        // Update seoSection
+        if (seoSection) {
+            homePage.seoSection = {
+                ...homePage.seoSection,
+                ...seoSection
             };
         }
 
@@ -155,7 +157,9 @@ const updateHomePage = async (req, res) => {
                 servicePointList: card.servicePointList || homePage.servicesCardSection[index]?.servicePointList || [],
                 heading: card.heading || homePage.servicesCardSection[index]?.heading || "Default Heading",
                 description: card.description || homePage.servicesCardSection[index]?.description || "No description",
-                serviceImgs: card.serviceImgs || homePage.servicesCardSection[index]?.serviceImgs || {}
+                serviceImgs: card.serviceImgs || homePage.servicesCardSection[index]?.serviceImgs || {},
+                buttonText: card.buttonText || homePage.servicesCardSection[index]?.buttonText || "",
+                buttonUrl: card.buttonUrl || homePage.servicesCardSection[index]?.buttonUrl || ""
             }));
         }
 
@@ -196,6 +200,134 @@ const updateHomePage = async (req, res) => {
         res.status(500).json({ success: false, message: err.message });
     }
 };
+
+
+// const updateHomePage = async (req, res) => {
+//     try {
+//         const { id } = req.params; // Assuming we're updating the homepage by ID
+//         const { heroSection, seoSection, servicesSection, aboutSection, reviewsSection, clientSection } = req.body;
+
+//         // Find the existing homepage by ID
+//         const homePage = await homepageModel.findById(id);
+
+//         if (!homePage) {
+//             return res.status(404).json({ success: false, message: "Home page not found" });
+//         }
+
+//         // Update hero section
+//         if (heroSection) {
+//             homePage.heroSection = {
+//                 ...homePage.heroSection,
+//                 ...heroSection
+//             };
+//         }
+
+//         // Update about section
+//         if (aboutSection) {
+//             homePage.aboutSection = aboutSection;
+//         }
+
+//         // Update services section
+//         // if (servicesSection) {
+//         //     homePage.servicesSection = {
+//         //         ...homePage.servicesSection,
+//         //         ...servicesSection
+//         //     };
+//         // }
+//         if (servicesSection) {
+//             homePage.servicesSection = {
+//                 ...homePage.servicesSection,
+//                 serviceCards: servicesSection.serviceCards.map((card, index) => ({
+//                     servicePointList: card.servicePointList || homePage.servicesSection.serviceCards[index]?.servicePointList || [],
+//                     heading: card.heading || homePage.servicesSection.serviceCards[index]?.heading || "Default Heading",
+//                     description: card.description || homePage.servicesSection.serviceCards[index]?.description || "No description",
+//                     serviceImgs: card.serviceImgs || homePage.servicesSection.serviceCards[index]?.serviceImgs || {}
+//                 })),
+//                 ...servicesSection
+//             };
+//         }
+
+//         // if (servicesSection) {
+//         //     homePage.servicesSection = servicesSection.map((card, index) => ({
+//         //         servicePointList: card.servicePointList || homePage.servicesSection[index]?.servicePointList || [],
+//         //         heading: card.heading || homePage.servicesSection[index]?.heading || "Default Heading",
+//         //         description: card.description || homePage.servicesSection[index]?.description || "No description",
+//         //         serviceImgs: card.serviceImgs || homePage.servicesSection[index]?.serviceImgs || {}
+//         //     }));
+//         // }
+
+//         // Update services card section (with image handling)
+//         // if (servicesCardSection) {
+//         //     homePage.servicesCardSection = servicesCardSection.map((card, index) => ({
+//         //         servicePointList: card.servicePointList || homePage.servicesCardSection[index]?.servicePointList || [],
+//         //         heading: card.heading || homePage.servicesCardSection[index]?.heading || "Default Heading",
+//         //         description: card.description || homePage.servicesCardSection[index]?.description || "No description",
+//         //         serviceImgs: card.serviceImgs || homePage.servicesCardSection[index]?.serviceImgs || {}
+//         //     }));
+//         // }
+
+//         // Update testimonial section
+//         // if (testimonialSection) {
+//         //     homePage.testimonialSection = {
+//         //         ...homePage.testimonialSection,
+//         //         ...testimonialSection
+//         //     };
+//         // }
+
+//         //reviews section (with image handling)
+//         if (reviewsSection) {
+//             homePage.reviewsSection = {
+//                 ...homePage.reviewsSection,
+//                 reviews: reviewsSection.reviews.map((review, index) => ({
+//                     company: review.company || homePage.reviewsSection.reviews[index]?.company || "Unknown Company",
+//                     description: review.description || homePage.reviewsSection.reviews[index]?.description || "No description",
+//                     clientName: review.clientName || homePage.reviewsSection.reviews[index]?.clientName || "Anonymous",
+//                     serviceBtn: review.serviceBtn || homePage.reviewsSection.reviews[index]?.serviceBtn || "Anonymous",
+//                     clientImgs: review.clientImgs || homePage.reviewsSection.reviews[index]?.clientImgs || {}
+//                 })),
+//                 ...reviewsSection
+//             };
+//         }
+
+//         // if (reviewsSection) {
+//         //     homePage.reviewsSection = reviewsSection.reviews.map((review, index) => ({
+//         //         company: review.company || homePage.reviewsSection.reviews[index]?.company || "Unknown Company",
+//         //         description: review.description || homePage.reviewsSection.reviews[index]?.description || "No description",
+//         //         clientName: review.clientName || homePage.reviewsSection.reviews[index]?.clientName || "Anonymous",
+//         //         clientImgs: review.clientImgs || homePage.reviewsSection.reviews[index]?.clientImgs || {}
+//         //     }));
+//         // }
+
+
+//         //client section 
+//         if (clientSection) {
+//             homePage.clientSection = {
+//                 ...homePage.clientSection,
+//                 heading: clientSection.heading || homePage.clientSection?.heading || "Default cardName",
+//                 subHeading: clientSection.subHeading || homePage.clientSection?.subHeading || "Default cardName",
+//                 clientLogos: clientSection.clientLogos || homePage.clientSection?.clientLogos || []
+//             };
+//         }
+
+//         // Update Seo Section
+//         if (seoSection) {
+//             homePage.seoSection = {
+//                 ...homePage.seoSection,
+//                 ...seoSection
+//             };
+//         }
+
+//         // Update timestamps
+//         homePage.updatedAt = Date.now();
+
+//         // Save the updated homepage
+//         await homePage.save();
+//         res.status(200).json({ success: true, data: homePage });
+//     } catch (err) {
+//         console.error("Error updating home page:", err);
+//         res.status(500).json({ success: false, message: err.message });
+//     }
+// };
 
 
 module.exports = {

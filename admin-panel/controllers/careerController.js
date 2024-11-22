@@ -164,7 +164,7 @@ const createCareerPage = async (req, res) => {
 const updatecareerPage = async (req, res) => {
     try {
         const { id } = req.params; // we're updating the career page by ID
-        const { heroSection, cardsSection, jobSection } = req.body;
+        const { heroSection, seoSection, cardsSection, jobSection } = req.body;
         // Find the existing career page by ID
         const careerPage = await careerModel.findById(id);
 
@@ -177,6 +177,12 @@ const updatecareerPage = async (req, res) => {
             careerPage.heroSection = {
                 ...careerPage.heroSection,
                 ...heroSection
+            };
+        }
+        if (seoSection) {
+            careerPage.seoSection = {
+                ...careerPage.seoSection,
+                ...seoSection
             };
         }
         if (jobSection) {

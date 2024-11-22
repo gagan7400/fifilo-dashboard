@@ -6,7 +6,9 @@ export default function ReviewCard({ card, index, handleReviewCardChange }) {
 
     // Open the modal to select an image
     const openMediaLibrary = () => setIsModalOpen(true);
-
+    const deleteImage = () => {
+        handleReviewCardChange(index, "clientImgs", { filename: "", path: "" })
+    }
     // Close the modal
     const closeMediaLibrary = () => setIsModalOpen(false);
 
@@ -18,61 +20,65 @@ export default function ReviewCard({ card, index, handleReviewCardChange }) {
     };
 
     return (
-        <div>
-            <h5>Review  {index + 1}</h5>
-            <div className="row">
-                <div className="col">
-                    <label htmlFor={`clientName${index}`} className="form-label">Reviewer Name </label>
+        <div className="row">
+            <div className="col-lg-12">
+                <div className="profile__block">
+                    <div className="image__block">
+                        <img src={card.clientImgs.filename ? `http://localhost:4000/images/${card.clientImgs.filename}` : "assets/imgs/avatar.svg"} alt="testimonials-img" />
+                    </div>
+                    <div className="btn__grp">
+                        <button className="btn" onClick={() => { openMediaLibrary() }}><img src="assets/imgs/edit-05.svg" alt="" /></button>
+                        <button className="btn" onClick={() => { deleteImage() }}><img src="assets/imgs/trash-03.svg" alt="" /></button>
+                    </div>
+                </div>
+                <MediaLibraryModal
+                    isOpen={isModalOpen}
+                    onClose={closeMediaLibrary}
+                    onSelectImage={handleImageSelect} // Pass the image selection handler
+                />
+            </div>
+            <div className="col-lg-6 col-lg-6">
+                <div className="input__inr">
+                    <label htmlFor={`clientName${index}`}>Reviewer’s Name</label>
                     <input type="text"
                         name="clientName"
                         id={`clientName${index}`}
                         className="form-control"
                         value={card.clientName}
                         onChange={(e) => { handleReviewCardChange(index, e) }}
-                        placeholder="clientName"
+                        placeholder="Enter Reviewer’s Name"
                         autoComplete='false'
                     />
                 </div>
-                <div className="col">
-                    <label htmlFor={`company${index}`} className="form-label"> Reviewer's Company </label>
+            </div>
+            <div className="col-lg-6 col-lg-6">
+                <div className="input__inr">
+                    <label htmlFor={`company${index}`}>Company Name</label>
                     <input type="text"
                         name="company"
                         id={`company${index}`}
                         className="form-control"
                         value={card.company}
                         onChange={(e) => { handleReviewCardChange(index, e) }}
-                        placeholder="company"
+                        placeholder="Enter Company Name"
                         autoComplete='false'
                     />
                 </div>
             </div>
-            <div className="mb-3">
-                <label htmlFor={`Reviewdescription${index}`} className="form-label"> Review Description </label>
-                <textarea
-                    name="description"
-                    id={`Reviewdescription${index}`}
-                    className="form-control"
-                    value={card.description}
-                    onChange={(e) => { handleReviewCardChange(index, e) }}
-                    rows={4}
-                    placeholder="description"
-                    autoComplete='false'
-                > </textarea>
-            </div>
-            <div className="mb-3">
-                <span className="form-label">clientImgs </span> <br />
-                <div className="imgbx"  >
-                    <img src={`http://localhost:5000/images/${card.clientImgs.filename}`} alt="Avatar" className="image" />
-                    <div className="overlay" >
-                        <i className="icon"><button type="button" className='btn btn-info' onClick={() => { openMediaLibrary() }}>&#9998;</button></i>
-                    </div>
+            <div className="col-lg-12">
+                <div className="input__inr">
+                    <label htmlFor={`Reviewdescription${index}`}>Review Description</label>
+                    <textarea
+                        name="description"
+                        id={`Reviewdescription${index}`}
+                        className="form-control"
+                        value={card.description}
+                        onChange={(e) => { handleReviewCardChange(index, e) }}
+                        rows={5}
+                        placeholder="Enter Review Description"
+                        autoComplete='false'
+                    > </textarea>
                 </div>
-
-                <MediaLibraryModal
-                    isOpen={isModalOpen}
-                    onClose={closeMediaLibrary}
-                    onSelectImage={handleImageSelect} // Pass the image selection handler
-                />
             </div>
         </div>
     )

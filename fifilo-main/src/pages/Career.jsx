@@ -332,15 +332,17 @@ export default function Career() {
         centro[1];
     }
   }
+  let closemodel = () => {
+    document.getElementsByClassName("btn-close")[0].click()
+  }
   return (
     <>
       <Helmet>
         <title>{(!publishedcareerloading && publishedcareerdata) && publishedcareerdata.seoSection.title.trim()}</title>
-        {(!publishedcareerloading && publishedcareerdata) ? publishedcareerdata.seoSection.meta.map((v, i) => {
-          return <meta key={i} name={v.name.trim()} content={v.content.trim()} />
-        }) : ""}
-
+        <meta name="keywords" content={(!publishedcareerloading && publishedcareerdata) && publishedcareerdata.seoSection.keywords.trim()} />
+        <meta name="description" content={(!publishedcareerloading && publishedcareerdata) && publishedcareerdata.seoSection.description.trim()} />
       </Helmet>
+
       <div className="comn__bnr service__bnr">
         <div className="container">
           <div className="bnr__content">
@@ -448,15 +450,14 @@ export default function Career() {
       <div className="modal fade career__modal" id="careerModal" aria-labelledby="careerModalLabel" aria-hidden="true">
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
+            <div class="modal-header">
+              <h5>Let's Talk</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
+            </div>
             <div className="modal-body">
-              <Careerform />
-              {/* <iframe
-                src="https://www.fifilo.com/contact/contact-modal/"
-                width="100%"
-                frameBorder="0"
-                onLoad={handleIframeLoad}
-                style={{ display: loading ? 'none' : 'block' }}
-              ></iframe> */}
+              <div className="contact_formModal">
+                <Careerform closemodel={closemodel} />
+              </div>
             </div>
           </div>
         </div>

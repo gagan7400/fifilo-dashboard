@@ -135,7 +135,7 @@ export default function Home() {
     return () => {
       document.body.removeChild(script);
     };
-  }, []);
+  }, [publishedhomepage]);
 
   const [loading, setLoading] = useState(true);
 
@@ -147,37 +147,29 @@ export default function Home() {
     loadData();
     return () => {
     };
-  }, []);
 
+  }, []);
   return (
     <>
       <Helmet>
-        <title>{(!loading && publishedhomepage) && publishedhomepage.seoSection.title.trim()}</title>
-        {(!loading && publishedhomepage) ? publishedhomepage.seoSection.meta.map((v, i) => {
-          return <meta key={i} name={v.name.trim()} content={v.content.trim()} />
-        }) : ""}
-
+        <title>{(!homeloading && publishedhomepage) && publishedhomepage.seoSection.title.trim()}</title>
+        <meta name='keywords' content={(!homeloading && publishedhomepage) && publishedhomepage.seoSection.keywords.trim()} />
+        <meta name='description' content={(!homeloading && publishedhomepage) && publishedhomepage.seoSection.description.trim()} />
       </Helmet>
       <div className="hero__bnr dark__bnr">
-        {loading && <Loader />}
+        {loading && homeloading && <Loader />}
         <div className="container">
           <div className="bnr__content">
             <h1 data-aos="fade-up" data-aos-duration="800" dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(!homeloading && publishedhomepage ? publishedhomepage.heroSection.heading : `Designing Intuitive <br /><span>Digital Interfaces</span>`)
+              __html: DOMPurify.sanitize(!homeloading && publishedhomepage ? publishedhomepage.heroSection.heading : ``)
             }} />
             <h6 data-aos="fade-up" data-aos-duration="800" dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(!homeloading && publishedhomepage ? publishedhomepage.heroSection.subHeading : `Crafting immersive digital experiences that resonate with users, fueling engagement, and accelerating growth for your business`)
+              __html: DOMPurify.sanitize(!homeloading && publishedhomepage ? publishedhomepage.heroSection.subHeading : ``)
             }} />
-
-            <NavLink to="/services/" className="button first">
-              Services<span></span>
-            </NavLink>
-            <NavLink to="/contact-us/" className="button second">
-              Lets Talk<span></span>
-            </NavLink>
-            <NavLink to="/case-studies/" className="button third">
-              Case Studies<span></span>
-            </NavLink>
+            {!homeloading && publishedhomepage &&
+              <><NavLink data-aos="fade-up" data-aos-duration="800" to={!homeloading && publishedhomepage ? publishedhomepage.heroSection.heroButtons.CTA1.url : ""} className="button first">{!homeloading && publishedhomepage ? publishedhomepage.heroSection.heroButtons.CTA1.name : ""}<span></span></NavLink>
+                <NavLink data-aos="fade-up" data-aos-duration="800" to={!homeloading && publishedhomepage ? publishedhomepage.heroSection.heroButtons.CTA2.url : ""} className="button second">{!homeloading && publishedhomepage ? publishedhomepage.heroSection.heroButtons.CTA2.name : ""}<span></span></NavLink>
+                <NavLink data-aos="fade-up" data-aos-duration="800" to={!homeloading && publishedhomepage ? publishedhomepage.heroSection.heroButtons.CTA3.url : ""} className="button third">{!homeloading && publishedhomepage ? publishedhomepage.heroSection.heroButtons.CTA3.name : ""}<span></span></NavLink></>}
           </div>
         </div>
       </div>
@@ -187,8 +179,7 @@ export default function Home() {
           <div className="row justify-content-center">
             <div className="col-lg-10">
               <h2 data-aos="fade-up" data-aos-duration="800" dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(!homeloading && publishedhomepage ? publishedhomepage.aboutSection : `We’re a dedicated team of UI UX professionals, committed to delivering research-driven, user-centered solutions that transform businesses and inspire users. Our tailored design process, aligns with your goals and industry needs, ensuring a perfect balance of aesthetics and functionality.
-                Let’s build something amazing together!`)
+                __html: DOMPurify.sanitize(!homeloading && publishedhomepage ? publishedhomepage.aboutSection : ``)
               }} />
             </div>
           </div>
@@ -279,10 +270,10 @@ export default function Home() {
         <div className="container">
           <div className="main__heading" data-aos="fade-up" data-aos-duration="800">
             <p dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(!homeloading && publishedhomepage ? publishedhomepage.servicesSection.preHeading : `Our Services`)
+              __html: DOMPurify.sanitize(!homeloading && publishedhomepage ? publishedhomepage.servicesSection.preHeading : ``)
             }} />
             <h2 dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(!homeloading && publishedhomepage ? publishedhomepage.servicesSection.heading : `<span>Services</span> we’re Offering`)
+              __html: DOMPurify.sanitize(!homeloading && publishedhomepage ? publishedhomepage.servicesSection.heading : ``)
             }} />
           </div>
           <div className="inner__gapTop row justify-content-center">
@@ -311,91 +302,7 @@ export default function Home() {
                   {(i !== publishedhomepage.servicesCardSection.length - 1) && <div className="brdr" data-aos="fade-up" data-aos-duration={(9 + i) * 100}></div>}
                 </div>
 
-              }) : <>
-                <div className="services__card">
-                  <div className="row gx-3" data-aos="fade-up" data-aos-duration="800">
-                    <div className="col-lg-9">
-                      <div className="content__box">
-                        <h2>Branding</h2>
-                        <div className="service__inr">
-                          <h6>Power up your business with our branding services that command attention. We design standout brand identities that capture the essence of who you are. </h6>
-                          <NavLink to="/services#branding" className="btn btn__primary">
-                            Learn more <img src="assets/img/arrow-up-right.svg" alt="home" />
-                          </NavLink>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-lg-3 d-none d-lg-block">
-                      <div className="services__img">
-                        <img src="assets/img/service-icon-01.svg" alt="home" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="brdr" data-aos="fade-up" data-aos-duration="900"></div>
-                <div className="services__card">
-                  <div className="row gx-3" data-aos="fade-up" data-aos-duration="900">
-                    <div className="col-lg-9">
-                      <div className="content__box">
-                        <h2>UI UX Design</h2>
-                        <div className="service__inr">
-                          <h6>Ignite your digital experience with our UI/UX design services that grab attention and drive engagement.  We create user-centric designs that not only look impressive but also deliver smooth, intuitive interactions.</h6>
-                          <NavLink to="/services#uiux-design" className="btn btn__primary">
-                            Learn more <img src="assets/img/arrow-up-right.svg" alt="home" />
-                          </NavLink>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-lg-3 d-none d-lg-block">
-                      <div className="services__img">
-                        <img src="assets/img/service-icon-02.svg" alt="home" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="brdr" data-aos="fade-up" data-aos-duration="1000"></div>
-                <div className="services__card">
-                  <div className="row gx-3" data-aos="fade-up" data-aos-duration="1000">
-                    <div className="col-lg-9">
-                      <div className="content__box">
-                        <h2>Web Development</h2>
-                        <div className="service__inr">
-                          <h6>Turn your vision into reality with our web development services that excels in both form and function. We blend creativity with cutting-edge technology to build websites and apps that are visually stunning and exceptionally functional.</h6>
-                          <NavLink to="/services#development" className="btn btn__primary">
-                            Learn more <img src="assets/img/arrow-up-right.svg" alt="home" />
-                          </NavLink>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-lg-3 d-none d-lg-block">
-                      <div className="services__img">
-                        <img src="assets/img/service-icon-03.svg" alt="home" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="brdr" data-aos="fade-up" data-aos-duration="1100"></div>
-                <div className="services__card">
-                  <div className="row gx-3" data-aos="fade-up" data-aos-duration="1100">
-                    <div className="col-lg-9">
-                      <div className="content__box">
-                        <h2>Digital Marketing</h2>
-                        <div className="service__inr">
-                          <h6>Supercharge your brand with our digital marketing services that drive real results. Our mission is to enhance your visibility, build meaningful connections, and turn clicks into customers.</h6>
-                          <NavLink to="/services#digital-marketing" className="btn btn__primary">
-                            Learn more <img src="assets/img/arrow-up-right.svg" alt="home" />
-                          </NavLink>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-lg-3 d-none d-lg-block">
-                      <div className="services__img">
-                        <img src="assets/img/service-icon-04.svg" alt="home" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </>}
+              }) : ""}
             </div>
           </div>
         </div>
@@ -404,11 +311,10 @@ export default function Home() {
       <div className="our__testimonials rn__section__gapTop">
         <div className="main__heading" data-aos="fade-up" data-aos-duration="800">
           <p dangerouslySetInnerHTML={{
-            __html: DOMPurify.sanitize(!homeloading && publishedhomepage ? publishedhomepage.testimonialSection.preHeading : `Testimonials`)
+            __html: DOMPurify.sanitize(!homeloading && publishedhomepage ? publishedhomepage.testimonialSection.preHeading : ``)
           }} />
           <h2 dangerouslySetInnerHTML={{
-            __html: DOMPurify.sanitize(!homeloading && publishedhomepage ? publishedhomepage.testimonialSection.heading : `Reviews from our <br />
-                            Satisfied <span>Customers</span>`)
+            __html: DOMPurify.sanitize(!homeloading && publishedhomepage ? publishedhomepage.testimonialSection.heading : ``)
           }} />
         </div>
 
@@ -416,17 +322,16 @@ export default function Home() {
           <div className="slider__card">
             {/* <div className="testimonials__slide owl-carousel"> */}
             {!homeloading && publishedhomepage && publishedhomepage.reviewsSection.length > 0 && (
-              <div className="testimonials__slide owl-carousel">
+              <div className="testimonials__slide owl-carousel" data-aos="fade-up" data-aos-duration="800">
                 {publishedhomepage.reviewsSection.map((item, index) => (
-                  <div className="item__slide" key={index}>
+                  <div className="item__slide" key={index} data-aos="fade-up" data-aos-duration="800">
                     <div className="img__bx">
-                      <img src={`http://localhost:4000/images/${item.clientImgs && item.clientImgs.filename}`} alt="clients" />
+                      <img src={item.clientImgs && item.clientImgs.filename ? `http://localhost:4000/images/${item.clientImgs.filename}` : "assets/imgs/avatar.svg"} alt="clients" />
                     </div>
                     <div className="content__box">
-                      <h6>{item.clientName ? item.clientName : "Bob Cooper"}</h6>
+                      <h6>{item.clientName ? item.clientName : ""}</h6>
                       <h6>{item.description ? item.description :
-                        `I had an opportunity to work with Fifilo Design Studio Team. One of the best UI UX designers team I have ever worked with. They know UX process in depth and have problem solving
-                          skills. With the help of Fifilo Team my business growth is now exponential and they did a fantastic job for me. I will highly recommend them for any project.`}
+                        ``}
                       </h6>
                       <p>{item.company ? item.company : ""}</p>
                     </div>
@@ -442,10 +347,10 @@ export default function Home() {
         <div className="container">
           <div className="main__heading">
             <p dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(!homeloading && publishedhomepage ? publishedhomepage.clientSection.heading : `Trust they show`)
+              __html: DOMPurify.sanitize(!homeloading && publishedhomepage ? publishedhomepage.clientSection.heading : ``)
             }} />
             <h2 dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(!homeloading && publishedhomepage ? publishedhomepage.clientSection.subHeading : `Our <span>Clients</span>`)
+              __html: DOMPurify.sanitize(!homeloading && publishedhomepage ? publishedhomepage.clientSection.subHeading : ``)
             }} />
           </div>
           <div className="row inner__gapTop gx-0">

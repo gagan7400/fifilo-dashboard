@@ -17,17 +17,20 @@ export default function MemberCard({ card, index, handleMembersCardChange }) {
         handleMembersCardChange(index, "memberImg", { filename: image.filename, path: image.filePath })
         setIsModalOpen(false); // Close the modal
     };
+    let deleteImg = () => {
+        handleMembersCardChange(index, "memberImg", { filename: "", path: "" })
+    }
     return (
-        <div className="mb-3" style={{ height: "150px", width: "100px" }}>
-            <span className="form-label">memberImg </span> <br />
-            <div className="imgbx"  >
-                <img src={`http://localhost:5000/images/${card.memberImg.filename}`} alt="Avatar" className="image" />
-                <div className="overlay" >
-                    <i className="icon"><button type="button" className='btn btn-info' onClick={() => { openMediaLibrary() }}>&#9998;</button></i>
+        <div className="col-lg-12">
+            <div className="profile__block">
+                <div className="image__block">
+                    <img src={card.memberImg.filename ? `http://localhost:4000/images/${card.memberImg.filename}` : "assets/imgs/avatar.svg"} alt="" />
+                </div>
+                <div className="btn__grp">
+                    <button className="btn" onClick={() => { openMediaLibrary() }}><img src="/assets/imgs/edit-05.svg" alt="" /></button>
+                    <button className="btn" onClick={() => { deleteImg() }}><img src="/assets/imgs/trash-03.svg" alt="" /></button>
                 </div>
             </div>
-
-            {/* <img src={`http://localhost:5000/images/${card.memberImg.filename}`} width="50" /> */}
             <MediaLibraryModal
                 isOpen={isModalOpen}
                 onClose={closeMediaLibrary}

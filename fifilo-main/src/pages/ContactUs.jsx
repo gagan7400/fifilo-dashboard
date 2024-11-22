@@ -8,15 +8,16 @@ import Navbar from '../layout/Navbar';
 import Footer from '../layout/Footer';
 import { useSelector, useDispatch } from 'react-redux'
 import { contactus, getPublishContactPage } from '../redux/actions/contactAction';
+import { useNavigate } from 'react-router-dom';
 export default function ContactUs() {
-
+  let nav = useNavigate()
   let dispatch = useDispatch();
   const { success, loading } = useSelector((state) => state.contact);
   const [Name, setName] = useState("")
   const [Email, setEmail] = useState("")
   const [Number, setNumber] = useState("")
   const [Message, setMessage] = useState("")
-  const [servicerequired, setservicerequired] = useState("")
+  // const [servicerequired, setservicerequired] = useState("")
   const [errors, setErrors] = useState({});
   const [showErrors, setShowErrors] = useState(false);
 
@@ -64,25 +65,24 @@ export default function ContactUs() {
     } else if (Message.length < 3) {
       newErrors.message = 'Message must be at least 3 letters';
     }
-    if (!servicerequired) {
-      newErrors.message = 'servicerequired is required';
-    }
+
     return newErrors;
   };
 
   useEffect(() => {
     if (showErrors) {
-      const timer = setTimeout(() => {
+      
         setShowErrors(false);
         setErrors({});
-      }, 2000);
-      return () => clearTimeout(timer);
+       
+      return () =>  {};
     }
-  }, [showErrors]);
+  }, [ Name ,Email ,Number ,Message]);
   const submithandler = async (e) => {
     e.preventDefault();
     const validationErrors = validate();
-    if (Object.keys(validationErrors).length > 0) {
+    if (!Email || !Name || !Number || !Message || Object.keys(validationErrors).length > 0) {
+      console.log(Email, Name, Number, Message)
       setErrors(validationErrors);
       setShowErrors(true);
     } else {
@@ -94,34 +94,29 @@ export default function ContactUs() {
       formdata.append('Email', Email);
       formdata.append('PhoneNumber', Number);
       formdata.append('Message', Message);
-      formdata.append('Servicerequired', servicerequired);
       formdata.append('Date', date.toLocaleDateString());
       fetch("https://script.google.com/macros/s/AKfycbx47sHgIKLw2QEnhmrZ2EyxiUF7tvTCyx31T0dPESi-Z1YCIxRCOyPD8MAO_wKc_hrG4Q/exec", {
         method: "POST",
         body: formdata,
       })
-      dispatch(contactus({ name: Name, email: Email, phonenumber: Number, message: Message, servicerequired }))
+     await  dispatch(contactus({ name: Name, email: Email, phonenumber: Number, message: Message }))
+      if (success) {
+        setEmail('')
+        setMessage("")
+        setNumber("");
+        setName("")
+        nav("/thank-you")
+      }
     }
   }
-  useEffect(() => {
-    if (success) {
-      setEmail('')
-      setMessage("")
-      setNumber("");
-      setName("")
-      setservicerequired("");
-      setEmail("")
-    }
-  }, [success])
+
 
   return (
     <>
       <Helmet>
         <title>{(!publishedcontactloading && publishedcontactdata) && publishedcontactdata.seoSection.title.trim()}</title>
-        {(!publishedcontactloading && publishedcontactdata) ? publishedcontactdata.seoSection.meta.map((v, i) => {
-          return <meta key={i} name={v.name.trim()} content={v.content.trim()} />
-        }) : ""}
-
+        <meta name="keywords" content={(!publishedcontactloading && publishedcontactdata) && publishedcontactdata.seoSection.keywords.trim()} />
+        <meta name="description" content={(!publishedcontactloading && publishedcontactdata) && publishedcontactdata.seoSection.description.trim()} />
       </Helmet>
       <div className="contact__bnr bg__dark">
         <div className="container">
@@ -157,7 +152,7 @@ export default function ContactUs() {
                     <div className="form__card">
                       <div className="contact__form" data-aos="fade-up" data-aos-duration="800">
                         <div className="inr__input" >
-                          <span><img src="assets/img/user-01.svg" alt="contact__form" /></span>
+                          <span className='icon'><img src="assets/img/user-01.svg" alt="contact__form" /></span>
                           <input
                             type="text"
                             name="Name"
@@ -171,7 +166,7 @@ export default function ContactUs() {
                           {errors.name && <div className="error text-danger position-absolute" style={{ color: "#f0f1f1" }}>{errors.name}</div>}
                         </div>
                         <div className="inr__input" >
-                          <span><img src="assets/img/mail-02.svg" alt="contact__form" /></span>
+                          <span className='icon'><img src="assets/img/mail-02.svg" alt="contact__form" /></span>
                           <input
                             type="email"
                             name="Email"
@@ -185,7 +180,7 @@ export default function ContactUs() {
                           {errors.email && <div className="error text-danger position-absolute" style={{ color: "#f0f1f1" }} >{errors.email}</div>}
                         </div>
                         <div className="inr__input"  >
-                          <span><img src="assets/img/phone-02.svg" alt="contact__form" /></span>
+                          <span className='icon'><img src="assets/img/phone-02.svg" alt="contact__form" /></span>
                           <input
                             type="text"
                             name="Number"
@@ -198,7 +193,7 @@ export default function ContactUs() {
                           {errors.number && <div className="error text-danger position-absolute" style={{ color: "#f0f1f1" }} >{errors.number}</div>}
                         </div>
                         <div className="inr__input"  >
-                          <span><img src="assets/img/message.svg" alt="contact__form" /></span>
+                          <span className='icon'><img src="assets/img/message.svg" alt="contact__form" /></span>
                           <input
                             type="text"
                             name="Message"
@@ -210,8 +205,8 @@ export default function ContactUs() {
                           />
                           {errors.message && <div className="error text-danger position-absolute" style={{ color: "#f0f1f1" }} >{errors.message}</div>}
                         </div>
-                        <div className="inr__input"  >
-                          <span><img src="assets/img/message.svg" alt="contact__form" /></span>
+                        {/* <div className="inr__input"  >
+                          <span className='icon'><img src="assets/img/message.svg" alt="contact__form" /></span>
                           <input
                             type="text"
                             name="servicerequired"
@@ -222,7 +217,7 @@ export default function ContactUs() {
                             autoComplete='off'
                           />
                           {errors.servicerequired && <div className="error text-danger position-absolute" style={{ color: "#f0f1f1" }} >{errors.message}</div>}
-                        </div>
+                        </div> */}
                         <div>
                           <button className="btn btn__primary" type="submit">Submit
                             {loading ? <Spinner
@@ -251,59 +246,3 @@ export default function ContactUs() {
   )
 }
 
-
-// import React, { useEffect, useState } from "react";
-// import { useNavigate } from "react-router-dom";
-// import $ from "jquery"; // import jQuery
-// import AOS from "aos";
-// import "aos/dist/aos.css";
-// import Loader from "../layout/Loader";
-
-// export default function ContactUs() {
-
-//   useEffect(() => {
-//     $(document).ready(function () {
-//       if (window.location.pathname === '/contact-us/') {
-//         $('.footer').addClass('contact-footer');
-//       } else {
-//         $('.footer').removeClass('contact-footer');
-//       }
-//     });
-//   }, []);
-
-//   const navigate = useNavigate();
-//   const [loading, setLoading] = useState(true);
-
-//   useEffect(() => {
-//     AOS.init();
-
-//     const handleMessage = (event) => {
-//       if (event.data === 'formSubmitted') {
-//         navigate('/thank-you/');
-//       }
-//     };
-
-//     window.addEventListener('message', handleMessage);
-
-//     return () => {
-//       window.removeEventListener('message', handleMessage);
-//     };
-//   }, [navigate]);
-
-//   const handleIframeLoad = () => {
-//     setLoading(false);
-//   };
-
-//   return (
-//     <div className="contactPage bg__dark">
-//       {loading && <Loader />}
-//       <iframe
-//         src="https://www.fifilo.com/contact/"
-//         width="100%"
-//         frameBorder="0"
-//         onLoad={handleIframeLoad}
-//         style={{ display: loading ? 'none' : 'block' }}
-//       ></iframe>
-//     </div>
-//   );
-// }

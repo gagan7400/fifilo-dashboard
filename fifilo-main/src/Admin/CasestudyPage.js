@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import ProcessIcon from './ProcessIcon';
 import { Editor } from "@tinymce/tinymce-react";
+import SketchesImg from './SketchesImg';
 const CasestudyPage = () => {
     const { pageData } = useSelector((state) => state.page);
     const [heroSection, setHeroSection] = useState(pageData ? { ...pageData.heroSection } : {
@@ -23,26 +24,130 @@ const CasestudyPage = () => {
         coreIssue: { heading: "", description: "" },
         Strategy: { heading: "", description: "" }
     });
-    let addWorkButtons = () => {
+    const [designProcessSection, setDesignProcessSection] = useState(pageData ? { ...pageData.designProcessSection } : {
+        heading: "",
+        content: [{ heading: '', description: '', icon: { filename: "", path: "" } }],
+    });
+    const [sketches, setSketches] = useState({ heading: "", description: "", imgs: [{ filename: "", path: "" }], });
+    const [styleGuideSection, setStyleGuideSection] = useState({
+        heading: "",
+        description: "",
+        sectionName: "",
+        BrandcolorSections: [{ name: "", hex: "" }],
+        SecondaryColorSections: [{ name: "", hex: "" }],
+    })
+    const [typographyData, setTypographyData] = useState({
+        heading: "",
+        fontFamily: "",
+        fontTable: [{ fontSize: "", lineHeight: "", }],
+    })
+    const [howFifiloDesignsDrives, setHowFifiloDesignsDrives] = useState({ heading: "", description: "" })
+    const addFontTable = () => {
+        setTypographyData((prevState) => ({
+            ...prevState,
+            fontTable: [...prevState.fontTable, { fontSize: "", lineHeight: "" }],
+        }));
+    };
+    const removeFontTable = (index) => {
+        setTypographyData((prevState) => ({
+            ...prevState,
+            fontTable: prevState.fontTable.filter((_, i) => i !== index),
+        }));
+    };
+    const handleFontTableChange = (index, field, value) => {
+        setTypographyData((prevState) => {
+            const updatedFontTable = [...prevState.fontTable];
+            updatedFontTable[index][field] = value;
+            return { ...prevState, fontTable: updatedFontTable };
+        });
+    };
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setStyleGuideSection((prevState) => ({ ...prevState, [name]: value, }));
+    };
+    const handleColorInputChange = (e, sectionType, index, field) => {
+        const { value } = e.target;
+        const updatedSections = [...styleGuideSection[sectionType]];
+
+        updatedSections[index][field] = value;
+
+        setStyleGuideSection((prevState) => ({
+            ...prevState,
+            [sectionType]: updatedSections,
+        }));
+    };
+    const addColorSection = (sectionType) => {
+        const updatedSections = [...styleGuideSection[sectionType]];
+        updatedSections.push({ name: "", hex: "" });
+
+        setStyleGuideSection((prevState) => ({
+            ...prevState,
+            [sectionType]: updatedSections,
+        }));
+    };
+    const removeColorSection = (sectionType, index) => {
+        const updatedSections = [...styleGuideSection[sectionType]];
+        updatedSections.splice(index, 1);
+
+        setStyleGuideSection((prevState) => ({
+            ...prevState,
+            [sectionType]: updatedSections,
+        }));
+    };
+    const addSketchesImg = () => {
+        let newImg = { filename: "", path: "" }
+        setSketches(prevState => ({ ...prevState, imgs: [...prevState.imgs, newImg] }));
+    }
+    const removeSketchesImg = (index) => {
+        if (window.confirm("Are You Sure ,You Want To Delete This")) {
+            const updatedContent = sketches.imgs.filter((_, i) => i !== index);
+            setSketches({ ...sketches, imgs: updatedContent });
+        }
+    }
+    const HandleSketchesImg = (index, name, data) => {
+        const newImg = sketches.imgs.map((img) => ({ ...img }));
+        newImg[index] = data;
+        setSketches({ ...sketches, imgs: [...newImg] })
+    }
+    // updatedLook: { heading: String, description: String, imgs: [{ filename: String, path: String }] },
+    // fullWidthImg: [{ filename: String, path: String }],
+    // HowFifiloDesignsDrives: { heading: String, description: String },
+    const handleContentCardChange = (index, event, data) => {
+        const values = designProcessSection.content.map((card) => ({ ...card }));
+        if (event === 'icon') {
+            values[index]['icon'] = { ...data };
+        } else {
+            values[index][event.target.name] = event.target.value;
+        }
+        setDesignProcessSection({ ...designProcessSection, content: values });
+    };
+    const handleAddContentCard = () => {
+        setDesignProcessSection({ ...designProcessSection, content: [...designProcessSection.content, { heading: '', description: '', icon: { filename: "", path: "" } }] });
+    };
+    const handleRemoveContentCard = (index) => {
+        if (window.confirm("Are You Sure ,You Want To Delete This")) {
+            const updatedContent = designProcessSection.content.filter((_, i) => i !== index);
+            setDesignProcessSection({ ...designProcessSection, content: updatedContent });
+        }
+    };
+    const addWorkButtons = () => {
         let newButton = { url: "", name: "" }
         setHeroSection(prevState => ({ ...prevState, workButtons: [...prevState.workButtons, newButton] }));
     }
-    let removeWorkButtons = (index) => {
-        setHeroSection(prevState => ({
-            ...prevState, workButtons: [...prevState.workButtons.slice(
-                0, index), ...prevState.workButtons.slice(index + 1)]
-        }));
+    const removeWorkButtons = (index) => {
+        if (window.confirm("Are You Sure ,You Want To Delete This")) {
+            const updatedContent = heroSection.workButtons.filter((_, i) => i !== index);
+            setHeroSection({ ...heroSection, workButtons: updatedContent });
+        }
     }
-    let HandleWorkButtons = (index, event) => {
+    const HandleWorkButtons = (index, event) => {
         const newworkButton = heroSection.workButtons.map((card) => ({ ...card }));
         newworkButton[index][event.target.name] = event.target.value;
         setHeroSection({ ...heroSection, workButtons: [...newworkButton] })
-
     }
     const handleOverviewSectionChange = (section, field, value, index = null) => {
         setOverviewSection((prev) => {
             const updatedSection = { ...prev };
-
             if (field === "contentBox") {
                 // Update specific contentBox fields (heading/description)
                 updatedSection[section][field] = {
@@ -63,8 +168,6 @@ const CasestudyPage = () => {
             return updatedSection;
         });
     };
-
-    // Handler to add a new item to overviewBox
     const addOverviewBox = () => {
         setOverviewSection((prev) => ({
             ...prev,
@@ -74,8 +177,6 @@ const CasestudyPage = () => {
             }
         }));
     };
-
-    // Handler to remove an item from overviewBox
     const removeOverviewBox = (index) => {
         setOverviewSection((prev) => ({
             ...prev,
@@ -87,10 +188,9 @@ const CasestudyPage = () => {
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(overviewSection)
         try {
             if (heroSection) {
-                let { data } = await axios.put('http://localhost:5000/admin/casestudy/updatecasestudy/' + pageData._id, { heroSection, overviewSection }, {
+                let { data } = await axios.put('http://localhost:5000/admin/casestudy/updatecasestudy/' + pageData._id, { heroSection, overviewSection, sketches, designProcessSection, styleGuideSection }, {
                     headers: {
                         'Content-Type': 'application/json',
                         'x-auth-token': localStorage.getItem('token')
@@ -108,7 +208,6 @@ const CasestudyPage = () => {
         }
 
     };
-
     return (
         <>
             <Sidebar titles="casestudy" />
@@ -135,6 +234,31 @@ const CasestudyPage = () => {
                                 <button className="nav-link" id="pills-overviewSection-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-overviewSection" type="button" role="tab" aria-controls="pills-overviewSection"
                                     aria-selected="true">overviewSection</button>
+                            </li>
+                            <li className="nav-item" role="presentation">
+                                <button className="nav-link" id="pills-process-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-process" type="button" role="tab" aria-controls="pills-process"
+                                    aria-selected="false">Process</button>
+                            </li>
+                            <li className="nav-item" role="presentation">
+                                <button className="nav-link" id="pills-sketches-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-sketches" type="button" role="tab" aria-controls="pills-sketches"
+                                    aria-selected="false">Sketches</button>
+                            </li>
+                            <li className="nav-item" role="presentation">
+                                <button className="nav-link" id="pills-styleGuideSection-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-styleGuideSection" type="button" role="tab" aria-controls="pills-styleGuideSection"
+                                    aria-selected="false">StyleGuideSection</button>
+                            </li>
+                            <li className="nav-item" role="presentation">
+                                <button className="nav-link" id="pills-typographyData-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-typographyData" type="button" role="tab" aria-controls="pills-typographyData"
+                                    aria-selected="false">TypographyData</button>
+                            </li>
+                            <li className="nav-item" role="presentation">
+                                <button className="nav-link" id="pills-howFifiloDesignsDrives-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-howFifiloDesignsDrives" type="button" role="tab" aria-controls="pills-howFifiloDesignsDrives"
+                                    aria-selected="false">HowFifiloDesignsDrives</button>
                             </li>
                         </ul>
                         <div className="tab-content" id="pills-tabContent">
@@ -234,7 +358,7 @@ const CasestudyPage = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="tab-pane fade show active" id="pills-overviewSection" role="tabpanel"
+                            <div className="tab-pane fade show" id="pills-overviewSection" role="tabpanel"
                                 aria-labelledby="pills-overviewSection-tab">
                                 <div className="edit__tools">
                                     <div className="card__block">
@@ -377,6 +501,392 @@ const CasestudyPage = () => {
                                                             }}
                                                             onEditorChange={(newContent) => handleOverviewSectionChange("Strategy", "description", newContent)}
                                                         />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="update__block">
+                                                <button className="btn btn__update" type="button" onClick={handleSubmit}>Update</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="tab-pane fade" id="pills-process" role="tabpanel" aria-labelledby="pills-process-tab">
+                                <div className="edit__tools">
+                                    <div className="card__block">
+                                        <div className="row">
+                                            <div className="col-lg-6 col-md-6">
+                                                <div className="input__inr">
+                                                    <label htmlFor="processheading" className="form-label">Headline</label>
+                                                    <input required type="text"
+                                                        id="processheading"
+                                                        name="designProcessSection.heading"
+                                                        className="form-control"
+                                                        value={designProcessSection.heading}
+                                                        onChange={(e) => setDesignProcessSection({ ...designProcessSection, heading: e.target.value })}
+                                                        placeholder="Enter Headline"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="col-lg-12">
+                                                <div className="seo__card">
+                                                    {designProcessSection.content.map((card, index) => (
+                                                        <div className="card__block" key={index} >
+                                                            <div className="testimonial__box">
+                                                                <div className="top__heading">
+                                                                    <p>Step {index + 1}</p>
+                                                                    <button className="btn" onClick={() => handleRemoveContentCard(index)} ><img src="assets/imgs/trash.svg" alt="" />Delete</button>
+                                                                </div>
+                                                                <div className="row">
+                                                                    <ProcessIcon handleContentCardChange={handleContentCardChange} card={card} index={index} />
+                                                                    <div className="col-lg-12">
+                                                                        <div className="input__inr">
+                                                                            <label htmlFor="cardheading">Heading</label>
+                                                                            <input required type="text"
+                                                                                className="form-control"
+                                                                                name="heading"
+                                                                                id="cardheading"
+                                                                                value={card.heading}
+                                                                                onChange={(event) => handleContentCardChange(index, event)}
+                                                                                placeholder="Enter Heading"
+                                                                            />
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="col-lg-12">
+                                                                        <div className="input__inr">
+                                                                            <label htmlFor="carddescription">Description</label>
+                                                                            <textarea
+                                                                                rows="4"
+                                                                                id="carddescription"
+                                                                                className="form-control"
+                                                                                name="description"
+                                                                                value={card.description}
+                                                                                onChange={(event) => handleContentCardChange(index, event)}
+                                                                                placeholder="Enter Description"
+                                                                            ></textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                    <div className="add__review">
+                                                        <button className="btn" onClick={handleAddContentCard}><img src="assets/imgs/plus.svg" alt="" />Add Step</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="update__block">
+                                            <button className="btn btn__update" type="button" onClick={handleSubmit}>Update</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="tab-pane fade" id="pills-sketches" role="tabpanel" aria-labelledby="pills-sketches-tab">
+                                <div className="edit__tools">
+                                    <div className="card__block">
+                                        <div className="row">
+                                            <div className="col-lg-12">
+                                                <div className="input__inr">
+                                                    <label htmlFor="sketchesHeading" className="form-label">Heading</label>
+                                                    <input required type="text"
+                                                        id="sketchesHeading"
+                                                        name="sketchesHeading"
+                                                        className="form-control"
+                                                        value={sketches.heading}
+                                                        onChange={(e) => setSketches({ ...sketches, heading: e.target.value })}
+                                                        placeholder="Enter Heading"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="col-lg-12">
+                                                <div className="input__inr">
+                                                    <label htmlFor="sketchesdescription" className="form-label">Description</label>
+                                                    <input required type="text"
+                                                        id="sketchesDescription"
+                                                        name="sketchesDescription"
+                                                        className="form-control"
+                                                        value={sketches.description}
+                                                        onChange={(e) => setSketches({ ...sketches, description: e.target.value })}
+                                                        placeholder="Enter Description"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="col-lg-12">
+                                                <div className="seo__card">
+                                                    {sketches.imgs.map((img, index) => (
+                                                        <div className="card__block" key={index} >
+                                                            <div className="testimonial__box">
+                                                                <div className="top__heading">
+                                                                    <p>Img {index + 1}</p>
+                                                                    <button className="btn" onClick={() => removeSketchesImg(index)} ><img src="assets/imgs/trash.svg" alt="" />Delete</button>
+                                                                </div>
+                                                                <div className="row">
+                                                                    <SketchesImg HandleSketchesImg={HandleSketchesImg} index={index} img={img} />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                    <div className="add__review">
+                                                        <button className="btn" onClick={addSketchesImg}><img src="assets/imgs/plus.svg" alt="" />Add Img</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="update__block">
+                                            <button className="btn btn__update" type="button" onClick={handleSubmit}>Update</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="tab-pane fade" id="pills-styleGuideSection" role="tabpanel" aria-labelledby="pills-styleGuideSection-tab">
+                                <div className="edit__tools">
+                                    <div className="card__block">
+                                        <div className="row">
+                                            <div className="col-lg-12">
+                                                <div className="input__inr">
+                                                    <label htmlFor="styleGuideSectionHeading" className="form-label">Heading</label>
+                                                    <input required type="text"
+                                                        id="styleGuideSectionHeading"
+                                                        name="styleGuideSectionHeading"
+                                                        className="form-control"
+                                                        value={styleGuideSection.heading}
+                                                        onChange={(e) => setStyleGuideSection({ ...styleGuideSection, heading: e.target.value })}
+                                                        placeholder="Enter Heading"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="col-lg-12">
+                                                <div className="input__inr">
+                                                    <label htmlFor="styleGuideSectiondescription" className="form-label">Description</label>
+                                                    <input required type="text"
+                                                        id="styleGuideSectionDescription"
+                                                        name="styleGuideSectionDescription"
+                                                        className="form-control"
+                                                        value={styleGuideSection.description}
+                                                        onChange={(e) => setStyleGuideSection({ ...styleGuideSection, description: e.target.value })}
+                                                        placeholder="Enter Description"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="col-lg-12">
+                                                <div className="input__inr">
+                                                    <label htmlFor="SectionName" className="form-label">SectionName</label>
+                                                    <input required type="text"
+                                                        id="SectionName"
+                                                        name="SectionName"
+                                                        className="form-control"
+                                                        value={styleGuideSection.sectionName}
+                                                        onChange={(e) => setStyleGuideSection({ ...styleGuideSection, sectionName: e.target.value })}
+                                                        placeholder="Enter SectionName"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="col-lg-12">
+                                                <div className="seo__card">
+                                                    {styleGuideSection.BrandcolorSections.map((color, index) => (
+                                                        <div className="card__block" key={index} >
+                                                            <div className="testimonial__box">
+                                                                <div className="top__heading">
+                                                                    <p>Brand Color Section {index + 1}</p>
+                                                                    <button className="btn" onClick={() => removeColorSection('BrandcolorSections', index)} ><img src="assets/imgs/trash.svg" alt="" />Delete</button>
+                                                                </div>
+                                                                <div className="col-lg-12">
+                                                                    <div className="input__inr">
+                                                                        <label htmlFor="ColorName" className="form-label">ColorName</label>
+                                                                        <input required type="text"
+                                                                            id="ColorName"
+                                                                            name="ColorName"
+                                                                            className="form-control"
+                                                                            value={color.name}
+                                                                            onChange={(e) => handleColorInputChange(e, 'BrandcolorSections', index, 'name')}
+                                                                            placeholder="Enter Color Name"
+                                                                        />
+                                                                    </div>
+                                                                </div>
+                                                                <div className="col-lg-12">
+                                                                    <div className="input__inr">
+                                                                        <label htmlFor="ColorHexcode" className="form-label">Color Hex Code</label>
+                                                                        <input required type="text"
+                                                                            id="ColorHexcode"
+                                                                            name="ColorHexcode"
+                                                                            className="form-control"
+                                                                            value={color.hex}
+                                                                            onChange={(e) => handleColorInputChange(e, 'BrandcolorSections', index, 'hex')}
+                                                                            placeholder="Enter Color Hexa"
+                                                                        />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                    <div className="add__review">
+                                                        <button className="btn" onClick={() => addColorSection('BrandcolorSections')}><img src="assets/imgs/plus.svg" alt="" />Add Color</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="col-lg-12">
+                                                <div className="seo__card">
+                                                    {styleGuideSection.SecondaryColorSections.map((color, index) => (
+                                                        <div className="card__block" key={index} >
+                                                            <div className="testimonial__box">
+                                                                <div className="top__heading">
+                                                                    <p>Secondary Color Section {index + 1}</p>
+                                                                    <button className="btn" onClick={() => removeColorSection('SecondaryColorSections', index)} ><img src="assets/imgs/trash.svg" alt="" />Delete</button>
+                                                                </div>
+                                                                <div className="col-lg-12">
+                                                                    <div className="input__inr">
+                                                                        <label htmlFor="ColorName" className="form-label">ColorName</label>
+                                                                        <input required type="text"
+                                                                            id="ColorName"
+                                                                            name="ColorName"
+                                                                            className="form-control"
+                                                                            value={color.name}
+                                                                            onChange={(e) => handleColorInputChange(e, 'SecondaryColorSections', index, 'name')}
+                                                                            placeholder="Enter Color Name"
+                                                                        />
+                                                                    </div>
+                                                                </div>
+                                                                <div className="col-lg-12">
+                                                                    <div className="input__inr">
+                                                                        <label htmlFor="ColorHexcode" className="form-label">Color Hex Code</label>
+                                                                        <input required type="text"
+                                                                            id="ColorHexcode"
+                                                                            name="ColorHexcode"
+                                                                            className="form-control"
+                                                                            value={color.hex}
+                                                                            onChange={(e) => handleColorInputChange(e, 'SecondaryColorSections', index, 'hex')}
+                                                                            placeholder="Enter Color Hexa"
+                                                                        />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                    <div className="add__review">
+                                                        <button className="btn" onClick={() => addColorSection('SecondaryColorSections')}><img src="assets/imgs/plus.svg" alt="" />Add Color</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="update__block">
+                                            <button className="btn btn__update" type="button" onClick={handleSubmit}>Update</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="tab-pane fade" id="pills-typographyData" role="tabpanel" aria-labelledby="pills-typographyData-tab">
+                                <div className="edit__tools">
+                                    <div className="card__block">
+                                        <div className="row">
+                                            <div className="col-lg-12">
+                                                <div className="input__inr">
+                                                    <label htmlFor="typographyDataHeading" className="form-label">Heading</label>
+                                                    <input required type="text"
+                                                        id="typographyDataHeading"
+                                                        name="typographyDataHeading"
+                                                        className="form-control"
+                                                        value={typographyData.heading}
+                                                        onChange={(e) => setTypographyData({ ...typographyData, heading: e.target.value })}
+                                                        placeholder="Enter Heading"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="col-lg-12">
+                                                <div className="input__inr">
+                                                    <label htmlFor="typographyDatafontFamily" className="form-label">fontFamily</label>
+                                                    <input required type="text"
+                                                        id="typographyDatafontFamily"
+                                                        name="typographyDatafontFamily"
+                                                        className="form-control"
+                                                        value={typographyData.fontFamily}
+                                                        onChange={(e) => setTypographyData({ ...typographyData, fontFamily: e.target.value })}
+                                                        placeholder="Enter fontFamily"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="col-lg-12">
+                                                <div className="seo__card">
+                                                    {typographyData.fontTable.map((font, index) => (
+                                                        <div className="card__block" key={index} >
+                                                            <div className="testimonial__box">
+                                                                <div className="top__heading">
+                                                                    <p>Font Table {index + 1}</p>
+                                                                    <button className="btn" onClick={() => removeFontTable(index)} ><img src="assets/imgs/trash.svg" alt="" />Delete</button>
+                                                                </div>
+                                                                <div className="col-lg-12">
+                                                                    <div className="input__inr">
+                                                                        <label htmlFor="fontSize" className="form-label">fontSize</label>
+                                                                        <input required type="text"
+                                                                            id="fontSize"
+                                                                            name="fontSize"
+                                                                            className="form-control"
+                                                                            value={font.fontSize}
+                                                                            onChange={(e) =>
+                                                                                handleFontTableChange(index, "fontSize", e.target.value)
+                                                                            }
+                                                                            placeholder="Enter FontSize"
+                                                                        />
+                                                                    </div>
+                                                                </div>
+                                                                <div className="col-lg-12">
+                                                                    <div className="input__inr">
+                                                                        <label htmlFor="lineHeight" className="form-label">LineHeight</label>
+                                                                        <input required type="text"
+                                                                            id="lineHeight"
+                                                                            name="lineHeight"
+                                                                            className="form-control"
+                                                                            value={font.lineHeight}
+                                                                            onChange={(e) =>
+                                                                                handleFontTableChange(index, "lineHeight", e.target.value)
+                                                                            }
+                                                                            placeholder="Enter LineHeight"
+                                                                        />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                    <div className="add__review">
+                                                        <button className="btn" onClick={addFontTable} ><img src="assets/imgs/plus.svg" alt="" />Add Font Table</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="update__block">
+                                            <button className="btn btn__update" type="button" onClick={handleSubmit}>Update</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="tab-pane fade" id="pills-howFifiloDesignsDrives" role="tabpanel"
+                                aria-labelledby="pills-howFifiloDesignsDrives-tab">
+                                <div className="edit__tools">
+                                    <div className="card__block">
+                                        <div className="testimonial__box">
+                                            <div className="row">
+                                                <div className="col-lg-12">
+                                                    <div className="input__inr">
+                                                        <label htmlFor="heading">Heading</label>
+                                                        <input required type="text"
+                                                            name="howFifiloDesignsDrives"
+                                                            id="heading"
+                                                            className="form-control"
+                                                            value={howFifiloDesignsDrives.heading}
+                                                            onChange={(e) => setHowFifiloDesignsDrives({ ...howFifiloDesignsDrives, heading: e.target.value })}
+                                                            placeholder="Enter Heading"
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div className="col-lg-12">
+                                                    <div className="input__inr">
+                                                        <label htmlFor="description">Description</label>
+                                                        <textarea rows={4} id="description"
+                                                            name="description"
+                                                            className="form-control"
+                                                            value={howFifiloDesignsDrives.description}
+                                                            onChange={(e) => setHowFifiloDesignsDrives({ ...howFifiloDesignsDrives, description: e.target.value })}
+                                                            placeholder="Enter Description" />
                                                     </div>
                                                 </div>
                                             </div>

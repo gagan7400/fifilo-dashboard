@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux";
 import axios from "axios";
 import DOMPurify from 'dompurify';
 import { pageAction } from '../redux/actions/pagedataAction';
-
+import Loader from "../layout/Loader";
 export default function Work() {
   let dispatch = useDispatch();
   let [casestudy, setCasestudy] = useState(null);
@@ -134,6 +134,16 @@ export default function Work() {
   useEffect(() => {
     AOS.init();
   }, []);
+  useEffect(() => {
+    const loadData = async () => {
+      setLoading(false);
+    };
+
+    loadData();
+    return () => {
+    };
+
+  }, []);
   return (
     <>
       <Helmet>
@@ -148,6 +158,7 @@ export default function Work() {
         />
       </Helmet>
       <div className="comn__bnr work__bnr">
+        {loading && <Loader />}
         <div className="container">
           <div className="bnr__content">
             <div className="left__bx" data-aos="fade-up" data-aos-duration="800">

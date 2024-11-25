@@ -71,8 +71,8 @@ const Aboutpage = () => {
     };
     const handleRemoveContentCard = (index) => {
         if (window.confirm("Are You Sure ,You Want To Delete This")) {
-        const updatedContent = processSection.content.filter((_, i) => i !== index);
-        setProcessSection({ ...processSection, content: updatedContent });
+            const updatedContent = processSection.content.filter((_, i) => i !== index);
+            setProcessSection({ ...processSection, content: updatedContent });
         }
     };
     const handleSubmit = async (e) => {

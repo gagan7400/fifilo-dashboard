@@ -4,12 +4,8 @@ const caseStudyModel = require("../models/caseStudyModel.js");
 
 const createCaseStudy = async (req, res) => {
     try {
-        const { heroSection, overview, casestudyName } = req.body;
-        const caseStudy = new caseStudyModel({
-            casestudyName,
-            heroSection,
-            overview
-        });
+        const { heroSection, overviewSection, designProcessSection, sketches, styleGuideSection } = req.body;
+        const caseStudy = new caseStudyModel({ heroSection, overviewSection, designProcessSection, sketches, styleGuideSection });
         await caseStudy.save();
         res.status(201).json({ success: true, data: caseStudy });
     } catch (err) {
@@ -25,6 +21,17 @@ const getCaseStudy = async (req, res) => {
         res.status(400).json({ success: false, message: err.message });
     }
 };
+const getCaseStudyByName = async (req, res) => {
+    try {
+        let { name } = req.params;
+        const result = await caseStudyModel.findOne({ "heroSection.casestudyName": name });
+        console.log(result, name)
+        res.send({ success: true, data: result });
+    } catch (err) {
+        res.status(400).json({ success: false, message: err.message });
+    }
+};
+
 const deleteCaseStudy = async (req, res) => {
 
     try {
@@ -41,11 +48,10 @@ const deleteCaseStudy = async (req, res) => {
     }
 };
 
-
 const updateCaseStudy = async (req, res) => {
     try {
         const { id } = req.params; // We're updating the about  by ID
-        const { heroSection ,overviewSection } = req.body;
+        const { heroSection, overviewSection, sketches, designProcessSection, styleGuideSection } = req.body;
 
         const casestudy = await caseStudyModel.findById(id);
 
@@ -65,12 +71,26 @@ const updateCaseStudy = async (req, res) => {
                 ...overviewSection
             };
         }
-        // if (casestudyName) {
-        //     casestudy.casestudyName = casestudyName
-        // }
+        if (designProcessSection) {
+            casestudy.designProcessSection = {
+                ...casestudy.designProcessSection,
+                ...designProcessSection
+            };
+        }
+        if (sketches) {
+            casestudy.sketches = {
+                ...casestudy.sketches,
+                ...sketches
+            };
+        }
+        if (styleGuideSection) {
+            casestudy.styleGuideSection = {
+                ...casestudy.styleGuideSection,
+                ...styleGuideSection
+            };
+        }
         casestudy.updatedAt = Date.now();
 
-        // Save the updated about 
         await casestudy.save();
 
         res.status(200).json({ success: true, data: casestudy });
@@ -85,6 +105,7 @@ module.exports = {
     createCaseStudy,
     getCaseStudy,
     updateCaseStudy,
-    deleteCaseStudy
+    deleteCaseStudy,
+    getCaseStudyByName
 };
 

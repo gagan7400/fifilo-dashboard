@@ -35,7 +35,7 @@ export default function CasestudyPages() {
                     alert("not deleted occured");
                 }
             } catch (error) {
-                alert( error);
+                alert(error);
             }
         }
     }

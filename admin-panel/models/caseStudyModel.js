@@ -17,8 +17,31 @@ const caseStudySchema = new mongoose.Schema({
         coreIssue: { heading: String, description: String },
         Strategy: { heading: String, description: String }
     },
-
-}, { timestamps: true })
+    designProcessSection: {
+        heading: String,
+        content: [{ _id: false, heading: String, description: String, icon: { filename: String, path: String, }, }]
+    },
+    sketches: {
+        heading: String,
+        description: String,
+        imgs: [{ filename: String, path: String }]
+    },
+    styleGuideSection: {
+        heading: String,
+        description: String,
+        sectionName: String,
+        BrandcolorSections: [{ name: String, hex: String }],
+        SecondaryColorSections: [{ name: String, hex: String }],
+    },
+    typographyData: {
+        heading: String,
+        fontFamily: String,
+        fontTable: [{ fontSize: String, lineHeight: String, }],
+    },
+    updatedLook: { heading: String, description: String, imgs: [{ filename: String, path: String }] },
+    fullWidthImg: [{ filename: String, path: String }],
+    howFifiloDesignsDrives: { heading: String, description: String },
+}, { timestamps: true });
 
 let caseStudyModel = mongoose.model("casestudies", caseStudySchema);
 module.exports = caseStudyModel;

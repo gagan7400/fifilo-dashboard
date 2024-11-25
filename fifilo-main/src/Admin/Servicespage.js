@@ -76,7 +76,7 @@ const ServicesForm = () => {
         newServicesCards[index].cardDescription[descIndex] = value;
         setServicesCards(newServicesCards);
     };
-         const handleCardListChange = (index, newContent) => {
+    const handleCardListChange = (index, newContent) => {
         const newServicesCards = servicesCards.map((card) => ({
             ...card,
             cardDescription: [...card.cardDescription],
@@ -326,11 +326,9 @@ const ServicesForm = () => {
                                                     <div className="col-lg-12">
                                                         <label htmlFor={`servicesdescription${index}`}>Description</label>
                                                         <div className="row">
-
                                                             {card.cardDescription.map((desc, descIndex) => (
                                                                 <div className="col-lg-12" key={descIndex}>
                                                                     <div className="input__inr">
-
                                                                         <textarea rows={3} required
                                                                             name="carddescription"
                                                                             type="text"

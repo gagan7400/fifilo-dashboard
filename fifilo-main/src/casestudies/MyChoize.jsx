@@ -6,7 +6,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { NavLink } from "react-router-dom";
 
-export default function TribeStays() {
+export default function MyChoize() {
   useEffect(() => {
     getdata();
   }, []);
@@ -301,7 +301,6 @@ export default function TribeStays() {
         </div>
       </div>
 
-
       <div className="caseStudies__overview bottom__overview">
         <div className="container">
           <div className="row justify-content-center">
@@ -326,9 +325,7 @@ export default function TribeStays() {
                 <h3>Style Guide and Key Components</h3>
                 <p>As a team, we collaborated on the style guide to ensure consistency and enhance the overall quality of the product. Our primary focus was on typography, icons,
                   and updating colors to align with WCAG standards.</p>
-
                 <p>To achieve a cohesive and unified look across all elements, we led the creation of the component library. This involved developing components and variants.</p>
-
               </div>
 
               <div className="color__palette myChoize__color" data-aos="fade-up" data-aos-duration="800">

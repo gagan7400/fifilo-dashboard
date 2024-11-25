@@ -4,19 +4,41 @@ import $ from "jquery";
 import { another, getdata } from "../casestudies/New";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import axios from 'axios';
 import DOMPurify from 'dompurify';
 import { useDispatch, useSelector } from 'react-redux';
+import Loader from "../layout/Loader";
 export default function Casestudy() {
-    const { pageData } = useSelector((state) => state.page);
-    let [casestudy, setCasestudy] = useState(pageData ? { ...pageData } : {});
-    let [loading, setLoading] = useState(true)
+    let { name } = useParams()
+    // const { pageData } = useSelector((state) => state.page);
+    let [casestudy, setCasestudy] = useState(null);
+    let [loading, setLoading] = useState(true);
+    console.log(name, name.split("-").join(""))
+    let alldata = async () => {
+        try {
+            console.log(name, name.split("-").join(""))
+            let { data } = await axios.get('http://localhost:5000/admin/casestudy/getcasestudy/' + name.split("-").join(""));
+            if (data.success) {
+                setCasestudy(data.data);
+                setLoading(false)
+            } else {
+                setCasestudy(null);
+                alert("error occured");
+            }
+        } catch (error) {
+            setCasestudy(null)
+            setCasestudy(null);
+        }
+    }
     useEffect(() => {
-        if (pageData) {
+        alldata();
+    }, [])
+    useEffect(() => {
+        if (casestudy) {
             setLoading(false);
         }
-    }, [pageData]);
+    }, [casestudy]);
     useEffect(() => {
         getdata();
     }, []);
@@ -35,7 +57,18 @@ export default function Casestudy() {
 
     useEffect(() => {
         AOS.init();
-    }, [pageData]);
+    }, [casestudy]);
+    // useEffect(() => {
+    //     const loadData = async () => {
+    //         setLoading(false);
+    //     };
+
+    //     loadData();
+    //     return () => {
+    //     };
+
+    // }, []);
+    console.log(casestudy)
     return (
         <>
             <Helmet>
@@ -46,6 +79,7 @@ export default function Casestudy() {
                 />
             </Helmet>
             <div className="caseStudies__bnr myChoize__bnr">
+                {(loading && !casestudy) && <Loader />}
                 <div className="container">
                     <div className="top__bx" data-aos="fade-up" data-aos-duration="800">
                         <h1 dangerouslySetInnerHTML={{
@@ -64,7 +98,7 @@ export default function Casestudy() {
                         })}
                     </div>
                     <div className="bottom__bx" data-aos="fade-up" data-aos-duration="1000">
-                        <img src={(!loading && casestudy) ? `http://localhost:5000/images/${casestudy.heroSection.heroImg.filename}` : "/assets/imgs/avatar.svg"} alt="banner" />
+                        <img src={(!loading && casestudy) ? `http://localhost:5000/images/${casestudy.heroSection.heroImg.filename}` : ""} alt="banner" />
                     </div>
                 </div>
             </div>
@@ -81,7 +115,7 @@ export default function Casestudy() {
                                     __html: DOMPurify.sanitize(!loading && casestudy ? casestudy.overviewSection.briefInsight.contentBox.description : ``)
                                 }} />
                             </div>
-                            <div className="card__bx aos-init aos-animate" data-aos="fade-up" data-aos-duration="800">
+                            <div className="card__bx" data-aos="fade-up" data-aos-duration="800">
                                 {(!loading && casestudy) && casestudy.overviewSection.briefInsight.overviewBox.map((value, index) => (
                                     <div key={index}>
                                         <p>{value.name}</p>

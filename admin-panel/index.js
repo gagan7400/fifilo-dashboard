@@ -14,8 +14,10 @@ const aboutRoute = require("./routes/aboutRoute");
 const faqRoute = require("./routes/faqRoute");
 const pagesRoute = require("./routes/pagesRoute");
 const mediaRoute = require("./routes/mediaRoute.js");
+const caseStudyRoute = require("./routes/caseStudyRoute.js");
 
 const port = process.env.PORT || 4000;
+
 const app = express();
 
 // Handling Uncaught Exception
@@ -41,7 +43,6 @@ app.use(express.static(uploadpath))
 app.use(express.static(newuploadpath))
 app.use(errorHandler);
 app.use(errormidd);
-
 //routes
 app.use('/admin/', adminRoute);
 app.use('/admin/career', careerRoute);
@@ -52,6 +53,10 @@ app.use('/admin/about', aboutRoute);
 app.use('/admin/faq', faqRoute);
 app.use('/admin/pages', pagesRoute);
 app.use('/api/media', mediaRoute);
+app.use('/admin/casestudy/', caseStudyRoute);
+
+//error handle
+
 
 let server = app.listen(port, (err) => {
   console.log(err || "server run on port " + port)

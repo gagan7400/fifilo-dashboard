@@ -365,7 +365,7 @@ const Aboutpage = () => {
                                         </div>
                                     </div>
                                     {membersCard.map((card, index) => (
-                                        <div className="card__block">
+                                        <div className="card__block" key={index}>
                                             <div className="testimonial__box">
                                                 <div className="top__heading">
                                                     <p>Member {index + 1}</p>

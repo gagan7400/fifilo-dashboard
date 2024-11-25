@@ -114,7 +114,6 @@ const deleteCareerPage = async (req, res) => {
         if (careerPage.cardsSection && careerPage.cardsSection.length > 0) {
             careerPage.cardsSection.forEach((card) => {
                 const imagePath = path.join(__dirname, '../', card.cardImg.path);
-                // console.log(imagePath)
                 // Check if file exists and delete
                 if (fs.existsSync(imagePath)) {
                     fs.unlinkSync(imagePath); // Delete the image file

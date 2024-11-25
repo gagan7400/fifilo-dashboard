@@ -1452,7 +1452,7 @@ export default function Services() {
 
           <div className="row gx-lg-4 gx-md-3 gx-2 inner__gapTop justify-content-center">
             {!publishedServiceLoading && publishedServicePage ? publishedServicePage.toolSection.toolsLogo.map((img, index) => {
-              return <div className="col-lg-3 col-md-4 col-6">
+              return <div className="col-lg-3 col-md-4 col-6" key={index}>
                 <div className="card__bx">
                   <img src={img && img.filename ? `http://localhost:5000/images/${img.filename}` : ''} data-aos="zoom-in" alt="card__bx" />
                 </div>

@@ -23,7 +23,6 @@ export default function ContactUs() {
 
   let { publishedcontactdata, publishedcontactloading } = useSelector((state) => state.contactpage);
   const handleWindowLaod = useCallback(() => {
-    console.log("load")
   }, []);
   useEffect(() => {
     window.addEventListener("load", handleWindowLaod);
@@ -71,18 +70,17 @@ export default function ContactUs() {
 
   useEffect(() => {
     if (showErrors) {
-      
-        setShowErrors(false);
-        setErrors({});
-       
-      return () =>  {};
+
+      setShowErrors(false);
+      setErrors({});
+
+      return () => { };
     }
-  }, [ Name ,Email ,Number ,Message]);
+  }, [Name, Email, Number, Message]);
   const submithandler = async (e) => {
     e.preventDefault();
     const validationErrors = validate();
     if (!Email || !Name || !Number || !Message || Object.keys(validationErrors).length > 0) {
-      console.log(Email, Name, Number, Message)
       setErrors(validationErrors);
       setShowErrors(true);
     } else {
@@ -99,7 +97,7 @@ export default function ContactUs() {
         method: "POST",
         body: formdata,
       })
-     await  dispatch(contactus({ name: Name, email: Email, phonenumber: Number, message: Message }))
+      await dispatch(contactus({ name: Name, email: Email, phonenumber: Number, message: Message }))
       if (success) {
         setEmail('')
         setMessage("")
@@ -138,7 +136,6 @@ export default function ContactUs() {
                                                 partnership in mind?`)
                       }} />
                       <ul>
-                        {/* {console.log(!publishedcontactloading && publishedcontactdata && publishedcontactdata.cardSection.email)} */}
                         <li><a href={`mailto:${!publishedcontactloading && publishedcontactdata ? publishedcontactdata.cardSection.email : "hey@fifilo.com"}`}><img src="assets/img/mail-01.svg" alt="mail" />{!publishedcontactloading && publishedcontactdata ? publishedcontactdata.cardSection.email : "hey@fifilo.com"}</a>
                         </li>
                         <li><a href={`tel:${!publishedcontactloading && publishedcontactdata ? publishedcontactdata.cardSection.phoneNumber : "+91-7869525027"}`}><img src="assets/img/phone.svg" alt="mail" />{!publishedcontactloading && publishedcontactdata ? publishedcontactdata.cardSection.phoneNumber : "+91-7869525027"}</a>

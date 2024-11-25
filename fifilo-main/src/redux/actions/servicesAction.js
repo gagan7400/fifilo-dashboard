@@ -91,7 +91,7 @@
 //             payload: data.data,
 //         });
 //     } catch (error) {
-//         console.log(error)
+//       
 //         dispatch({
 //             type: "DELETE_SERVICEPAGE_FAIL",
 //             payload: error.response.data.message,

@@ -26,7 +26,6 @@ const TinyMCE = () => {
       status,
       thumbnail,
     };
-    console.log("Case Study Data:", caseStudyData);
     setTitle("");
     setDescription("");
     setContent("");

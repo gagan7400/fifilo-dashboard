@@ -26,6 +26,11 @@ export default function Sidebar() {
               </NavLink>
             </li>
             <li className="nav-item">
+              <NavLink to="/section/casestudypages" className="nav-link"  >
+                <img src="assets/imgs/task.svg" alt="pages Icon" />Case Studies
+              </NavLink>
+            </li>
+            <li className="nav-item">
               <NavLink to="/section/job" className="nav-link"  >
                 <img src="assets/imgs/project.svg" alt="Jobs Icon" />Jobs
               </NavLink>

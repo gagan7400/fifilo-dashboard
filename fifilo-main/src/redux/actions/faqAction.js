@@ -11,7 +11,6 @@ export const createFaqPage = ({ heroSection, faqSection }) => async (dispatch) =
                 "x-auth-token": localStorage.getItem("token")
             }
         }).then((r) => r.json()).then((res) => {
-            console.log(res);
             dispatch({
                 type: "CREATE_FAQPAGE_SUCCESS",
                 payload: res._id,

@@ -19,7 +19,7 @@ const authenticate = async (email, password) => {
 
 const generateToken = (admin) => {
   const token = jwt.sign({ adminId: admin._id }, process.env.SECRET_KEY, {
-    expiresIn: '24h'
+    expiresIn: '4h'
   });
   return token;
 };
@@ -32,8 +32,7 @@ const registerAdmin = async (email, password) => {
   return admin;
 };
 
-// console.log(registerAdmin("admin@gmail.com","admin"))
-
+ 
 router.post('/login', async (req, res, next) => {
   try {
     const { email, password } = req.body;

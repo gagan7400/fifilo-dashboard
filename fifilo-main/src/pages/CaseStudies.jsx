@@ -1,12 +1,37 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import $ from "jquery";
 import anime from "animejs";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import axios from "axios";
+import DOMPurify from 'dompurify';
+import { pageAction } from '../redux/actions/pagedataAction';
 
 export default function Work() {
+  let dispatch = useDispatch();
+  let [casestudy, setCasestudy] = useState(null);
+  let [loading, setLoading] = useState(true)
+  let alldata = async () => {
+    try {
+      let { data } = await axios.get('http://localhost:5000/admin/casestudy/getcasestudy');
+      if (data.success) {
+        setCasestudy(data.data);
+        setLoading(false)
+      } else {
+        setCasestudy(null);
+        alert("error occured");
+      }
+    } catch (error) {
+      setCasestudy(null)
+      setCasestudy(null);
+    }
+  }
+  useEffect(() => {
+    alldata();
+  }, [])
   useEffect(() => {
     $(document).ready(function () {
       function fitElementToParent(el, padding) {
@@ -175,7 +200,29 @@ export default function Work() {
       <div className="our__work all__work rn__section__gapTop">
         <div className="container">
           <div className="inner__gapTop row">
-            <div className="col-12" data-aos="fade-right" data-aos-duration="800">
+            {(!loading && casestudy) ? casestudy.map((v, i) => (
+              <div key={i} className={i == 0 ? "col-12" : i % 2 == 0 ? "col-lg-5 col-md-12" : "col-lg-7 col-md-12"} data-aos="fade-right" data-aos-duration="800">
+                <div className="card__caseStudies">
+                  <div className="top__keywords">
+                    {v.heroSection.workButtons.map((btn, index) => {
+                      return (<span key={index}>{btn.name}</span>)
+                    })}
+                  </div>
+                  <h4>
+                    <NavLink to={`/casestudy/${v.heroSection.casestudyName.split(" ").join("-")}`} onClick={() => { dispatch(pageAction({ ...v })) }}>
+                      {v.heroSection.casestudyName}{" "}
+                      <img src="./assets/img/arrow-up-right.svg" alt="work" />
+                    </NavLink>
+                  </h4>
+                  <p>{v.heroSection.description}</p>
+                  <div className="img__box">
+                    <NavLink to={`/casestudy/${v.heroSection.casestudyName.split(" ").join("-")}`} onClick={() => { dispatch(pageAction({ ...v })) }} >
+                      <img src={(v.heroSection.cardImg && v.heroSection.cardImg.filename) && `http://localhost:5000/images/${v.heroSection.cardImg.filename}`} alt={v.heroSection.casestudyName} />
+                    </NavLink>
+                  </div>
+                </div>
+              </div>)) : ""}
+            {/* <div className="col-12" data-aos="fade-right" data-aos-duration="800">
               <div className="card__caseStudies">
                 <div className="top__keywords">
                   <span>UI/UX Design</span>
@@ -341,7 +388,7 @@ export default function Work() {
                   </NavLink>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

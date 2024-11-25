@@ -81,8 +81,7 @@ const Login = () => {
         e.preventDefault();
         const validationErrors = validate();
         if (Object.keys(validationErrors).length > 0) {
-            console.log(validationErrors)
-            setErrors(validationErrors);
+         setErrors(validationErrors);
             setShowErrors(true);
             if (validationErrors.email) {
                 toast.error(validationErrors.email, {
@@ -102,6 +101,7 @@ const Login = () => {
         }
 
     }
+     
     useEffect(() => {
         if (error) {
             setShowErrors(true);
@@ -120,21 +120,20 @@ const Login = () => {
     }, [dispatch, nav, isAuthenticated])
     return (
         <>
-            <Navbar />
-            <div className="contact__bnr hero__bnr" ref={heroBnrRef}>
+             <div className="contact__bnr hero__bnr" ref={heroBnrRef}>
                 <ToastContainer autoClose={2000} />
-                <div className="col-lg-6 col-md-6">
+                 <div className="col-lg-6 col-md-6">
                     <form onSubmit={submithandler}>
                         <div className="form__card">
                             <div className="contact__form" data-aos="fade-up" data-aos-duration="800">
                                 <div className="inr__input" >
-                                    <span><img src="assets/img/mail-02.svg" alt="contact__form" /></span>
-                                    <input type="email" name="Email" value={Email} onChange={(e) => { setEmail(e.target.value) }}
+                                    <span className='icon'><img src="assets/img/mail-02.svg" alt="contact__form" /></span>
+                                    <input type="email" name="Email" value={Email} id="loginEmailinput" onChange={(e) => { setEmail(e.target.value) }}
                                         className="form-control" placeholder="Your E-mail" autoComplete='false' />
                                     {errors.email && <div className="error text-danger position-absolute" style={{ color: "#f0f1f1" }} >{errors.email}</div>}
                                 </div>
                                 <div className="inr__input" >
-                                    <span><img src="assets/img/mail-02.svg" alt="contact__form" /></span>
+                                    <span className='icon'><img src="assets/img/mail-02.svg" alt="contact__form" /></span>
                                     <input type="password" name="Password" value={Password}
                                         onChange={(e) => { setPassword(e.target.value) }} className="form-control" placeholder="Your password" autoComplete='false' />
                                     {errors.password && <div className="error text-danger position-absolute" style={{ color: "#f0f1f1" }} >{errors.password}</div>}
@@ -149,7 +148,6 @@ const Login = () => {
                 </div>
 
             </div>
-            <Footer />
         </>
     );
 };

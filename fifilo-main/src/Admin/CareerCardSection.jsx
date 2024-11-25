@@ -22,14 +22,14 @@ export default function CareerCardSection({ card, index, handleCardChange }) {
 
     }
     return (
-        <div class="col-lg-12">
-            <div class="profile__block">
-                <div class="image__block">
-                    <img src={card.cardImg.filename ? `http://localhost:4000/images/${card.cardImg.filename}` : "/assets/imgs/avatar.svg"} alt="" />
+        <div className="col-lg-12">
+            <div className="profile__block">
+                <div className="image__block">
+                    <img src={card.cardImg.filename ? `http://localhost:5000/images/${card.cardImg.filename}` : "/assets/imgs/avatar.svg"} alt="" />
                 </div>
-                <div class="btn__grp">
-                    <button class="btn" onClick={() => { openMediaLibrary() }}><img src="/assets/imgs/edit-05.svg" alt="" /></button>
-                    <button class="btn" onClick={() => { deleteImg() }}><img src="/assets/imgs/trash-03.svg" alt="" /></button>
+                <div className="btn__grp">
+                    <button className="btn" onClick={() => { openMediaLibrary() }}><img src="/assets/imgs/edit-05.svg" alt="" /></button>
+                    <button className="btn" onClick={() => { deleteImg() }}><img src="/assets/imgs/trash-03.svg" alt="" /></button>
                 </div>
             </div>
             <MediaLibraryModal

@@ -62,30 +62,30 @@ const Faqpage = () => {
         <>
             <Sidebar titles="Faq's Page" />
             <div className="main__content"  >
-                <div class="page__editors">
-                    <div class="page__title">
+                <div className="page__editors">
+                    <div className="page__title">
                         <h5>FAQ Page</h5>
                     </div>
 
-                    <div class="page__editContent">
-                        <ul class="nav nav-pills" id="pills-tab" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="pills-heading-tab" data-bs-toggle="pill" data-bs-target="#pills-heading" type="button" role="tab" aria-controls="pills-heading"
+                    <div className="page__editContent">
+                        <ul className="nav nav-pills" id="pills-tab" role="tablist">
+                            <li className="nav-item" role="presentation">
+                                <button className="nav-link active" id="pills-heading-tab" data-bs-toggle="pill" data-bs-target="#pills-heading" type="button" role="tab" aria-controls="pills-heading"
                                     aria-selected="true">Heading</button>
                             </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="pills-question-tab" data-bs-toggle="pill" data-bs-target="#pills-question" type="button" role="tab" aria-controls="pills-question"
+                            <li className="nav-item" role="presentation">
+                                <button className="nav-link" id="pills-question-tab" data-bs-toggle="pill" data-bs-target="#pills-question" type="button" role="tab" aria-controls="pills-question"
                                     aria-selected="false">Question-Answer Section</button>
                             </li>
                         </ul>
-                        <div class="tab-content" id="pills-tabContent">
-                            <div class="tab-pane fade show active" id="pills-heading" role="tabpanel" aria-labelledby="pills-heading-tab">
-                                <div class="edit__tools">
-                                    <div class="card__block">
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <div class="input__inr">
-                                                    <label for="heroheading">Main Heading</label>
+                        <div className="tab-content" id="pills-tabContent">
+                            <div className="tab-pane fade show active" id="pills-heading" role="tabpanel" aria-labelledby="pills-heading-tab">
+                                <div className="edit__tools">
+                                    <div className="card__block">
+                                        <div className="row">
+                                            <div className="col-lg-12">
+                                                <div className="input__inr">
+                                                    <label htmlFor="heroheading">Main Heading</label>
                                                     <input required type="text"
                                                         name="heroSection.heading"
                                                         id="heroheading"
@@ -96,9 +96,9 @@ const Faqpage = () => {
                                                     />
                                                 </div>
                                             </div>
-                                            <div class="col-lg-12">
-                                                <div class="input__inr">
-                                                    <label for="herosubHeading">Sub Heading</label>
+                                            <div className="col-lg-12">
+                                                <div className="input__inr">
+                                                    <label htmlFor="herosubHeading">Sub Heading</label>
                                                     <textarea rows="2"
                                                         id="herosubHeading"
                                                         name="heroSection.subHeading"
@@ -109,25 +109,25 @@ const Faqpage = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="update__block">
-                                            <button class="btn btn__update" onClick={handleSubmit}>Update</button>
+                                        <div className="update__block">
+                                            <button className="btn btn__update" onClick={handleSubmit}>Update</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="pills-question" role="tabpanel" aria-labelledby="pills-question-tab">
-                                <div class="edit__tools">
+                            <div className="tab-pane fade" id="pills-question" role="tabpanel" aria-labelledby="pills-question-tab">
+                                <div className="edit__tools">
                                     {faqSection.map((card, index) => (
-                                        <div class="card__block">
-                                            <div class="testimonial__box">
-                                                <div class="top__heading">
+                                        <div className="card__block" key={index}>
+                                            <div className="testimonial__box">
+                                                <div className="top__heading">
                                                     <p>Question {index + 1}</p>
-                                                    {faqSection.length > 1 && <button class="btn" onClick={() => handleRemoveCard(index)}><img src="/assets/imgs/trash.svg" alt="" />Delete</button>}
+                                                    {faqSection.length > 1 && <button className="btn" onClick={() => handleRemoveCard(index)}><img src="/assets/imgs/trash.svg" alt="" />Delete</button>}
                                                 </div>
-                                                <div class="row">
-                                                    <div class="col-lg-12">
-                                                        <div class="input__inr">
-                                                            <label for="question">Question</label>
+                                                <div className="row">
+                                                    <div className="col-lg-12">
+                                                        <div className="input__inr">
+                                                            <label htmlFor="question">Question</label>
                                                             <input required type="text"
                                                                 className="form-control"
                                                                 name="question"
@@ -138,9 +138,9 @@ const Faqpage = () => {
                                                             />
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-12">
-                                                        <div class="input__inr">
-                                                            <label for="answer">Answer</label>
+                                                    <div className="col-lg-12">
+                                                        <div className="input__inr">
+                                                            <label htmlFor="answer">Answer</label>
                                                             <textarea className="form-control"
                                                                 name="answer"
                                                                 rows={4}
@@ -155,11 +155,11 @@ const Faqpage = () => {
                                             </div>
                                         </div>
                                     ))}
-                                    <div class="add__review">
-                                        <button class="btn" onClick={handleAddCard}><img src="/assets/imgs/plus.svg" alt="" />Add New Review</button>
+                                    <div className="add__review">
+                                        <button className="btn" onClick={handleAddCard}><img src="/assets/imgs/plus.svg" alt="" />Add New Review</button>
                                     </div>
-                                    <div class="update__block">
-                                        <button class="btn btn__update" onClick={handleSubmit}>Update</button>
+                                    <div className="update__block">
+                                        <button className="btn btn__update" onClick={handleSubmit}>Update</button>
                                     </div>
                                 </div>
                             </div>

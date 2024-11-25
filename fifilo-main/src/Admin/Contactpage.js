@@ -20,7 +20,7 @@ const Contactpage = () => {
     }
     );
 
-    const [seoSection, setSeoSection] = useState(pageData ?{ ...pageData.seoSection} :
+    const [seoSection, setSeoSection] = useState(pageData ? { ...pageData.seoSection } :
         {
             title: "",
             keywords: "",
@@ -37,41 +37,41 @@ const Contactpage = () => {
         <>
             <Sidebar titles="Contact Page" />
             <div className="main__content" >
-                <div class="page__editors">
+                <div className="page__editors">
                     <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><NavLink to="/pages">Pages</NavLink></li>
-                            <li class="breadcrumb-item"><img src="/assets/imgs/chevron-right.svg" alt="" /></li>
-                            <li class="breadcrumb-item active">Contact Page</li>
+                        <ol className="breadcrumb">
+                            <li className="breadcrumb-item"><NavLink to="/pages">Pages</NavLink></li>
+                            <li className="breadcrumb-item"><img src="/assets/imgs/chevron-right.svg" alt="" /></li>
+                            <li className="breadcrumb-item active">Contact Page</li>
                         </ol>
                     </nav>
-                    <div class="page__title">
+                    <div className="page__title">
                         <h5>Contact Page</h5>
                     </div>
 
-                    <div class="page__editContent">
-                        <ul class="nav nav-pills" id="pills-tab" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="pills-hero-tab" data-bs-toggle="pill" data-bs-target="#pills-hero" type="button" role="tab" aria-controls="pills-hero"
+                    <div className="page__editContent">
+                        <ul className="nav nav-pills" id="pills-tab" role="tablist">
+                            <li className="nav-item" role="presentation">
+                                <button className="nav-link active" id="pills-hero-tab" data-bs-toggle="pill" data-bs-target="#pills-hero" type="button" role="tab" aria-controls="pills-hero"
                                     aria-selected="true">Hero</button>
                             </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="pills-cards-tab" data-bs-toggle="pill" data-bs-target="#pills-cards" type="button" role="tab" aria-controls="pills-cards"
+                            <li className="nav-item" role="presentation">
+                                <button className="nav-link" id="pills-cards-tab" data-bs-toggle="pill" data-bs-target="#pills-cards" type="button" role="tab" aria-controls="pills-cards"
                                     aria-selected="false">Card</button>
                             </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="pills-seo-tab" data-bs-toggle="pill" data-bs-target="#pills-seo" type="button" role="tab" aria-controls="pills-seo"
+                            <li className="nav-item" role="presentation">
+                                <button className="nav-link" id="pills-seo-tab" data-bs-toggle="pill" data-bs-target="#pills-seo" type="button" role="tab" aria-controls="pills-seo"
                                     aria-selected="false">SEO</button>
                             </li>
                         </ul>
-                        <div class="tab-content" id="pills-tabContent">
-                            <div class="tab-pane fade show active" id="pills-hero" role="tabpanel" aria-labelledby="pills-hero-tab">
-                                <div class="edit__tools">
-                                    <div class="card__block">
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <div class="input__inr">
-                                                    <label for="heroheading">Main Heading</label>
+                        <div className="tab-content" id="pills-tabContent">
+                            <div className="tab-pane fade show active" id="pills-hero" role="tabpanel" aria-labelledby="pills-hero-tab">
+                                <div className="edit__tools">
+                                    <div className="card__block">
+                                        <div className="row">
+                                            <div className="col-lg-12">
+                                                <div className="input__inr">
+                                                    <label htmlFor="heroheading">Main Heading</label>
                                                     <input required type="text"
                                                         id="heroheading"
                                                         name="heroSection.heading"
@@ -82,9 +82,9 @@ const Contactpage = () => {
                                                     />
                                                 </div>
                                             </div>
-                                            <div class="col-lg-12">
-                                                <div class="input__inr">
-                                                    <label for="herosubHeading">Sub Heading</label>
+                                            <div className="col-lg-12">
+                                                <div className="input__inr">
+                                                    <label htmlFor="herosubHeading">Sub Heading</label>
                                                     <input required type="text"
                                                         id="herosubHeading"
                                                         rows="4"
@@ -97,20 +97,20 @@ const Contactpage = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="update__block">
-                                            <button class="btn btn__update" onClick={handleSubmit}>Update</button>
+                                        <div className="update__block">
+                                            <button className="btn btn__update" onClick={handleSubmit}>Update</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="pills-cards" role="tabpanel" aria-labelledby="pills-cards-tab">
-                                <div class="edit__tools">
-                                    <div class="card__block" >
-                                        <div class="testimonial__box">
-                                            <div class="row">
-                                                <div class="col-lg-12">
-                                                    <div class="input__inr">
-                                                        <label for="cardHeading">Heading</label>
+                            <div className="tab-pane fade" id="pills-cards" role="tabpanel" aria-labelledby="pills-cards-tab">
+                                <div className="edit__tools">
+                                    <div className="card__block" >
+                                        <div className="testimonial__box">
+                                            <div className="row">
+                                                <div className="col-lg-12">
+                                                    <div className="input__inr">
+                                                        <label htmlFor="cardHeading">Heading</label>
                                                         <input required type="text"
                                                             id="cardheading"
                                                             name="cardSection.heading"
@@ -121,9 +121,9 @@ const Contactpage = () => {
                                                         />
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-12">
-                                                    <div class="input__inr">
-                                                        <label for="cardemail">Email</label>
+                                                <div className="col-lg-12">
+                                                    <div className="input__inr">
+                                                        <label htmlFor="cardemail">Email</label>
                                                         <input required type="text"
                                                             id="cardemail"
                                                             name="cardSection.email"
@@ -134,9 +134,9 @@ const Contactpage = () => {
                                                         />
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-12">
-                                                    <div class="input__inr">
-                                                        <label for="cardphoneNumber">Phone Number</label>
+                                                <div className="col-lg-12">
+                                                    <div className="input__inr">
+                                                        <label htmlFor="cardphoneNumber">Phone Number</label>
                                                         <input required type="text"
                                                             id="cardphoneNumber"
                                                             name="cardSection.phoneNumber"
@@ -150,8 +150,8 @@ const Contactpage = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="update__block">
-                                        <button class="btn btn__update" onClick={handleSubmit}>Update</button>
+                                    <div className="update__block">
+                                        <button className="btn btn__update" onClick={handleSubmit}>Update</button>
                                     </div>
                                 </div>
                             </div>

@@ -347,9 +347,9 @@ export default function Career() {
         <div className="container">
           <div className="bnr__content">
             <div className="left__bx" data-aos="fade-up" data-aos-duration="800">
-              <h2 dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(!publishedcareerloading && publishedcareerdata ? publishedcareerdata.heroSection.heading : "Where Talent Meets<br /> <span>Opportunity!</span>") }} />
+              <h2 dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(!publishedcareerloading && publishedcareerdata ? publishedcareerdata.heroSection.heading : "") }} />
               <h6 dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(!publishedcareerloading && publishedcareerdata ? publishedcareerdata.heroSection.subHeading : `Join our dynamic team and take your career to the next level. Discover exciting opportunities where your skills and creativity can thrive.`)
+                __html: DOMPurify.sanitize(!publishedcareerloading && publishedcareerdata ? publishedcareerdata.heroSection.subHeading : ``)
               }} />
             </div>
             <div data-aos="fade-up" data-aos-duration="800">
@@ -372,40 +372,14 @@ export default function Career() {
               publishedcareerdata.cardsSection.map((v, i) => {
                 return <div className="col-lg-4 col-md-4" data-aos="flip-left" data-aos-duration="800" key={i}>
                   <div className="card__bx">
-                    <img src={v.cardImg ? "http://localhost:4000/images/" + v.cardImg.filename : "assets/img/icon-01.svg"} alt="career__section" />
-                    <h5>{v.cardHeading ? v.cardHeading : "Innovative and Impactful Projects"}</h5>
-                    <span>{v.cardDescription ? v.cardDescription : `Our mission is to create digital experiences that wow users. We use the latest tech and creative ideas
-                                    to
-                                    go beyond expectations and achieve real results for our clients.`}</span>
+                    <img src={v.cardImg ? "http://localhost:5000/images/" + v.cardImg.filename : "assets/img/icon-01.svg"} alt="career__section" />
+                    <h5>{v.cardHeading ? v.cardHeading : ""}</h5>
+                    <span>{v.cardDescription ? v.cardDescription : ``}</span>
                   </div>
                 </div>
               }
               )
-              :
-              <>
-                <div className="col-lg-4 col-md-4" data-aos="flip-left" data-aos-duration="800">
-                  <div className="card__bx">
-                    <img src="assets/img/icon-01.svg" alt="career__section" />
-                    <h5>Innovative and Impactful Projects</h5>
-                    <span>Join us in shaping the future of design with projects that challenge creativity and make a real difference.</span>
-                  </div>
-                </div>
-                <div className="col-lg-4 col-md-4" data-aos="flip-left" data-aos-duration="800">
-                  <div className="card__bx">
-                    <img src="assets/img/icon-02.svg" alt="careerimg" />
-                    <h5>Supportive Environment</h5>
-                    <span>Be part of a team that values collaboration, fosters creativity, and supports your professional journey every step of the way.</span>
-                  </div>
-                </div>
-                <div className="col-lg-4 col-md-4" data-aos="flip-left" data-aos-duration="800">
-                  <div className="card__bx">
-                    <img src="assets/img/icon-03.svg" alt="careerimg" />
-                    <h5>Continuous Learning & Growth</h5>
-                    <span>Unlock your potential with opportunities for ongoing learning, skill development, and career advancement in a dynamic industry.</span>
-                  </div>
-                </div>
-              </>
-            }
+              : ""}
 
           </div>
         </div>
@@ -414,19 +388,18 @@ export default function Career() {
       <div className="open__roles rn__section__gapTop">
         <div className="container">
           <div className="main__heading" data-aos="fade-up">
-            <h2 dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(!publishedcareerloading && publishedcareerdata ? publishedcareerdata.jobSection.heading : "Open <span>Roles</span>") }} />
+            <h2 dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(!publishedcareerloading && publishedcareerdata ? publishedcareerdata.jobSection.heading : "") }} />
             <p dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(!publishedcareerloading && publishedcareerdata ? publishedcareerdata.jobSection.subHeading : `Please send a cover letter and resume to jobs@fifilo.com or apply below.`)
+              __html: DOMPurify.sanitize(!publishedcareerloading && publishedcareerdata ? publishedcareerdata.jobSection.subHeading : '')
             }} />
           </div>
-
           <div className="isotope__filter inner__gapTop">
             <div className="filters" data-aos="fade-up">
               <ul>
                 <li className={filter === "*" ? "is-checked" : ""} onClick={() => setFilter("*")}>
                   All Jobs
                 </li>
-                <li className={filter === "Design" ? "is-checked" : ""} onClick={() => setFilter("Design")}>
+                <li className={filter === "UI-UX" ? "is-checked" : ""} onClick={() => setFilter("UI-UX")}>
                   Design
                 </li>
                 <li className={filter === "Development" ? "is-checked" : ""} onClick={() => setFilter("Development")}>
@@ -439,8 +412,8 @@ export default function Career() {
             </div>
 
             <div className="rows inner__gapTop grid" data-aos="fade-up" data-aos-duration="800">
-              {filteredJobs.map((job) => (
-                <Job job={job} />
+              {filteredJobs.map((job, index) => (
+                <Job job={job} key={index} />
               ))}
             </div>
           </div>
@@ -450,9 +423,9 @@ export default function Career() {
       <div className="modal fade career__modal" id="careerModal" aria-labelledby="careerModalLabel" aria-hidden="true">
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
-            <div class="modal-header">
+            <div className="modal-header">
               <h5>Let's Talk</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
+              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
             </div>
             <div className="modal-body">
               <div className="contact_formModal">

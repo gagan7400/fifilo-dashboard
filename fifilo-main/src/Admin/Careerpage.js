@@ -33,8 +33,7 @@ const Careerpage = () => {
             description: "",
             seoImg: { filename: "", path: "" }
         });
-    console.log(seoSection)
-    const handleCardChange = (index, event, data) => {
+        const handleCardChange = (index, event, data) => {
         const values = cardsSection.map((card) => ({ ...card, }));
         // const values = [...cardsSection];
         if (event === 'cardImg') {
@@ -71,46 +70,46 @@ const Careerpage = () => {
         <>
             <Sidebar titles="Career Page" />
             <div className="main__content" >
-                <div class="page__editors">
+                <div className="page__editors">
                     <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><NavLink to="/pages">Pages</NavLink></li>
-                            <li class="breadcrumb-item"><img src="/assets/imgs/chevron-right.svg" alt="" /></li>
-                            <li class="breadcrumb-item active">Career Page</li>
+                        <ol className="breadcrumb">
+                            <li className="breadcrumb-item"><NavLink to="/pages">Pages</NavLink></li>
+                            <li className="breadcrumb-item"><img src="/assets/imgs/chevron-right.svg" alt="" /></li>
+                            <li className="breadcrumb-item active">Career Page</li>
                         </ol>
                     </nav>
 
-                    <div class="page__title">
+                    <div className="page__title">
                         <h5>Career Page</h5>
                     </div>
 
-                    <div class="page__editContent">
-                        <ul class="nav nav-pills" id="pills-tab" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="pills-hero-tab" data-bs-toggle="pill" data-bs-target="#pills-hero" type="button" role="tab" aria-controls="pills-hero"
+                    <div className="page__editContent">
+                        <ul className="nav nav-pills" id="pills-tab" role="tablist">
+                            <li className="nav-item" role="presentation">
+                                <button className="nav-link active" id="pills-hero-tab" data-bs-toggle="pill" data-bs-target="#pills-hero" type="button" role="tab" aria-controls="pills-hero"
                                     aria-selected="true">Hero</button>
                             </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="pills-cards-tab" data-bs-toggle="pill" data-bs-target="#pills-cards" type="button" role="tab" aria-controls="pills-cards"
+                            <li className="nav-item" role="presentation">
+                                <button className="nav-link" id="pills-cards-tab" data-bs-toggle="pill" data-bs-target="#pills-cards" type="button" role="tab" aria-controls="pills-cards"
                                     aria-selected="false">What Sets Us Apart</button>
                             </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="pills-job-tab" data-bs-toggle="pill" data-bs-target="#pills-job" type="button" role="tab" aria-controls="pills-job"
+                            <li className="nav-item" role="presentation">
+                                <button className="nav-link" id="pills-job-tab" data-bs-toggle="pill" data-bs-target="#pills-job" type="button" role="tab" aria-controls="pills-job"
                                     aria-selected="false">Job</button>
                             </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="pills-seo-tab" data-bs-toggle="pill" data-bs-target="#pills-seo" type="button" role="tab" aria-controls="pills-seo"
+                            <li className="nav-item" role="presentation">
+                                <button className="nav-link" id="pills-seo-tab" data-bs-toggle="pill" data-bs-target="#pills-seo" type="button" role="tab" aria-controls="pills-seo"
                                     aria-selected="false">SEO</button>
                             </li>
                         </ul>
-                        <div class="tab-content" id="pills-tabContent">
-                            <div class="tab-pane fade show active" id="pills-hero" role="tabpanel" aria-labelledby="pills-hero-tab">
-                                <div class="edit__tools">
-                                    <div class="card__block">
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <div class="input__inr">
-                                                    <label for="heroheading">Main Heading</label>
+                        <div className="tab-content" id="pills-tabContent">
+                            <div className="tab-pane fade show active" id="pills-hero" role="tabpanel" aria-labelledby="pills-hero-tab">
+                                <div className="edit__tools">
+                                    <div className="card__block">
+                                        <div className="row">
+                                            <div className="col-lg-12">
+                                                <div className="input__inr">
+                                                    <label htmlFor="heroheading">Main Heading</label>
                                                     <input required type="text"
                                                         id="heroheading"
                                                         name="heroSection.heading"
@@ -121,9 +120,9 @@ const Careerpage = () => {
                                                     />
                                                 </div>
                                             </div>
-                                            <div class="col-lg-12">
-                                                <div class="input__inr">
-                                                    <label for="herosubHeading">Sub Text</label>
+                                            <div className="col-lg-12">
+                                                <div className="input__inr">
+                                                    <label htmlFor="herosubHeading">Sub Text</label>
                                                     <input required type="text"
                                                         id="herosubHeading"
                                                         rows="4"
@@ -161,26 +160,26 @@ const Careerpage = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="update__block">
-                                            <button class="btn btn__update" onClick={handleSubmit}>Update</button>
+                                        <div className="update__block">
+                                            <button className="btn btn__update" onClick={handleSubmit}>Update</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="pills-cards" role="tabpanel" aria-labelledby="pills-cards-tab">
-                                <div class="edit__tools">
+                            <div className="tab-pane fade" id="pills-cards" role="tabpanel" aria-labelledby="pills-cards-tab">
+                                <div className="edit__tools">
                                     {cardsSection.map((card, index) => (
-                                        <div class="card__block" key={index}>
-                                            <div class="testimonial__box">
-                                                <div class="top__heading">
+                                        <div className="card__block" key={index}>
+                                            <div className="testimonial__box">
+                                                <div className="top__heading">
                                                     <p>Card {index + 1}</p>
-                                                    <button class="btn" onClick={() => handleRemoveCard(index)}><img src="/assets/imgs/trash.svg" alt="" />Delete</button>
+                                                    <button className="btn" onClick={() => handleRemoveCard(index)}><img src="/assets/imgs/trash.svg" alt="" />Delete</button>
                                                 </div>
-                                                <div class="row">
+                                                <div className="row">
                                                     <CareerCardSection handleCardChange={handleCardChange} card={card} index={index} />
-                                                    <div class="col-lg-12">
-                                                        <div class="input__inr">
-                                                            <label for="cardHeading">Heading</label>
+                                                    <div className="col-lg-12">
+                                                        <div className="input__inr">
+                                                            <label htmlFor="cardHeading">Heading</label>
                                                             <input required type="text"
                                                                 className="form-control"
                                                                 name="cardHeading"
@@ -190,9 +189,9 @@ const Careerpage = () => {
                                                             />
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-12">
-                                                        <div class="input__inr">
-                                                            <label for="cardDescription">Description</label>
+                                                    <div className="col-lg-12">
+                                                        <div className="input__inr">
+                                                            <label htmlFor="cardDescription">Description</label>
                                                             <textarea rows={4}
                                                                 name="cardDescription"
                                                                 value={card.cardDescription}
@@ -207,21 +206,21 @@ const Careerpage = () => {
                                             </div>
                                         </div>
                                     ))}
-                                    <div class="add__review">
-                                        <button class="btn" onClick={handleAddCard}><img src="/assets/imgs/plus.svg" alt="" />Add New Section</button>
+                                    <div className="add__review">
+                                        <button className="btn" onClick={handleAddCard}><img src="/assets/imgs/plus.svg" alt="" />Add New Section</button>
                                     </div>
-                                    <div class="update__block">
-                                        <button class="btn btn__update" onClick={handleSubmit}>Update</button>
+                                    <div className="update__block">
+                                        <button className="btn btn__update" onClick={handleSubmit}>Update</button>
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="pills-job" role="tabpanel" aria-labelledby="pills-job-tab">
-                                <div class="edit__tools">
-                                    <div class="card__block">
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <div class="input__inr">
-                                                    <label for="Jobheading">Main Heading</label>
+                            <div className="tab-pane fade" id="pills-job" role="tabpanel" aria-labelledby="pills-job-tab">
+                                <div className="edit__tools">
+                                    <div className="card__block">
+                                        <div className="row">
+                                            <div className="col-lg-12">
+                                                <div className="input__inr">
+                                                    <label htmlFor="Jobheading">Main Heading</label>
                                                     <input required type="text"
                                                         id="Jobheading"
                                                         name="jobSection.heading"
@@ -232,9 +231,9 @@ const Careerpage = () => {
                                                     />
                                                 </div>
                                             </div>
-                                            <div class="col-lg-12">
-                                                <div class="input__inr">
-                                                    <label for="jobSectionsubHeading">Sub Heading</label>
+                                            <div className="col-lg-12">
+                                                <div className="input__inr">
+                                                    <label htmlFor="jobSectionsubHeading">Sub Heading</label>
                                                     <textarea required
                                                         rows={4}
                                                         id="jobSectionsubHeading"
@@ -248,8 +247,8 @@ const Careerpage = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="update__block">
-                                            <button class="btn btn__update" onClick={handleSubmit}>Update</button>
+                                        <div className="update__block">
+                                            <button className="btn btn__update" onClick={handleSubmit}>Update</button>
                                         </div>
                                     </div>
                                 </div>

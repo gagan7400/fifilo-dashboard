@@ -17,8 +17,6 @@ export default function ProtectedRoute({ Component }) {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (isTokenExpired(token)) {
-      console.log(token, isTokenExpired)
-      // Token expired, log out admin
       handleLogout();
     }
   }, [Component]);

@@ -12,18 +12,18 @@ const ContentEditor = () => {
     };
 
     const handleUploadSuccess = (newImage) => {
-        console.log("Image uploaded:", newImage);
         setImageUplaoded(newImage)
+        alert("Image Uploaded Successfully")
     };
 
     return (
         <div>
             <button className="btn btn-parimary" onClick={() => { setSection(true) }}> Upload new image </button>  | <button className="btn btn-parimary" onClick={() => { setSection(false) }}>Media library </button>
-           
+
             {selectedImageUrl && (
                 <div>
                     <p>Selected Image:</p>
-                    <img src={`http://localhost:4000/images/${selectedImageUrl.filename}`} alt="Selected" width="200" />
+                    <img src={`http://localhost:5000/images/${selectedImageUrl.filename}`} alt="Selected" width="200" />
                 </div>
             )}
             {section ?

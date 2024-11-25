@@ -63,7 +63,7 @@ export default function Careerform({ closemodel }) {
     // let addresume = (event) => {
     //     event.preventDefault()
     //     let file = event.target.files[0];
-    //     console.log(file)
+
     //     setresume(file);
     // }
     const submithandler = async (e) => {
@@ -99,7 +99,7 @@ export default function Careerform({ closemodel }) {
                     body: formdata,
                 });
                 let result = await data.json();
-                console.log(result);
+
                 if (result.Status) {
                     setLoading(false)
                     setEmail('')
@@ -112,7 +112,7 @@ export default function Careerform({ closemodel }) {
 
                 }
             } catch (error) {
-                console.log(error)
+                alert("Error Occured")
             }
         }
     }

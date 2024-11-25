@@ -91,14 +91,13 @@ export default function Jobpage() {
         setResponsibilities("")
         setJobStatus("");
     }
-    console.log(section)
     return (
         <div>
             <Sidebar titles="Job section" />
             <div className="main__content">
                 <div className="card__box" style={{ display: "block" }} >
-                    <div class="page__editors">
-                        <div class="page__title">
+                    <div className="page__editors">
+                        <div className="page__title">
                             <h5>Jobs</h5>
                             {(!isUpdateJob.isupdate && !isUpdateJob.id && !section) ? <button className="btn btn__update" onClick={() => { createJobBtn() }}>
                                 <img src="/assets/imgs/plusyellow.svg" alt="" /> Create a New Job</button>
@@ -220,7 +219,7 @@ export default function Jobpage() {
                                         </div>
                                     </div>
                                     <div className="update__block" >
-                                        <button className="btn btn__update" type="button" onClick={submithandler}>{isUpdateJob.isupdate ? "Update":"Submit"}</button>
+                                        <button className="btn btn__update" type="button" onClick={submithandler}>{isUpdateJob.isupdate ? "Update" : "Submit"}</button>
                                         <button className="btn btn__update" type="button" onClick={cancelForm}>Cancel</button>
                                     </div>
                                 </div>

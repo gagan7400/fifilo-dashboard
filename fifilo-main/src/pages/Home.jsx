@@ -279,7 +279,7 @@ export default function Home() {
           <div className="inner__gapTop row justify-content-center">
             <div className="col-lg-10">
               {(!homeloading && publishedhomepage) ? publishedhomepage.servicesCardSection.map((service, i) => {
-                return <div> <div className="services__card">
+                return <div key={i}> <div className="services__card">
                   <div className="row gx-3" data-aos="fade-up" data-aos-duration={(8 + i) * 100}>
                     <div className="col-lg-9">
                       <div className="content__box">
@@ -326,7 +326,7 @@ export default function Home() {
                 {publishedhomepage.reviewsSection.map((item, index) => (
                   <div className="item__slide" key={index} data-aos="fade-up" data-aos-duration="800">
                     <div className="img__bx">
-                      <img src={item.clientImgs && item.clientImgs.filename ? `http://localhost:4000/images/${item.clientImgs.filename}` : "assets/imgs/avatar.svg"} alt="clients" />
+                      <img src={item.clientImgs && item.clientImgs.filename ? `http://localhost:5000/images/${item.clientImgs.filename}` : "assets/imgs/avatar.svg"} alt="clients" />
                     </div>
                     <div className="content__box">
                       <h6>{item.clientName ? item.clientName : ""}</h6>
@@ -357,9 +357,9 @@ export default function Home() {
             {!homeloading && publishedhomepage && publishedhomepage.clientSection.clientLogos.length > 0 && (
               <>
                 {!homeloading && publishedhomepage.clientSection.clientLogos.map((card, index) => {
-                  return <div className="col-lg-2 col-md-2 col-6">
+                  return <div className="col-lg-2 col-md-2 col-6" key={index}>
                     <div className="card__logo">
-                      <img src={card ? `http://localhost:4000/images/${card && card.filename}` : "assets/img/clients-logo-01.png"} data-aos="zoom-in" data-aos-duration="1200" alt="clients-logo" />
+                      <img src={card ? `http://localhost:5000/images/${card && card.filename}` : "assets/img/clients-logo-01.png"} data-aos="zoom-in" data-aos-duration="1200" alt="clients-logo" />
                     </div>
                   </div>
                 })

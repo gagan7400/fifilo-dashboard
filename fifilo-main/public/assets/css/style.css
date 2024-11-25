@@ -3739,218 +3739,6 @@ select:autofill:focus {
   --font: "Poppins", sans-serif;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p {
-  margin: 0;
-}
-
-a {
-  color: #1f0b3c;
-  text-decoration: none;
-}
-
-a:hover {
-  color: #1f0b3c;
-}
-
-.btn-check:focus+.btn,
-.btn:focus,
-.btn-close:focus,
-.form-control:focus {
-  box-shadow: none;
-}
-
-h1 {
-  font: normal normal 600 100px/110% var(--font);
-  letter-spacing: -3px;
-}
-
-h2 {
-  font: normal normal 600 44px var(--font);
-  letter-spacing: -0.44px;
-}
-
-h3 {
-  font: normal normal 500 32px/148% var(--font);
-}
-
-h4 {
-  font: normal normal 600 30px/106.667% var(--font);
-}
-
-h5 {
-  font: normal normal 500 24px var(--font);
-}
-
-h6 {
-  font: normal normal 500 18px/168% var(--font);
-}
-
-p {
-  font: normal normal 400 16px/125% var(--font);
-}
-
-ul li {
-  font: normal normal 400 18px var(--font);
-}
-
-.shell .sidebar {
-  background-color: #181A1E;
-  width: 240px;
-  height: 100vh;
-  position: fixed;
-  z-index: 999;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.shell .sidebar .logo {
-  padding: 17px 16px;
-}
-
-.shell .sidebar .logo img {
-  width: 118px;
-  height: auto;
-  display: block;
-  margin: auto;
-}
-
-.shell .header {
-  padding: 12px 24px;
-  border-bottom: 1px solid var(--Grays-50, #F6F7F9);
-  background: var(--White, #FFF);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: unset;
-}
-
-.shell .header .title {
-  padding-left: 240px;
-
-}
-
-.shell .header .admin-circle {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: #DAF0E1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.shell .header .admin-circle p {
-  color: #00B69B;
-  font-weight: 500;
-  line-height: normal;
-  letter-spacing: -0.114px;
-}
-
-.shell .sidebar .nav {
-  padding: 24px 16px;
-  gap: 4px;
-}
-
-.shell .sidebar .nav-item .nav-link {
-  font: normal normal 400 16px/150% var(--font);
-  color: #D7DAE0;
-  padding: 8px 12px;
-  border-radius: 6px;
-  border-left: 1px solid transparent;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  transition: .5s all ease-out;
-}
-
-.shell .sidebar .nav-item .nav-link.active {
-  color: var(--color-white);
-  border-left: 2px solid var(--color-yellow);
-  background: rgba(253, 185, 19, 0.16);
-}
-
-.shell .sidebar .nav-item .nav-link img {
-  width: 24px;
-  height: auto;
-}
-
-.shell .sidebar .nav-item .nav-link.active img {
-  filter: brightness(0) invert(1);
-}
-
-.shell .sidebar .btm-bar {
-  padding: 24px 16px;
-}
-
-.shell .sidebar .btm-bar .btn-logout {
-  font: normal normal 400 16px/150% var(--font);
-  color: #D7DAE0;
-  padding: 8px 12px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.main__content {
-  margin-left: 240px;
-  width: calc(100% - 240px);
-  padding: 20px 26px;
-}
-
-/* .main__content .card__box {
-  display: none;
-} */
-
-.main__content .table__block {
-  border-radius: 8px;
-  border: 1px solid var(--Grey-tone-100, #EDEEF1);
-  background: var(--White, #FFF);
-  overflow: hidden;
-}
-
-.main__content .table {
-  margin: 0;
-}
-
-.main__content .table tr th {
-  padding: 12px 24px;
-  background-color: #EDEEF1;
-  box-shadow: none;
-  font: normal normal 400 12px/116% var(--font);
-  color: #464C5E;
-}
-
-.main__content .table>:not(:last-child)>:last-child>* {
-  border-bottom-color: #EAECF0;
-}
-
-.main__content .table tr td {
-  padding: 26px 24px;
-  font: normal normal 400 14px/128% var(--font);
-  color: #181A1E;
-  border-color: #EDEEF1;
-  vertical-align: middle;
-}
-
-.main__content .table tr:last-child td {
-  border-bottom: none;
-}
-
-.main__content .table tr td .btn {
-  padding: 0;
-}
-
-.main__content .table tr td .btn img {
-  width: 20px;
-  height: auto;
-}
 
 .career__modal .modal-header {
   padding: 0 0 32px;
@@ -3958,5 +3746,26 @@ ul li {
 }
 
 .contact_formModal .contact__form .inr__input .error {
-  color: #0e0e0e  !important;
+  color: #0e0e0e !important;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+
+}
+
+input:-webkit-autofill {
+  -webkit-text-fill-color: #363a44 !important;
+}
+
+
+#loginEmailinput:-webkit-autofill,
+#loginEmailinput:-webkit-autofill:hover,
+#loginEmailinput:-webkit-autofill:focus,
+#loginEmailinput:-webkit-autofill:active {
+  -webkit-text-fill-color: #f0f1f1 !important  ;
+  -webkit-box-shadow:  0 0 0 30px #1e1e1d inset !important;
 }

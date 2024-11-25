@@ -368,7 +368,7 @@ export default function About() {
                     <div className="col-lg-1 col-md-1 col-2 center__bx">
                       <div className="border-section">
                         <div className="stroke-circle">
-                          <img src={(v.icon && v.icon.filename) ? `http://localhost:4000/images/${v.icon.filename}` : ""} alt="icon" />
+                          <img src={(v.icon && v.icon.filename) ? `http://localhost:5000/images/${v.icon.filename}` : ""} alt="icon" />
                         </div>
                         <div className="stroke-border">
                           <div className="arrow-down">
@@ -382,7 +382,7 @@ export default function About() {
                         <h5>{v.heading ? v.heading : "Program Inception"}</h5>
                         <p>{v.description ? v.description : `Program inception sets the stage for aligning your vision with our UI/UX expertise, laying the
                           groundwork for innovative design solutions`}</p>
-                        </div>
+                      </div>
                     </div>
                   </>
                     :
@@ -399,7 +399,7 @@ export default function About() {
                       <div className="col-lg-1 col-2 center__bx">
                         <div className="border-section">
                           <div className="stroke-circle">
-                          <img src={(v.icon && v.icon.filename) ? `http://localhost:4000/images/${v.icon.filename}` : ""} alt="icon" />
+                            <img src={(v.icon && v.icon.filename) ? `http://localhost:5000/images/${v.icon.filename}` : ""} alt="icon" />
                           </div>
                           <div className="stroke-border">
                             <div className="arrow-down">
@@ -432,10 +432,10 @@ export default function About() {
               </div>
             </div>
             {(!publishedLoading && publishedData) && publishedData.membersCard.map((member, index) => {
-              return <div className="col-lg-3 col-md-6 col-6" key={index+1}>
+              return <div className="col-lg-3 col-md-6 col-6" key={index + 1}>
                 <div className="team__card" data-aos="fade-up" data-aos-duration="800">
                   <div className="img__team">
-                    <img src={member.memberImg && member.memberImg ? "http://localhost:4000/images/" + member.memberImg.filename:"assets/imgs/avatar.svg"} alt="our-team" />
+                    <img src={member.memberImg && member.memberImg ? "http://localhost:5000/images/" + member.memberImg.filename : "assets/imgs/avatar.svg"} alt="our-team" />
                   </div>
                   <div className="team__detail">
                     <div>

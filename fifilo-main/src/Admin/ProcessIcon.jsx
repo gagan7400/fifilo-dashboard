@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import MediaLibraryModal from "./MediaLibraryModal";
 
-export default function ProcessIcon({ handleContentCardChange, card, index }) {
+export default function ProcessIcon({ handleContentCardChange, card, name, index, heroSection, setHeroSection }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
 
@@ -14,17 +14,40 @@ export default function ProcessIcon({ handleContentCardChange, card, index }) {
     // Handle image selection
     const handleImageSelect = (image) => {
         setSelectedImage(image); // Set the selected image data
-        handleContentCardChange(index, "icon", { filename: image.filename, path: image.filePath })
+        if (heroSection && setHeroSection) {
+            if (name === "heroImg") {
+                setHeroSection({ ...heroSection, heroImg: { filename: image.filename, path: image.filePath } });
+            } else if (name === "cardImg") {
+                setHeroSection({ ...heroSection, cardImg: { filename: image.filename, path: image.filePath } });
+            }
+        } else if (handleContentCardChange && card && index.toString()) {
+            handleContentCardChange(index, "icon", { filename: image.filename, path: image.filePath })
+
+        }
         setIsModalOpen(false); // Close the modal
     };
     let deleteImg = () => {
-        handleContentCardChange(index, "icon", { filename: "", path: "" })
+        if (heroSection && setHeroSection) {
+            if (name == "heroImg") {
+                setHeroSection({ ...heroSection, heroImg: { filename: "", path: "" } });
+            } else if (name == "cardImg") {
+                setHeroSection({ ...heroSection, cardImg: { filename: "", path: "" } });
+            }
+        } else if (handleContentCardChange && card && index.toString()) {
+            handleContentCardChange(index, "icon", { filename: "", path: "" })
+        }
     }
     return (
         <div className="col-lg-12">
             <div className="profile__block">
                 <div className="image__block">
-                    <img src={card.icon.filename ? `http://localhost:4000/images/${card.icon.filename}` : "assets/imgs/avatar.svg"} alt="" />
+                    {card && !heroSection ?
+                        <img src={card.icon.filename ? `http://localhost:5000/images/${card.icon.filename}` : "assets/imgs/avatar.svg"} alt="" />
+                        : name === "heroImg" ?
+                            <img src={heroSection.heroImg.filename ? `http://localhost:5000/images/${heroSection.heroImg.filename}` : "assets/imgs/avatar.svg"} alt="" />
+                            : <img src={heroSection.cardImg && heroSection.cardImg.filename ? `http://localhost:5000/images/${heroSection.cardImg.filename}` : "assets/imgs/avatar.svg"} alt="" />
+
+                    }
                 </div>
                 <div className="btn__grp">
                     <button className="btn" onClick={() => { openMediaLibrary() }}><img src="assets/imgs/edit-05.svg" alt="" /></button>
@@ -34,9 +57,8 @@ export default function ProcessIcon({ handleContentCardChange, card, index }) {
             <MediaLibraryModal
                 isOpen={isModalOpen}
                 onClose={closeMediaLibrary}
-                onSelectImage={handleImageSelect} // Pass the image selection handler
+                onSelectImage={handleImageSelect}
             />
         </div>
-
     )
 }

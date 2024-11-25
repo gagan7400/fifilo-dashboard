@@ -73,20 +73,18 @@ export const getpublishHomePage = () => async (dispatch) => {
 
 // Update Homepage Action
 export const updateHomePageAction = ({ homedata, id }) => async (dispatch) => {
-     try {
-         const config = {
+    try {
+        const config = {
             headers: {
                 "Content-Type": "application/json",
                 "x-auth-token": localStorage.getItem("token"),
             }
         };
-          const { data } = await axios.put(`http://localhost:5000/admin/homepage/updatehomepage/${id}`, homedata, config);
+        const { data } = await axios.put(`http://localhost:5000/admin/homepage/updatehomepage/${id}`, homedata, config);
 
         // dispatch({ type: "UPDATE_HOMEPAGE_SUCCESS", payload: data });
     } catch (error) {
-        console.log("pp", error)
         dispatch({ type: "UPDATE_HOMEPAGE_FAIL", payload: error.response?.data?.message || error.message });
     }
 };
 
- 

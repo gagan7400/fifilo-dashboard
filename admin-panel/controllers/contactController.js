@@ -211,7 +211,6 @@ const contactusController = async (req, res) => {
             success: true, message: `Email sent to ${email} successfully`,
         });
     } catch (error) {
-        console.log(error)
         res.status(400).json({ success: false, error, message: `Email not sent ` })
     }
 }
@@ -718,7 +717,7 @@ module.exports = { contactusController, jobapplicantController, createContactPag
 //             success: true, message: `Email sent to ${email} successfully`,
 //         });
 //     } catch (error) {
-//         console.log(error)
+//          
 //         res.status(400).json({ success: false, error, message: `Email not sent ` })
 //     }
 // }

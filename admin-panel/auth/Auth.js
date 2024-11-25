@@ -10,7 +10,6 @@ const authenticate = async (req, res, next) => {
         req.user = await User.findById(decoded.adminId);
         next();
     } catch (err) {
-        console.log(err)
         res.status(400).send("Invalid token.");
     }
 };

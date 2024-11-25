@@ -23,7 +23,6 @@ function Editor() {
     };
     let dispatch = useDispatch();
     const [value, setValue] = useState('');
-    console.log(value);
     useEffect(() => {
         dispatch(EditorAction(value))
     }, [])

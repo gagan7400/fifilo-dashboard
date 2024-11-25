@@ -76,19 +76,7 @@ const ServicesForm = () => {
         newServicesCards[index].cardDescription[descIndex] = value;
         setServicesCards(newServicesCards);
     };
-    // Handle input for CardList
-    // const handleCardListChange = (index, listIndex, e) => {
-    //     const { value } = e.target;
-    //     // const newServicesCards = [...servicesCards];
-    //     const newServicesCards = servicesCards.map((card) => ({
-    //         ...card,
-    //         cardDescription: [...card.cardDescription],
-    //         cardList: card.cardList
-    //     }));
-    //     newServicesCards[index].cardList = value;
-    //     setServicesCards(newServicesCards);
-    // };
-    const handleCardListChange = (index, newContent) => {
+         const handleCardListChange = (index, newContent) => {
         const newServicesCards = servicesCards.map((card) => ({
             ...card,
             cardDescription: [...card.cardDescription],
@@ -191,7 +179,6 @@ const ServicesForm = () => {
 
     };
 
-    console.log(servicesCards, pageData ? pageData.servicesCards : "");
     return (
         <>
             <Sidebar titles="Services  Page" />
@@ -300,7 +287,7 @@ const ServicesForm = () => {
                             <div className="tab-pane fade" id="pills-servicesCards" role="tabpanel" aria-labelledby="pills-servicesCards-tab">
                                 <div className="edit__tools">
                                     {servicesCards.map((card, index) => (
-                                        <div className="card__block">
+                                        <div className="card__block" key={index}>
                                             <div className="testimonial__box">
                                                 <div className="top__heading">
                                                     <p>Service {index + 1}</p>
@@ -341,7 +328,7 @@ const ServicesForm = () => {
                                                         <div className="row">
 
                                                             {card.cardDescription.map((desc, descIndex) => (
-                                                                <div className="col-lg-12">
+                                                                <div className="col-lg-12" key={descIndex}>
                                                                     <div className="input__inr">
 
                                                                         <textarea rows={3} required
@@ -365,7 +352,6 @@ const ServicesForm = () => {
                                                     <div className="col-lg-12">
                                                         <div className="input__inr">
                                                             <label htmlFor={`servicesCardList${index}`}>Unordered List</label>
-                                                            {console.log(card)}
                                                             <Editor
                                                                 value={card.cardList}
                                                                 apiKey="jd3e97w8li70lbzue44vverzarnpb6y52c1aht6swqstquwz"
@@ -384,23 +370,6 @@ const ServicesForm = () => {
                                                                 }}
                                                                 onEditorChange={(newContent) => handleCardListChange(index, newContent)}
                                                             />
-                                                            {/* {card.cardList.map((item, listIndex) => (
-                                                                <div className="input-group mb-3" key={listIndex} style={{ width: "fit-content" }}>
-                                                                    <input required
-                                                                        name="cardlist"
-                                                                        type="text"
-                                                                        value={item}
-                                                                        onChange={(e) => handleCardListChange(index, listIndex, e)}
-                                                                        placeholder="Enter List"
-                                                                        className="form-control"
-                                                                    />
-                                                                    <button type="button" className='btn btn-danger' onClick={() => removeCardList(index, listIndex)}>  X</button>
-                                                                </div>
-                                                            ))} */}
-                                                            {/* <button type="button" className='btn btn-info' onClick={() => addCardList(index)}>
-                                                                Add More List Items
-                                                            </button> */}
-
                                                         </div>
                                                     </div>
                                                 </div>
@@ -440,7 +409,7 @@ const ServicesForm = () => {
                                         <HomepageuploadSection setToolsLogo={setToolsLogo} toolsLogo={toolsLogo} />
                                         <div className="uploaded__images">
                                             {toolsLogo.map((tool, index) => (
-                                                <ToolSection tool={tool} index={index} handleTools={handleTools} removeTools={removeTools} />
+                                                <ToolSection key={index} tool={tool} index={index} handleTools={handleTools} removeTools={removeTools} />
                                             ))}
                                         </div>
                                         <div className="update__block">

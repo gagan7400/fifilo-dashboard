@@ -87,7 +87,6 @@ const createService = async (req, res) => {
             data: result
         });
     } catch (err) {
-        // console.log(err)
         res.status(400).send(err);
     }
 };
@@ -121,7 +120,7 @@ const updateService = async (req, res) => {
         if (servicesCards) {
             servicePage.servicesCards = servicesCards.map((card, index) => ({
                 cardDescription: card.cardDescription || servicePage.servicesCards[index]?.cardDescription || [],
-                cardList: card.cardList || servicePage.servicesCards[index]?.cardList ||"",
+                cardList: card.cardList || servicePage.servicesCards[index]?.cardList || "",
                 cardName: card.cardName || servicePage.servicesCards[index]?.cardName || "Default cardName",
                 cardId: card.cardId || servicePage.servicesCards[index]?.cardId || "Default cardId",
                 serviceImg: card.serviceImg || servicePage.servicesCards[index]?.serviceImg || {},
@@ -145,7 +144,6 @@ const updateService = async (req, res) => {
 
         res.status(200).json({ success: true, data: servicePage });
     } catch (err) {
-        console.error("Error updating service page:", err);
         res.status(500).json({ success: false, message: err.message });
     }
 };

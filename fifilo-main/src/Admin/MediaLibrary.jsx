@@ -8,7 +8,7 @@ const MediaLibrary = ({ onSelectImage, ImageUplaoded }) => {
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const response = await axios.get("http://localhost:4000/api/media");
+        const response = await axios.get("http://localhost:5000/api/media");
         setImages(response.data);
       } catch (error) {
         console.error("Error fetching images", error);
@@ -29,7 +29,7 @@ const MediaLibrary = ({ onSelectImage, ImageUplaoded }) => {
       <div style={{ display: "flex", flexWrap: "wrap" }}>
         {images.map((image) => (
           <div key={image._id} style={{ margin: "10px", border: selectedImage === image ? "2px solid blue" : "none", }} >
-            <img src={`http://localhost:4000/images/${image.filename}`} alt={image.altText} style={{ width: "100px", height: "100px", cursor: "pointer" }}
+            <img src={`http://localhost:5000/images/${image.filename}`} alt={image.altText} style={{ width: "100px", height: "100px", cursor: "pointer" }}
               onClick={() => handleImageClick(image)} />
           </div>
         ))}

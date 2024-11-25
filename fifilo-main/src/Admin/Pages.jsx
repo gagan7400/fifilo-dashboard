@@ -10,7 +10,7 @@ export default function Dashboard() {
     const [allData, setAllData] = useState([]);
     let alldata = async () => {
         try {
-            let { data } = await axios.get('http://localhost:4000/admin/pages/getallpages');
+            let { data } = await axios.get('http://localhost:5000/admin/pages/getallpages');
             setAllData(data.data)
         } catch (error) {
             console.error("ll", error);
@@ -28,8 +28,8 @@ export default function Dashboard() {
             <Sidebar />
             <div className="main__content">
                 <div id="home" className="card__box" style={{ display: "block" }}>
-                    <div class="page__editors">
-                        <div class="page__title">
+                    <div className="page__editors">
+                        <div className="page__title">
                             <h5>Pages</h5>
                         </div>
                     </div>

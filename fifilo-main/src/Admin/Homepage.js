@@ -58,7 +58,7 @@ const Homepage = () => {
         heading: pageData ? pageData.clientSection.heading : "",
         subHeading: pageData ? pageData.clientSection.subHeading : "",
     });
-    // console.log(...pageData.clientSection.clientLogos)
+     
     const [clientLogos, setClientLogos] = useState(pageData ?
         [...pageData.clientSection.clientLogos] : [{ filename: '', path: '' }]
     );
@@ -389,7 +389,7 @@ const Homepage = () => {
                                         </div>
                                     </div>
                                     {servicesCardSection.map((card, index) => (
-                                        <div className="card__block">
+                                        <div className="card__block" key={index}>
                                             <div className="testimonial__box">
                                                 <div className="top__heading">
                                                     <p>Service {index + 1}</p>
@@ -549,7 +549,7 @@ const Homepage = () => {
                                         <HomepageuploadSection addClients={addClients} setClientLogos={setClientLogos} clientLogos={clientLogos} />
                                         <div className="uploaded__images">
                                             {clientLogos.map((client, index) => (
-                                                <HomepageClients client={client} index={index} handleClients={handleClients} removeClients={removeClients} />
+                                                <HomepageClients key={index} client={client} index={index} handleClients={handleClients} removeClients={removeClients} />
                                             ))}
                                         </div>
                                         <div className="update__block">

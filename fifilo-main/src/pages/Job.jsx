@@ -18,7 +18,7 @@ export default function Job({ job }) {
                             <img src="assets/img/marker-pin-01.svg" alt="location" />
                             {job.location}
                         </span>{" "}
-                        | <span>{job.yearsOfExperience}</span>
+                        | <span>{job.yearsOfExperience} Years</span>
                     </h6>
                     {isExpanded && (
                         <div style={{ marginTop: "10px", transition: 'all 0.3s ease', display: "flex", flexDirection: "column", gap: "30px", justifyContent: "center" }}>

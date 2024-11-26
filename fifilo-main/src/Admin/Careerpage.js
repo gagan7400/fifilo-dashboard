@@ -33,7 +33,7 @@ const Careerpage = () => {
             description: "",
             seoImg: { filename: "", path: "" }
         });
-        const handleCardChange = (index, event, data) => {
+    const handleCardChange = (index, event, data) => {
         const values = cardsSection.map((card) => ({ ...card, }));
         // const values = [...cardsSection];
         if (event === 'cardImg') {

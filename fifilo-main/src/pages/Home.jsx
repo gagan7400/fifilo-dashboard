@@ -10,13 +10,33 @@ import useCursorPosition from "../layout/useCursorPosition";
 import { getpublishHomePage } from "../redux/actions/homeAction";
 import { useDispatch, useSelector } from "react-redux";
 import DOMPurify from 'dompurify';
+import axios from "axios";
 
 export default function Home() {
   useCursorPosition('dark__bnr');
   let dispatch = useDispatch();
   let { publishedhomepage, homeloading } = useSelector((state) => state.homepage);
+  let [casestudies, setCasestudies] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  let alldata = async () => {
+    try {
+      let { data } = await axios.get('http://localhost:5000/admin/casestudy/getcasestudy');
+      if (data.success) {
+        setCasestudies(data.data);
+        setLoading(false)
+      } else {
+        setCasestudies(null);
+        alert("error occured");
+      }
+    } catch (error) {
+      setCasestudies(null)
+      setCasestudies(null);
+    }
+  }
   useEffect(() => {
     dispatch(getpublishHomePage());
+    alldata();
   }, [dispatch])
 
   useEffect(() => {
@@ -137,17 +157,15 @@ export default function Home() {
     };
   }, [publishedhomepage]);
 
-  const [loading, setLoading] = useState(true);
+
 
   useEffect(() => {
     const loadData = async () => {
       setLoading(false);
     };
-
     loadData();
     return () => {
     };
-
   }, []);
   return (
     <>
@@ -195,68 +213,31 @@ export default function Home() {
             </h2>
           </div>
           <div className="inner__gapTop row">
-            <div className="col-12" data-aos="fade-right" data-aos-duration="800">
-              <div className="card__caseStudies">
-                <div className="top__keywords">
-                  <span>Development</span>
-                  <span>UI/UX Design</span>
-                </div>
-                <h4>
-                  <NavLink to="/tribe-stays/">
-                    TribeStays{" "}
-                    <img src="assets/img/arrow-up-right.svg" alt="case-studies" />
-                  </NavLink>
-                </h4>
-                <p>Creating a new hub for vital research & resources</p>
-                <div className="img__box">
-                  <NavLink to="/tribe-stays/">
-                    <img src="assets/img/case-studies-01.png" alt="case-studies" />
-                  </NavLink>
+            {console.log(!loading && casestudies)}
+            {!loading && casestudies && casestudies.slice(0, 3).map((card, index) => (
+              <div className="col-12" data-aos={index % 2 == 0 ? "fade-right" : "fade-left"} data-aos-duration="800">
+                <div className="card__caseStudies">
+                  <div className="top__keywords">
+                    {card.heroSection.workButtons.map((btn, i) => (
+                      <span key={i}>{btn.name}</span>
+                    ))}
+                  </div>
+                  <h4>
+                    <NavLink to={`/casestudy/${card.heroSection.casestudyName.split(" ").join("-")}`}>
+                      {card.heroSection.casestudyName}{" "}
+                      <img src="assets/img/arrow-up-right.svg" alt="case-studies" />
+                    </NavLink>
+                  </h4>
+                  <p>{card.heroSection.description}</p>
+                  <div className="img__box"  >
+                    <NavLink to={`/casestudy/${card.heroSection.casestudyName.split(" ").join("-")}`} >
+                      <img src={(card.heroSection.cardImg && card.heroSection.cardImg.filename) && `http://localhost:5000/images/${card.heroSection.cardImg.filename}`} alt={card.heroSection.casestudyName} />
+                    </NavLink>
+                  </div>
                 </div>
               </div>
-            </div>
+            ))}
 
-            <div className="col-12" data-aos="fade-left" data-aos-duration="800">
-              <div className="card__caseStudies">
-                <div className="top__keywords">
-                  <span>Branding</span>
-                  <span>UI/UX Design</span>
-                </div>
-                <h4>
-                  <NavLink to="/curehub/">
-                    Cure Hub{" "}
-                    <img src="assets/img/arrow-up-right.svg" alt="case-studies" />
-                  </NavLink>
-                </h4>
-                <p>Make hitting the GYM a habit you will love the App.</p>
-                <div className="img__box">
-                  <NavLink to="/curehub/">
-                    <img src="assets/img/case-studies-02.png" alt="case-studies" />
-                  </NavLink>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-12" data-aos="fade-right" data-aos-duration="800">
-              <div className="card__caseStudies">
-                <div className="top__keywords">
-                  <span>UI/UX Design</span>
-                  <span>Website Development</span>
-                </div>
-                <h4>
-                  <NavLink to="/spv-mortgages/">
-                    SPV Mortgages{" "}
-                    <img src="assets/img/arrow-up-right.svg" alt="case-studies" />
-                  </NavLink>
-                </h4>
-                <p>Maximizing Tax Efficiency with SPV Limited Company Mortgages</p>
-                <div className="img__box">
-                  <NavLink to="/spv-mortgages/">
-                    <img src="assets/img/case-studies-03.png" alt="case-studies" />
-                  </NavLink>
-                </div>
-              </div>
-            </div>
           </div>
           <div className="inner__gapTop" data-aos="fade-up" data-aos-duration="800">
             <NavLink to="/case-studies/" className="btn btn__primary m-auto">
@@ -286,8 +267,8 @@ export default function Home() {
                         <h2>{service.heading}</h2>
                         <div className="service__inr">
                           <h6> {service.description}</h6>
-                          <NavLink to={`/services#${service.heading.split(" ").join("-")}`} className="btn btn__primary">
-                            Learn more <img src="assets/img/arrow-up-right.svg" alt="home" />
+                          <NavLink to={service.buttonUrl} className="btn btn__primary">
+                            {service.buttonText} <img src="assets/img/arrow-up-right.svg" alt="home" />
                           </NavLink>
                         </div>
                       </div>

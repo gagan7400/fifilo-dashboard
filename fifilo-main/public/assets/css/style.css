@@ -3142,8 +3142,10 @@ ul li {
 }
 
 .contact_formModal .contact__form .form-control {
-  color: rgba(148, 150, 156, 1);
+  /* color: rgba(148, 150, 156, 1);iam changing it becuase it give problem in careerform*/
+  color: #363a44;
 }
+
 
 .contact_formModal .contact__form .form-control::placeholder,
 .contact__bnr .contact__form .form-control::placeholder {
@@ -3754,7 +3756,6 @@ input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
   -webkit-box-shadow: 0 0 0 30px white inset !important;
-
 }
 
 input:-webkit-autofill {
@@ -3762,10 +3763,12 @@ input:-webkit-autofill {
 }
 
 
-#loginEmailinput:-webkit-autofill,
-#loginEmailinput:-webkit-autofill:hover,
-#loginEmailinput:-webkit-autofill:focus,
-#loginEmailinput:-webkit-autofill:active {
-  -webkit-text-fill-color: #f0f1f1 !important  ;
-  -webkit-box-shadow:  0 0 0 30px #1e1e1d inset !important;
+.contact_formautofill input:-webkit-autofill,
+.contact_formautofill input:-webkit-autofill:hover,
+.contact_formautofill input:-webkit-autofill:focus,
+.contact_formautofill input:-webkit-autofill:active {
+  -webkit-text-fill-color: #f0f1f1 !important;
+  -webkit-box-shadow: 0 0 0 30px #1e1e1d inset !important;
+  color: white !important;
+  ;
 }

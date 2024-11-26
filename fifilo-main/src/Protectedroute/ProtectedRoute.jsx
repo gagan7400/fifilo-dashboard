@@ -30,9 +30,9 @@ export default function ProtectedRoute({ Component }) {
   };
   const { isAuthenticated } = useSelector((state) => state.user);
   return (
-    <>
+    <div>
       {isAuthenticated ? <>{Component}</> : <Navigate to="/admin" />}
-    </>
+    </div>
   )
 }
 

@@ -147,7 +147,7 @@ export default function ContactUs() {
                 <div className="col-lg-6 col-md-6">
                   <form onSubmit={submithandler}>
                     <div className="form__card">
-                      <div className="contact__form" data-aos="fade-up" data-aos-duration="800">
+                      <div className="contact__form contact_formautofill"  data-aos="fade-up" data-aos-duration="800">
                         <div className="inr__input" >
                           <span className='icon'><img src="assets/img/user-01.svg" alt="contact__form" /></span>
                           <input

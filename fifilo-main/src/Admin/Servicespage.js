@@ -387,7 +387,7 @@ const ServicesForm = () => {
                                 <div className="edit__tools">
                                     <div className="card__block">
                                         <div className="row">
-                                            <div className="col-lg-6 col-md-6">
+                                            <div className="col-lg-12">
                                                 <div className="input__inr">
                                                     <label htmlFor="toolheading">Headline</label>
                                                     <input required

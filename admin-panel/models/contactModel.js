@@ -18,7 +18,7 @@ const ContactusSchema = new mongoose.Schema({
         type: String,
         required: [true, "Please Enter Your Password"],
     },
-     date: {
+    date: {
         type: Date,
         default: Date.now()
     }
@@ -31,13 +31,16 @@ let contactPageSchema = new mongoose.Schema({
     },
     cardSection: {
         heading: String,
-        email: String,
-        phoneNumber: String
+        contactlist: [{
+            icon: { filename: String, path: String },
+            value: String,
+        }]
     },
     published: {
         type: Boolean,
         default: false
-    }, seoSection: {
+    },
+    seoSection: {
         title: String,
         keywords: String,
         description: String,

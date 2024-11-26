@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import MediaLibraryModal from "./MediaLibraryModal";
 
-export default function SeoImg({ seoSection, setSeoSection }) {
+export default function SeoImg({ seoSection, setSeoSection, updateContact, index, name, data }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
 
@@ -14,7 +14,11 @@ export default function SeoImg({ seoSection, setSeoSection }) {
     // Handle image selection
     const handleImageSelect = (image) => {
         setSelectedImage(image); // Set the selected image data
-        setSeoSection({ ...seoSection, seoImg: { filename: image.filename, path: image.filePath } })
+        if (setSeoSection && !name) {
+            setSeoSection({ ...seoSection, seoImg: { filename: image.filename, path: image.filePath } })
+        } else {
+            updateContact(index, name, { filename: image.filename, path: image.filePath })
+        }
         setIsModalOpen(false); // Close the modal
     };
     let deleteImg = () => {
@@ -25,8 +29,9 @@ export default function SeoImg({ seoSection, setSeoSection }) {
             <div className="uploaded__images">
                 <div className="image__block">
                     <div className="single__img">
-                        <img src={seoSection.seoImg.filename ? `http://localhost:5000/images/${seoSection.seoImg.filename}` : "assets/imgs/avatar.svg"} alt="" />
-
+                        {(seoSection && !name) ? <img src={seoSection.seoImg.filename ? `http://localhost:5000/images/${seoSection.seoImg.filename}` : "assets/imgs/avatar.svg"} alt="" />
+                            : <img src={data && data.filename ? `http://localhost:5000/images/${data.filename}` : "assets/imgs/avatar.svg"} alt="" />
+                        }
                     </div>
                     <div className="btn__grp">
                         <button className="btn" type="button" onClick={openMediaLibrary}><img src="assets/imgs/edit-05.svg"

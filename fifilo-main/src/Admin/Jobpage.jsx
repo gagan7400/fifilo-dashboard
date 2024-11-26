@@ -143,7 +143,7 @@ export default function Jobpage() {
                                         <div className="col-lg-6 col-md-6">
                                             <div className="input__inr">
                                                 <label htmlFor="yearsOfExperience">Experience</label>
-                                                <input required type="number"
+                                                <input required type="text"
                                                     name="yearsOfExperience"
                                                     id="yearsOfExperience"
                                                     className="form-control"

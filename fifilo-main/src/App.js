@@ -36,7 +36,7 @@ import Careerform from './pages/CareerForm.jsx';
 import Homepage from './Admin/Homepage.js';
 import Faqpage from './Admin/Faqpage.js';
 import Pages from './Admin/Pages.jsx';
-import Jobpage from './Admin/Jobpage.jsx'; import TinyMCE from './Admin/TinyMCE.jsx';
+import Jobpage from './Admin/Jobpage.jsx';
 import CasestudyPages from './Admin/CasestudyPages.js';
 import CasestudyPage from './Admin/CasestudyPage.js';
 import Casestudy from './pages/Casestudy.jsx';
@@ -76,7 +76,6 @@ function App() {
     <Layout>
       <ScrollToTop />
       <Routes>
-        <Route path="/editor" element={<ProtectedRoute Component={<TinyMCE />} />} />
         <Route path="/pages" element={<ProtectedRoute Component={<Pages />} />} />
         <Route path="/dashboard" element={<ProtectedRoute Component={<Dashboard />} />} />
         <Route path="/pages/home" element={<ProtectedRoute Component={<Homepage />} />} />

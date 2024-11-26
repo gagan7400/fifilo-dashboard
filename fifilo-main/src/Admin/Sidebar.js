@@ -2,11 +2,11 @@ import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { logout } from '../redux/actions/adminloginaction';
 import { NavLink } from 'react-router-dom';
+import "./dashboard.css";
 export default function Sidebar() {
   let dispatch = useDispatch();
 
   return (
-
     <div className="shell">
       <nav className="sidebar">
         <div className="top-bar">
@@ -38,11 +38,6 @@ export default function Sidebar() {
             <li className="nav-item">
               <NavLink to="/section/faq" className="nav-link"  >
                 <img src="assets/imgs/task.svg" alt="faq Icon" />Faq
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink to="/editor" className="nav-link"  >
-                <img src="assets/imgs/task.svg" alt="faq Icon" />Editor
               </NavLink>
             </li>
           </ul>

@@ -36,10 +36,11 @@ const caseStudySchema = new mongoose.Schema({
     typographyData: {
         heading: String,
         fontFamily: String,
-        fontTable: [{ fontSize: String, lineHeight: String, _id: false }],
+        fontTable: [{ name: String, fontSize: String, lineHeight: String, _id: false }],
     },
     updatedLook: { heading: String, description: String, imgs: [{ filename: String, path: String, _id: false }] },
     fullWidthImg: [{ filename: String, path: String, _id: false }],
+    impactAndImprovement: { heading: String, description: String },
     howFifiloDesignsDrives: { heading: String, description: String },
 }, { timestamps: true });
 

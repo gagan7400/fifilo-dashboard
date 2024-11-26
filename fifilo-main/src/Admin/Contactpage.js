@@ -15,10 +15,11 @@ const Contactpage = () => {
 
     const [cardSection, setCardSection] = useState({
         heading: pageData ? pageData.cardSection.heading : "",
-        email: pageData ? pageData.cardSection.email : "",
-        phoneNumber: pageData ? pageData.cardSection.phoneNumber : ""
-    }
-    );
+        contactlist: [{
+            icon: { filename: "", path: "" },
+            value: "",
+        }]
+    });
 
     const [seoSection, setSeoSection] = useState(pageData ? { ...pageData.seoSection } :
         {
@@ -27,7 +28,29 @@ const Contactpage = () => {
             description: "",
             seoImg: { filename: "", path: "" }
         });
+    // Add Contact
+    const addContact = () => {
+        setCardSection(prevState => ({
+            ...prevState, contactlist: [...prevState.contactlist, { icon: { filename: "", path: "" }, value: "" }]
+        }));
+    };
 
+    // Remove Contact
+    const removeContact = (index) => {
+        setCardSection(prevState => ({
+            ...prevState, contactlist: prevState.contactlist.filter((_, i) => i !== index)
+        }));
+    };
+
+    // Update Contact List (Icon or Value)
+    const updateContact = (index, field, value) => {
+        setCardSection(prevState => ({
+            ...prevState,
+            contactlist: prevState.contactlist.map((contact, i) =>
+                i === index ? { ...contact, [field]: value } : contact
+            )
+        }));
+    };
     const handleSubmit = async (e) => {
         e.preventDefault();
         dispatch(updateContactPageAction({ contactPageData: { heroSection, seoSection, cardSection }, id: pageData._id }));
@@ -48,7 +71,6 @@ const Contactpage = () => {
                     <div className="page__title">
                         <h5>Contact Page</h5>
                     </div>
-
                     <div className="page__editContent">
                         <ul className="nav nav-pills" id="pills-tab" role="tablist">
                             <li className="nav-item" role="presentation">
@@ -122,29 +144,23 @@ const Contactpage = () => {
                                                     </div>
                                                 </div>
                                                 <div className="col-lg-12">
-                                                    <div className="input__inr">
-                                                        <label htmlFor="cardemail">Email</label>
-                                                        <input required type="text"
-                                                            id="cardemail"
-                                                            name="cardSection.email"
-                                                            className="form-control"
-                                                            value={cardSection.email}
-                                                            onChange={(e) => setCardSection({ ...cardSection, email: e.target.value })}
-                                                            placeholder="Enter Email"
-                                                        />
-                                                    </div>
-                                                </div>
-                                                <div className="col-lg-12">
-                                                    <div className="input__inr">
-                                                        <label htmlFor="cardphoneNumber">Phone Number</label>
-                                                        <input required type="text"
-                                                            id="cardphoneNumber"
-                                                            name="cardSection.phoneNumber"
-                                                            className="form-control"
-                                                            value={cardSection.phoneNumber}
-                                                            onChange={(e) => setCardSection({ ...cardSection, phoneNumber: e.target.value })}
-                                                            placeholder="Enter phoneNumber"
-                                                        />
+                                                    <div className="seo__card">
+                                                        <div className="card__block">
+                                                            {cardSection.contactlist.map((contact, index) => (
+                                                                <div className="row">
+                                                                    <SeoImg updateContact={updateContact} index={index} name="icon" data={contact.icon} />
+                                                                    <div className="col-lg-12">
+                                                                        <div className="input__inr">
+                                                                            <label htmlFor="value">value</label>
+                                                                            <input type="text" id="value" className="form-control"
+                                                                                value={contact.value}
+                                                                                onChange={(e) => updateContact(index, "value", e.target.value)}
+                                                                                placeholder="Enter Value" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            ))}
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

@@ -137,7 +137,7 @@ export default function Casestudy() {
                                 {(!loading && casestudy) && casestudy.overviewSection.briefInsight.overviewBox.map((value, index) => (
                                     <div key={index}>
                                         <p>{value.name}</p>
-                                        <h5>{value.name}</h5>
+                                        <h5>{value.value}</h5>
                                     </div>
                                 ))}
                             </div>
@@ -320,7 +320,7 @@ export default function Casestudy() {
                                     __html: DOMPurify.sanitize(!loading && casestudy && casestudy.typographyData.heading)
                                 }} />
                                 <div className="font__family">
-                                    <h2 dangerouslySetInnerHTML={{
+                                    <h2 style={{ fontFamily: !loading && casestudy && casestudy.typographyData.fontFamily }} dangerouslySetInnerHTML={{
                                         __html: DOMPurify.sanitize(!loading && casestudy && casestudy.typographyData.fontFamily)
                                     }} />
 
@@ -375,9 +375,18 @@ export default function Casestudy() {
                     </div>
                 ))}
 
-
                 <div className="container" data-aos="fade-up" data-aos-duration="800">
                     <div className="row justify-content-center">
+                        {!loading &&casestudy.impactAndImprovement &&  casestudy.impactAndImprovement.heading && <div className="col-lg-10">
+                            <div className="content__box" data-aos="fade-up" data-aos-duration="800">
+                                <h3 dangerouslySetInnerHTML={{
+                                    __html: DOMPurify.sanitize(!loading && casestudy && casestudy.impactAndImprovement.heading)
+                                }} />
+                                <div dangerouslySetInnerHTML={{
+                                    __html: DOMPurify.sanitize(!loading && casestudy && casestudy.impactAndImprovement.description)
+                                }} />
+                            </div>
+                        </div>}
                         <div className="col-lg-10">
                             <div className="content__box">
                                 <h3 dangerouslySetInnerHTML={{
@@ -386,7 +395,6 @@ export default function Casestudy() {
                                 <p dangerouslySetInnerHTML={{
                                     __html: DOMPurify.sanitize(!loading && casestudy && casestudy.howFifiloDesignsDrives.description)
                                 }} />
-
                             </div>
                         </div>
                     </div>

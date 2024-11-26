@@ -4,8 +4,8 @@ const caseStudyModel = require("../models/caseStudyModel.js");
 
 const createCaseStudy = async (req, res) => {
     try {
-        const { heroSection, overviewSection, designProcessSection, sketches, styleGuideSection, typographyData, howFifiloDesignsDrives, updatedLook, fullWidthImg } = req.body;
-        const caseStudy = new caseStudyModel({ heroSection, overviewSection, designProcessSection, sketches, styleGuideSection, typographyData, howFifiloDesignsDrives, updatedLook, fullWidthImg });
+        const { heroSection, overviewSection, designProcessSection, sketches, styleGuideSection, typographyData,impactAndImprovement, howFifiloDesignsDrives, updatedLook, fullWidthImg } = req.body;
+        const caseStudy = new caseStudyModel({ heroSection, overviewSection, designProcessSection, sketches, styleGuideSection, impactAndImprovement,typographyData, howFifiloDesignsDrives, updatedLook, fullWidthImg });
         await caseStudy.save();
         res.status(201).json({ success: true, data: caseStudy });
     } catch (err) {
@@ -25,7 +25,6 @@ const getCaseStudyByName = async (req, res) => {
     try {
         let { name } = req.params;
         const result = await caseStudyModel.findOne({ "heroSection.casestudyName": name });
-        console.log(result, name)
         res.send({ success: true, data: result });
     } catch (err) {
         res.status(400).json({ success: false, message: err.message });
@@ -51,7 +50,7 @@ const deleteCaseStudy = async (req, res) => {
 const updateCaseStudy = async (req, res) => {
     try {
         const { id } = req.params; // We're updating the about  by ID
-        const { heroSection, overviewSection, designProcessSection, sketches, styleGuideSection, typographyData, howFifiloDesignsDrives, updatedLook, fullWidthImg } = req.body;
+        const { heroSection, overviewSection, designProcessSection, sketches, styleGuideSection, typographyData, impactAndImprovement ,howFifiloDesignsDrives, updatedLook, fullWidthImg } = req.body;
 
         const casestudy = await caseStudyModel.findById(id);
 
@@ -99,6 +98,12 @@ const updateCaseStudy = async (req, res) => {
             casestudy.howFifiloDesignsDrives = {
                 ...casestudy.howFifiloDesignsDrives,
                 ...howFifiloDesignsDrives
+            };
+        }
+        if (impactAndImprovement) {
+            casestudy.impactAndImprovement = {
+                ...casestudy.impactAndImprovement,
+                ...impactAndImprovement
             };
         }
         if (updatedLook) {

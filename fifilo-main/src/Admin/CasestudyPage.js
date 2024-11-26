@@ -6,6 +6,7 @@ import axios from 'axios';
 import ProcessIcon from './ProcessIcon';
 import { Editor } from "@tinymce/tinymce-react";
 import SketchesImg from './SketchesImg';
+import "./dashboard.css";
 const CasestudyPage = () => {
     const { pageData } = useSelector((state) => state.page);
     const [heroSection, setHeroSection] = useState(pageData ? { ...pageData.heroSection } : {
@@ -41,6 +42,7 @@ const CasestudyPage = () => {
         fontFamily: "",
         fontTable: [{ name: "", fontSize: "", lineHeight: "", }],
     })
+    const [impactAndImprovement, setImpactAndImprovement] = useState(pageData ? { ...pageData.impactAndImprovement } : { heading: "", description: "" });
     const [howFifiloDesignsDrives, setHowFifiloDesignsDrives] = useState(pageData ? { ...pageData.howFifiloDesignsDrives } : { heading: "", description: "" });
     const [updatedLook, setUpdatedLook] = useState(pageData ? { ...pageData.updatedLook } : { heading: "", description: "", imgs: [{ filename: "", path: "" }] })
     const [fullWidthImg, setFullWidthImg] = useState(pageData ? [...pageData.fullWidthImg] : [{ filename: "", path: "" }]);
@@ -221,7 +223,7 @@ const CasestudyPage = () => {
             if (heroSection) {
                 let { data } = await axios.put('http://localhost:5000/admin/casestudy/updatecasestudy/' + pageData._id,
                     {
-                        heroSection, overviewSection, designProcessSection,
+                        heroSection, overviewSection, designProcessSection, impactAndImprovement,
                         sketches, styleGuideSection, typographyData, howFifiloDesignsDrives, updatedLook, fullWidthImg
                     }, {
                     headers: {
@@ -266,7 +268,7 @@ const CasestudyPage = () => {
                             <li className="nav-item" role="presentation">
                                 <button className="nav-link" id="pills-overviewSection-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-overviewSection" type="button" role="tab" aria-controls="pills-overviewSection"
-                                    aria-selected="true">overviewSection</button>
+                                    aria-selected="true">Overview</button>
                             </li>
                             <li className="nav-item" role="presentation">
                                 <button className="nav-link" id="pills-process-tab" data-bs-toggle="pill"
@@ -281,28 +283,34 @@ const CasestudyPage = () => {
                             <li className="nav-item" role="presentation">
                                 <button className="nav-link" id="pills-styleGuideSection-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-styleGuideSection" type="button" role="tab" aria-controls="pills-styleGuideSection"
-                                    aria-selected="false">StyleGuideSection</button>
+                                    aria-selected="false">Style Guide</button>
                             </li>
                             <li className="nav-item" role="presentation">
                                 <button className="nav-link" id="pills-typographyData-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-typographyData" type="button" role="tab" aria-controls="pills-typographyData"
-                                    aria-selected="false">TypographyData</button>
+                                    aria-selected="false">Typography</button>
+                            </li>
+
+                            <li className="nav-item" role="presentation">
+                                <button className="nav-link" id="pills-updatedLook-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-updatedLook" type="button" role="tab" aria-controls="pills-updatedLook"
+                                    aria-selected="false">Updated Look</button>
+                            </li>
+                            <li className="nav-item" role="presentation">
+                                <button className="nav-link" id="pills-impactAndImprovement-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-impactAndImprovement" type="button" role="tab" aria-controls="pills-impactAndImprovement"
+                                    aria-selected="false">Impact and Improvement</button>
                             </li>
                             <li className="nav-item" role="presentation">
                                 <button className="nav-link" id="pills-howFifiloDesignsDrives-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-howFifiloDesignsDrives" type="button" role="tab" aria-controls="pills-howFifiloDesignsDrives"
-                                    aria-selected="false">HowFifiloDesignsDrives</button>
+                                    aria-selected="false">How Fifilo Designs</button>
                             </li>
-                            <li className="nav-item" role="presentation">
-                                <button className="nav-link" id="pills-updatedLook-tab" data-bs-toggle="pill"
-                                    data-bs-target="#pills-updatedLook" type="button" role="tab" aria-controls="pills-updatedLook"
-                                    aria-selected="false">UpdatedLook</button>
-                            </li>
-                            <li className="nav-item" role="presentation">
+                            {/* <li className="nav-item" role="presentation">
                                 <button className="nav-link" id="pills-fullWidthImg-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-fullWidthImg" type="button" role="tab" aria-controls="pills-fullWidthImg"
                                     aria-selected="false">FullWidthImg</button>
-                            </li>
+                            </li> */}
                         </ul>
                         <div className="tab-content" id="pills-tabContent">
                             <div className="tab-pane fade show active" id="pills-hero" role="tabpanel"
@@ -917,44 +925,7 @@ const CasestudyPage = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="tab-pane fade" id="pills-howFifiloDesignsDrives" role="tabpanel"
-                                aria-labelledby="pills-howFifiloDesignsDrives-tab">
-                                <div className="edit__tools">
-                                    <div className="card__block">
-                                        <div className="testimonial__box">
-                                            <div className="row">
-                                                <div className="col-lg-12">
-                                                    <div className="input__inr">
-                                                        <label htmlFor="heading">Heading</label>
-                                                        <input required type="text"
-                                                            name="howFifiloDesignsDrives"
-                                                            id="heading"
-                                                            className="form-control"
-                                                            value={howFifiloDesignsDrives.heading}
-                                                            onChange={(e) => setHowFifiloDesignsDrives({ ...howFifiloDesignsDrives, heading: e.target.value })}
-                                                            placeholder="Enter Heading"
-                                                        />
-                                                    </div>
-                                                </div>
-                                                <div className="col-lg-12">
-                                                    <div className="input__inr">
-                                                        <label htmlFor="description">Description</label>
-                                                        <textarea rows={4} id="description"
-                                                            name="description"
-                                                            className="form-control"
-                                                            value={howFifiloDesignsDrives.description}
-                                                            onChange={(e) => setHowFifiloDesignsDrives({ ...howFifiloDesignsDrives, description: e.target.value })}
-                                                            placeholder="Enter Description" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="update__block">
-                                                <button className="btn btn__update" type="button" onClick={handleSubmit}>Update</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+
                             <div className="tab-pane fade" id="pills-updatedLook" role="tabpanel" aria-labelledby="pills-updatedLook-tab">
                                 <div className="edit__tools">
                                     <div className="card__block">
@@ -1012,7 +983,95 @@ const CasestudyPage = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="tab-pane fade" id="pills-fullWidthImg" role="tabpanel" aria-labelledby="pills-fullWidthImg-tab">
+                            <div className="tab-pane fade" id="pills-impactAndImprovement" role="tabpanel"
+                                aria-labelledby="pills-impactAndImprovement-tab">
+                                <div className="edit__tools">
+                                    <div className="card__block">
+                                        <div className="testimonial__box">
+                                            <div className="row">
+                                                <div className="col-lg-12">
+                                                    <div className="input__inr">
+                                                        <label htmlFor="heading">Heading</label>
+                                                        <input required type="text"
+                                                            name="impactAndImprovement"
+                                                            id="heading"
+                                                            className="form-control"
+                                                            value={impactAndImprovement.heading}
+                                                            onChange={(e) => setImpactAndImprovement({ ...impactAndImprovement, heading: e.target.value })}
+                                                            placeholder="Enter Heading"
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div className="col-lg-12">
+                                                    <div className="input__inr">
+                                                        <label htmlFor="description">Description</label>
+                                                        <Editor
+                                                            value={impactAndImprovement.description}
+                                                            apiKey="jd3e97w8li70lbzue44vverzarnpb6y52c1aht6swqstquwz"
+                                                            init={{
+                                                                height: 400,
+                                                                menubar: true,
+                                                                plugins: [
+                                                                    "advlist",
+                                                                    "lists",
+                                                                    "link", "image", "charmap", "preview", "anchor", // Optional additional features
+                                                                    "searchreplace", "visualblocks", "code", "fullscreen",
+                                                                    "insertdatetime", "media", "table", "paste", "help", "wordcount"
+                                                                ],
+                                                                toolbar:
+                                                                    "undo redo | formatselect | bold italic backcolor  | \ alignleft aligncenter alignright alignjustify | \ bullist numlist | removeformat | help",
+                                                            }}
+                                                            onEditorChange={(newContent) => setImpactAndImprovement({ ...impactAndImprovement, description: newContent })}
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="update__block">
+                                                <button className="btn btn__update" type="button" onClick={handleSubmit}>Update</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="tab-pane fade" id="pills-howFifiloDesignsDrives" role="tabpanel"
+                                aria-labelledby="pills-howFifiloDesignsDrives-tab">
+                                <div className="edit__tools">
+                                    <div className="card__block">
+                                        <div className="testimonial__box">
+                                            <div className="row">
+                                                <div className="col-lg-12">
+                                                    <div className="input__inr">
+                                                        <label htmlFor="heading">Heading</label>
+                                                        <input required type="text"
+                                                            name="howFifiloDesignsDrives"
+                                                            id="heading"
+                                                            className="form-control"
+                                                            value={howFifiloDesignsDrives.heading}
+                                                            onChange={(e) => setHowFifiloDesignsDrives({ ...howFifiloDesignsDrives, heading: e.target.value })}
+                                                            placeholder="Enter Heading"
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div className="col-lg-12">
+                                                    <div className="input__inr">
+                                                        <label htmlFor="description">Description</label>
+                                                        <textarea rows={4} id="description"
+                                                            name="description"
+                                                            className="form-control"
+                                                            value={howFifiloDesignsDrives.description}
+                                                            onChange={(e) => setHowFifiloDesignsDrives({ ...howFifiloDesignsDrives, description: e.target.value })}
+                                                            placeholder="Enter Description" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="update__block">
+                                                <button className="btn btn__update" type="button" onClick={handleSubmit}>Update</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {/* <div className="tab-pane fade" id="pills-fullWidthImg" role="tabpanel" aria-labelledby="pills-fullWidthImg-tab">
                                 <div className="edit__tools">
                                     <div className="card__block">
                                         <div className="row">
@@ -1042,7 +1101,7 @@ const CasestudyPage = () => {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>

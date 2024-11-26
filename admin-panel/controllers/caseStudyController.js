@@ -4,8 +4,8 @@ const caseStudyModel = require("../models/caseStudyModel.js");
 
 const createCaseStudy = async (req, res) => {
     try {
-        const { heroSection, overviewSection, designProcessSection, sketches, styleGuideSection } = req.body;
-        const caseStudy = new caseStudyModel({ heroSection, overviewSection, designProcessSection, sketches, styleGuideSection });
+        const { heroSection, overviewSection, designProcessSection, sketches, styleGuideSection, typographyData, howFifiloDesignsDrives, updatedLook, fullWidthImg } = req.body;
+        const caseStudy = new caseStudyModel({ heroSection, overviewSection, designProcessSection, sketches, styleGuideSection, typographyData, howFifiloDesignsDrives, updatedLook, fullWidthImg });
         await caseStudy.save();
         res.status(201).json({ success: true, data: caseStudy });
     } catch (err) {
@@ -51,7 +51,7 @@ const deleteCaseStudy = async (req, res) => {
 const updateCaseStudy = async (req, res) => {
     try {
         const { id } = req.params; // We're updating the about  by ID
-        const { heroSection, overviewSection, sketches, designProcessSection, styleGuideSection } = req.body;
+        const { heroSection, overviewSection, designProcessSection, sketches, styleGuideSection, typographyData, howFifiloDesignsDrives, updatedLook, fullWidthImg } = req.body;
 
         const casestudy = await caseStudyModel.findById(id);
 
@@ -87,6 +87,30 @@ const updateCaseStudy = async (req, res) => {
             casestudy.styleGuideSection = {
                 ...casestudy.styleGuideSection,
                 ...styleGuideSection
+            };
+        }
+        if (typographyData) {
+            casestudy.typographyData = {
+                ...casestudy.typographyData,
+                ...typographyData
+            };
+        }
+        if (howFifiloDesignsDrives) {
+            casestudy.howFifiloDesignsDrives = {
+                ...casestudy.howFifiloDesignsDrives,
+                ...howFifiloDesignsDrives
+            };
+        }
+        if (updatedLook) {
+            casestudy.updatedLook = {
+                ...casestudy.updatedLook,
+                ...updatedLook
+            };
+        }
+        if (fullWidthImg) {
+            casestudy.fullWidthImg = {
+                ...casestudy.fullWidthImg,
+                ...fullWidthImg
             };
         }
         casestudy.updatedAt = Date.now();

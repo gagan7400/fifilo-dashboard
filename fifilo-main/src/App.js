@@ -4,7 +4,7 @@ import About from "./pages/About.jsx";
 import Services from "./pages/Services.jsx";
 import CaseStudies from "./pages/CaseStudies.jsx";
 import ContactUs from "./pages/ContactUs.jsx";
-import {  Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import $ from "jquery"; // import jQuery
 import anime from "animejs";
 import Career from "./pages/Career.jsx";
@@ -44,8 +44,8 @@ import Layout from "./pages/Layout.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import Newcasestudy from "./Admin/Newcasestudy.js";
 function App() {
- let dispatch = useDispatch();
-   
+  let dispatch = useDispatch();
+
   useEffect(() => {
     $(document).ready(function () {
       function fitElementToParent(el, padding) {

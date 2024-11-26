@@ -24,22 +24,22 @@ const caseStudySchema = new mongoose.Schema({
     sketches: {
         heading: String,
         description: String,
-        imgs: [{ filename: String, path: String }]
+        imgs: [{ filename: String, path: String, _id: false }]
     },
     styleGuideSection: {
         heading: String,
         description: String,
         sectionName: String,
         BrandcolorSections: [{ name: String, hex: String }],
-        SecondaryColorSections: [{ name: String, hex: String }],
+        SecondaryColorSections: [{ name: String, hex: String, _id: false }],
     },
     typographyData: {
         heading: String,
         fontFamily: String,
-        fontTable: [{ fontSize: String, lineHeight: String, }],
+        fontTable: [{ fontSize: String, lineHeight: String, _id: false }],
     },
-    updatedLook: { heading: String, description: String, imgs: [{ filename: String, path: String }] },
-    fullWidthImg: [{ filename: String, path: String }],
+    updatedLook: { heading: String, description: String, imgs: [{ filename: String, path: String, _id: false }] },
+    fullWidthImg: [{ filename: String, path: String, _id: false }],
     howFifiloDesignsDrives: { heading: String, description: String },
 }, { timestamps: true });
 

@@ -28,24 +28,41 @@ const CasestudyPage = () => {
         heading: "",
         content: [{ heading: '', description: '', icon: { filename: "", path: "" } }],
     });
-    const [sketches, setSketches] = useState({ heading: "", description: "", imgs: [{ filename: "", path: "" }], });
-    const [styleGuideSection, setStyleGuideSection] = useState({
+    const [sketches, setSketches] = useState(pageData ? { ...pageData.sketches } : { heading: "", description: "", imgs: [{ filename: "", path: "" }], });
+    const [styleGuideSection, setStyleGuideSection] = useState(pageData ? { ...pageData.styleGuideSection } : {
         heading: "",
         description: "",
         sectionName: "",
         BrandcolorSections: [{ name: "", hex: "" }],
         SecondaryColorSections: [{ name: "", hex: "" }],
     })
-    const [typographyData, setTypographyData] = useState({
+    const [typographyData, setTypographyData] = useState(pageData ? { ...pageData.typographyData } : {
         heading: "",
         fontFamily: "",
-        fontTable: [{ fontSize: "", lineHeight: "", }],
+        fontTable: [{ name: "", fontSize: "", lineHeight: "", }],
     })
-    const [howFifiloDesignsDrives, setHowFifiloDesignsDrives] = useState({ heading: "", description: "" })
+    const [howFifiloDesignsDrives, setHowFifiloDesignsDrives] = useState(pageData ? { ...pageData.howFifiloDesignsDrives } : { heading: "", description: "" });
+    const [updatedLook, setUpdatedLook] = useState(pageData ? { ...pageData.updatedLook } : { heading: "", description: "", imgs: [{ filename: "", path: "" }] })
+    const [fullWidthImg, setFullWidthImg] = useState(pageData ? [...pageData.fullWidthImg] : [{ filename: "", path: "" }]);
+    const addFullWidthImg = () => {
+        let newImg = { filename: "", path: "" }
+        setFullWidthImg(prevState => ([...prevState, { ...newImg }]));
+    }
+    const removeFullWidthImg = (index) => {
+        if (window.confirm("Are You Sure ,You Want To Delete This")) {
+            const updatedContent = fullWidthImg.filter((_, i) => i !== index);
+            setFullWidthImg([...updatedContent]);
+        }
+    }
+    const handleFullWidthImg = (index, data) => {
+        const newImg = fullWidthImg.map((img) => ({ ...img }));
+        newImg[index] = data;
+        setFullWidthImg([...newImg])
+    }
     const addFontTable = () => {
         setTypographyData((prevState) => ({
             ...prevState,
-            fontTable: [...prevState.fontTable, { fontSize: "", lineHeight: "" }],
+            fontTable: [...prevState.fontTable, { name: "", fontSize: "", lineHeight: "" }],
         }));
     };
     const removeFontTable = (index) => {
@@ -109,9 +126,21 @@ const CasestudyPage = () => {
         newImg[index] = data;
         setSketches({ ...sketches, imgs: [...newImg] })
     }
-    // updatedLook: { heading: String, description: String, imgs: [{ filename: String, path: String }] },
-    // fullWidthImg: [{ filename: String, path: String }],
-    // HowFifiloDesignsDrives: { heading: String, description: String },
+    const addupdatedLookImg = () => {
+        let newImg = { filename: "", path: "" }
+        setUpdatedLook(prevState => ({ ...prevState, imgs: [...prevState.imgs, newImg] }));
+    }
+    const removeupdatedLookImg = (index) => {
+        if (window.confirm("Are You Sure ,You Want To Delete This")) {
+            const updatedContent = updatedLook.imgs.filter((_, i) => i !== index);
+            setUpdatedLook({ ...updatedLook, imgs: updatedContent });
+        }
+    }
+    const HandleupdatedLookImg = (index, name, data) => {
+        const newImg = updatedLook.imgs.map((img) => ({ ...img }));
+        newImg[index] = data;
+        setUpdatedLook({ ...updatedLook, imgs: [...newImg] })
+    }
     const handleContentCardChange = (index, event, data) => {
         const values = designProcessSection.content.map((card) => ({ ...card }));
         if (event === 'icon') {
@@ -190,7 +219,11 @@ const CasestudyPage = () => {
         e.preventDefault();
         try {
             if (heroSection) {
-                let { data } = await axios.put('http://localhost:5000/admin/casestudy/updatecasestudy/' + pageData._id, { heroSection, overviewSection, sketches, designProcessSection, styleGuideSection }, {
+                let { data } = await axios.put('http://localhost:5000/admin/casestudy/updatecasestudy/' + pageData._id,
+                    {
+                        heroSection, overviewSection, designProcessSection,
+                        sketches, styleGuideSection, typographyData, howFifiloDesignsDrives, updatedLook, fullWidthImg
+                    }, {
                     headers: {
                         'Content-Type': 'application/json',
                         'x-auth-token': localStorage.getItem('token')
@@ -259,6 +292,16 @@ const CasestudyPage = () => {
                                 <button className="nav-link" id="pills-howFifiloDesignsDrives-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-howFifiloDesignsDrives" type="button" role="tab" aria-controls="pills-howFifiloDesignsDrives"
                                     aria-selected="false">HowFifiloDesignsDrives</button>
+                            </li>
+                            <li className="nav-item" role="presentation">
+                                <button className="nav-link" id="pills-updatedLook-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-updatedLook" type="button" role="tab" aria-controls="pills-updatedLook"
+                                    aria-selected="false">UpdatedLook</button>
+                            </li>
+                            <li className="nav-item" role="presentation">
+                                <button className="nav-link" id="pills-fullWidthImg-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-fullWidthImg" type="button" role="tab" aria-controls="pills-fullWidthImg"
+                                    aria-selected="false">FullWidthImg</button>
                             </li>
                         </ul>
                         <div className="tab-content" id="pills-tabContent">
@@ -816,6 +859,21 @@ const CasestudyPage = () => {
                                                                 </div>
                                                                 <div className="col-lg-12">
                                                                     <div className="input__inr">
+                                                                        <label htmlFor="name" className="form-label">Name</label>
+                                                                        <input required type="text"
+                                                                            id="name"
+                                                                            name="name"
+                                                                            className="form-control"
+                                                                            value={font.name}
+                                                                            onChange={(e) =>
+                                                                                handleFontTableChange(index, "name", e.target.value)
+                                                                            }
+                                                                            placeholder="Enter Name"
+                                                                        />
+                                                                    </div>
+                                                                </div>
+                                                                <div className="col-lg-12">
+                                                                    <div className="input__inr">
                                                                         <label htmlFor="fontSize" className="form-label">fontSize</label>
                                                                         <input required type="text"
                                                                             id="fontSize"
@@ -893,6 +951,94 @@ const CasestudyPage = () => {
                                             <div className="update__block">
                                                 <button className="btn btn__update" type="button" onClick={handleSubmit}>Update</button>
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="tab-pane fade" id="pills-updatedLook" role="tabpanel" aria-labelledby="pills-updatedLook-tab">
+                                <div className="edit__tools">
+                                    <div className="card__block">
+                                        <div className="row">
+                                            <div className="col-lg-12">
+                                                <div className="input__inr">
+                                                    <label htmlFor="updatedLookHeading" className="form-label">Heading</label>
+                                                    <input required type="text"
+                                                        id="updatedLookHeading"
+                                                        name="updatedLookHeading"
+                                                        className="form-control"
+                                                        value={updatedLook.heading}
+                                                        onChange={(e) => setUpdatedLook({ ...updatedLook, heading: e.target.value })}
+                                                        placeholder="Enter Heading"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="col-lg-12">
+                                                <div className="input__inr">
+                                                    <label htmlFor="updatedLookdescription" className="form-label">Description</label>
+                                                    <input required type="text"
+                                                        id="updatedLookDescription"
+                                                        name="updatedLookDescription"
+                                                        className="form-control"
+                                                        value={updatedLook.description}
+                                                        onChange={(e) => setUpdatedLook({ ...updatedLook, description: e.target.value })}
+                                                        placeholder="Enter Description"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="col-lg-12">
+                                                <div className="seo__card">
+                                                    {updatedLook.imgs.map((img, index) => (
+                                                        <div className="card__block" key={index} >
+                                                            <div className="testimonial__box">
+                                                                <div className="top__heading">
+                                                                    <p>Img {index + 1}</p>
+                                                                    <button className="btn" onClick={() => removeupdatedLookImg(index)} ><img src="assets/imgs/trash.svg" alt="" />Delete</button>
+                                                                </div>
+                                                                <div className="row">
+                                                                    <SketchesImg HandleupdatedLookImg={HandleupdatedLookImg} index={index} img={img} />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                    <div className="add__review">
+                                                        <button className="btn" onClick={addupdatedLookImg}><img src="assets/imgs/plus.svg" alt="" />Add Img</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="update__block">
+                                            <button className="btn btn__update" type="button" onClick={handleSubmit}>Update</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="tab-pane fade" id="pills-fullWidthImg" role="tabpanel" aria-labelledby="pills-fullWidthImg-tab">
+                                <div className="edit__tools">
+                                    <div className="card__block">
+                                        <div className="row">
+                                            <div className="col-lg-12">
+                                                <div className="seo__card">
+                                                    {fullWidthImg.map((img, index) => (
+                                                        <div className="card__block" key={index} >
+                                                            <div className="testimonial__box">
+                                                                <div className="top__heading">
+                                                                    <p>Img {index + 1}</p>
+                                                                    <button className="btn" onClick={() => removeFullWidthImg(index)} ><img src="assets/imgs/trash.svg" alt="" />Delete</button>
+                                                                </div>
+                                                                <div className="row">
+                                                                    <SketchesImg handleFullWidthImg={handleFullWidthImg} index={index} img={img} />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                    <div className="add__review">
+                                                        <button className="btn" onClick={addFullWidthImg}><img src="assets/imgs/plus.svg" alt="" />Add Img</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="update__block">
+                                            <button className="btn btn__update" type="button" onClick={handleSubmit}>Update</button>
                                         </div>
                                     </div>
                                 </div>

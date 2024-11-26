@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import MediaLibraryModal from "./MediaLibraryModal";
 
-export default function SketchesImg({ name, HandleSketchesImg, index, img }) {
+export default function SketchesImg({ name, HandleSketchesImg, HandleupdatedLookImg, handleFullWidthImg, index, img }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
 
@@ -14,15 +14,27 @@ export default function SketchesImg({ name, HandleSketchesImg, index, img }) {
     // Handle image selection
     const handleImageSelect = (image) => {
         setSelectedImage(image); // Set the selected image data
-        HandleSketchesImg(index, name, { filename: image.filename, path: image.filePath })
+        if (HandleSketchesImg) {
+            HandleSketchesImg(index, name, { filename: image.filename, path: image.filePath })
+        }
+        else if (handleFullWidthImg) {
+            handleFullWidthImg(index, { filename: image.filename, path: image.filePath })
+        } else {
+            HandleupdatedLookImg(index, name, { filename: image.filename, path: image.filePath })
+        }
         setIsModalOpen(false); // Close the modal
     };
     let deleteImg = () => {
-        HandleSketchesImg(index, name, { filename: "", path: "" })
+        if (HandleSketchesImg) {
+            HandleSketchesImg(index, name, { filename: "", path: "" })
+        } else {
+            HandleupdatedLookImg(index, name, { filename: "", path: "" })
+        }
+
     }
     return (
         <div className="col-lg-12">
-             <div className="profile__block">
+            <div className="profile__block">
                 <div className="image__block">
                     <img src={img && img.filename ? `http://localhost:5000/images/${img.filename}` : "assets/imgs/avatar.svg"} alt="" />
                 </div>

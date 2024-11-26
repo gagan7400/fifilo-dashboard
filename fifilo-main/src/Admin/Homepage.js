@@ -58,7 +58,7 @@ const Homepage = () => {
         heading: pageData ? pageData.clientSection.heading : "",
         subHeading: pageData ? pageData.clientSection.subHeading : "",
     });
-     
+
     const [clientLogos, setClientLogos] = useState(pageData ?
         [...pageData.clientSection.clientLogos] : [{ filename: '', path: '' }]
     );

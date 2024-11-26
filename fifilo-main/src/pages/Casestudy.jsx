@@ -13,9 +13,10 @@ export default function Casestudy() {
     let { name } = useParams()
     // const { pageData } = useSelector((state) => state.page);
     let [casestudy, setCasestudy] = useState(null);
+    let [casestudies, setCasestudies] = useState(null);
     let [loading, setLoading] = useState(true);
     console.log(name, name.split("-").join(""))
-    let alldata = async () => {
+    let getCasestudy = async () => {
         try {
             console.log(name, name.split("-").join(""))
             let { data } = await axios.get('http://localhost:5000/admin/casestudy/getcasestudy/' + name.split("-").join(""));
@@ -31,7 +32,23 @@ export default function Casestudy() {
             setCasestudy(null);
         }
     }
+    let alldata = async () => {
+        try {
+            let { data } = await axios.get('http://localhost:5000/admin/casestudy/getcasestudy');
+            if (data.success) {
+                setCasestudies(data.data);
+                setLoading(false)
+            } else {
+                setCasestudies(null);
+                alert("error occured");
+            }
+        } catch (error) {
+            setCasestudy(null)
+            setCasestudy(null);
+        }
+    }
     useEffect(() => {
+        getCasestudy();
         alldata();
     }, [])
     useEffect(() => {
@@ -41,7 +58,7 @@ export default function Casestudy() {
     }, [casestudy]);
     useEffect(() => {
         getdata();
-    }, []);
+    }, [casestudy, loading]);
 
     useEffect(() => {
         function cleanup() {
@@ -57,7 +74,7 @@ export default function Casestudy() {
 
     useEffect(() => {
         AOS.init();
-    }, [casestudy]);
+    }, [casestudy, casestudies]);
     // useEffect(() => {
     //     const loadData = async () => {
     //         setLoading(false);
@@ -102,6 +119,7 @@ export default function Casestudy() {
                     </div>
                 </div>
             </div>
+
 
             <div className="caseStudies__overview rn__section__gapTop">
                 <div className="container">
@@ -159,84 +177,32 @@ export default function Casestudy() {
                         <div className="row justify-content-center">
                             <div className="col-lg-10">
                                 <div className="main__heading">
-                                    <h2>
-                                        Design <span>Process</span>
-                                    </h2>
+                                    <h2 dangerouslySetInnerHTML={{
+                                        __html: DOMPurify.sanitize(!loading && casestudy ? casestudy.designProcessSection.heading : ``)
+                                    }} />
                                 </div>
 
                                 <div className="inner__gapTop card__inr horizontal-scroll-wrapper">
-                                    <div className="card__bx horizontal-scroll-container">
-                                        <div className="scroll-border">
-                                            <div className="horizontal-border"></div>
-                                            <div className="horizontal-stroke active">
-                                                <img src="assets/img/search-refraction.svg" alt="icon" />
-                                            </div>
-                                            <div className="horizontal-stroke-arrow">
-                                                <div className="arrow-down">
-                                                    <img src="assets/img/arrow-rt.svg" alt="icon" />
+                                    {!loading && casestudy && casestudy.designProcessSection.content.map((card, index) => (
+                                        <div className="card__bx horizontal-scroll-container">
+                                            <div className="scroll-border">
+                                                <div className="horizontal-border"></div>
+                                                <div className="horizontal-stroke active">
+                                                    <img src={card && card.icon && card.icon.filename && `http://localhost:5000/images/${card.icon.filename}`} alt="icon" />
+                                                </div>
+                                                <div className="horizontal-stroke-arrow">
+                                                    <div className="arrow-down">
+                                                        <img src="assets/img/arrow-rt.svg" alt="icon" />
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        <div className="content__box highlight">
-                                            <h5>Discover</h5>
-                                            <p>During the Discover phase, we delve deep into user needs and business goals to inform the design strategy and ensure tailored solutions.</p>
-                                        </div>
-                                    </div>
-                                    <div className="card__bx horizontal-scroll-container">
-                                        <div className="scroll-border">
-                                            <div className="horizontal-border"></div>
-                                            <div className="horizontal-stroke">
-                                                <img src="assets/img/pen-tool-02.svg" alt="icon" />
-                                            </div>
-                                            <div className="horizontal-stroke-arrow">
-                                                <div className="arrow-down">
-                                                    <img src="assets/img/arrow-rt.svg" alt="icon" />
-                                                </div>
+                                            <div className="content__box highlight">
+                                                <h5>{card.heading}</h5>
+                                                <p>{card.description}</p>
                                             </div>
                                         </div>
-
-                                        <div className="content__box">
-                                            <h5>Design</h5>
-                                            <p>In the Design phase, we transform insights and ideas into visually compelling interfaces that enhance user interaction and experience.</p>
-                                        </div>
-                                    </div>
-                                    <div className="card__bx horizontal-scroll-container">
-                                        <div className="scroll-border">
-                                            <div className="horizontal-border"></div>
-                                            <div className="horizontal-stroke">
-                                                <img src="assets/img/stand.svg" alt="icon" />
-                                            </div>
-                                            <div className="horizontal-stroke-arrow">
-                                                <div className="arrow-down">
-                                                    <img src="assets/img/arrow-rt.svg" alt="icon" />
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="content__box">
-                                            <h5>Implementation</h5>
-                                            <p>In the Implementation phase, we meticulously integrate and execute the designed solutions, ensuring functionality aligns with user expectations and design intent.</p>
-                                        </div>
-                                    </div>
-                                    <div className="card__bx horizontal-scroll-container">
-                                        <div className="scroll-border">
-                                            <div className="horizontal-border"></div>
-                                            <div className="horizontal-stroke">
-                                                <img src="assets/img/stars-02.svg" alt="icon" />
-                                            </div>
-                                            <div className="horizontal-stroke-arrow">
-                                                <div className="arrow-down">
-                                                    <img src="assets/img/arrow-rt.svg" alt="icon" />
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="content__box">
-                                            <h5>Development</h5>
-                                            <p>In the Implementation phase, we meticulously integrate and execute the designed solutions, ensuring functionality aligns with user expectations and design intent.</p>
-                                        </div>
-                                    </div>
+                                    ))}
                                 </div>
                             </div>
                         </div>
@@ -248,174 +214,115 @@ export default function Casestudy() {
             <div className="our__process rn__section__gapTop bg__dark d-block d-lg-none">
                 <div className="container">
                     <div className="main__heading" data-aos="fade-up" data-aos-duration="800">
-                        <h2>
-                            Design <span>Process</span>
-                        </h2>
+                        <h2 dangerouslySetInnerHTML={{
+                            __html: DOMPurify.sanitize(!loading && casestudy ? casestudy.designProcessSection.heading : ``)
+                        }} />
                     </div>
 
                     <div className="inner__gapTop row justify-content-center">
-                        <div className="col-lg-12">
-                            <div className="row">
-                                <div className="col-xl-3 col-lg-4 col-md-5 col-10 offset-xl-2 offset-lg-1" data-aos="fade-up" data-aos-duration="800">
-                                    <div className="card__bx">
-                                        <h5>Discover</h5>
-                                        <p>During the Discover phase, we delve deep into user needs and business goals to inform the design strategy and ensure tailored solutions.</p>
-                                    </div>
-                                </div>
-                                <div className="col-lg-1 col-2 center__bx">
-                                    <div className="border-section">
-                                        <div className="stroke-circle">
-                                            <img src="assets/img/search-refraction.svg" alt="icon" />
+                        {!loading && casestudy && casestudy.designProcessSection.content.map((card, index) => (
+                            <div className="col-lg-12">
+                                <div className="row">
+                                    <div className="col-xl-3 col-lg-4 col-md-5 col-10 offset-xl-2 offset-lg-1" data-aos="fade-up" data-aos-duration="800">
+                                        <div className="card__bx">
+                                            <h5>{card.heading}</h5>
+                                            <p>{card.description}</p>
                                         </div>
-                                        <div className="stroke-border">
-                                            <div className="arrow-down">
-                                                <img src="assets/img/arrow-down.svg" alt="" />
+                                    </div>
+                                    <div className="col-lg-1 col-2 center__bx">
+                                        <div className="border-section">
+                                            <div className="stroke-circle">
+                                                <img src={card && card.icon && card.icon.filename && `http://localhost:5000/images/${card.icon.filename}`} alt="icon" />
+                                            </div>
+                                            <div className="stroke-border">
+                                                <div className="arrow-down">
+                                                    <img src="assets/img/arrow-down.svg" alt="" />
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="col-lg-12">
-                            <div className="row">
-                                <div className="col-lg-1 col-md-1 col-2 center__bx">
-                                    <div className="border-section">
-                                        <div className="stroke-circle">
-                                            <img src="assets/img/pen-tool-02.svg" alt="icon" />
-                                        </div>
-                                        <div className="stroke-border">
-                                            <div className="arrow-down">
-                                                <img src="assets/img/arrow-down.svg" alt="" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-xl-3 col-lg-4 col-md-5 col-10 offset-md-7">
-                                    <div className="card__bx" data-aos="fade-up" data-aos-duration="800">
-                                        <h5>Design</h5>
-                                        <p>In the Design phase, we transform insights and ideas into visually compelling interfaces that enhance user interaction and experience.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-lg-12">
-                            <div className="row">
-                                <div className="col-xl-3 col-lg-4 col-md-5 col-10 offset-xl-2 offset-lg-1" data-aos="fade-up" data-aos-duration="800">
-                                    <div className="card__bx">
-                                        <h5>Implementation</h5>
-                                        <p>In the Implementation phase, we meticulously integrate and execute the designed solutions, ensuring functionality aligns with user expectations and design intent.</p>
-                                    </div>
-                                </div>
-                                <div className="col-lg-1 col-md-1 col-2 center__bx">
-                                    <div className="border-section">
-                                        <div className="stroke-circle">
-                                            <img src="assets/img/stand.svg" alt="icon" />
-                                        </div>
-                                        <div className="stroke-border">
-                                            <div className="arrow-down">
-                                                <img src="assets/img/arrow-down.svg" alt="" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-lg-12">
-                            <div className="row">
-                                <div className="col-lg-1 col-md-1 col-2 center__bx">
-                                    <div className="border-section">
-                                        <div className="stroke-circle">
-                                            <img src="assets/img/stars-02.svg" alt="icon" />
-                                        </div>
-                                        <div className="stroke-border">
-                                            <div className="arrow-down">
-                                                <img src="assets/img/arrow-down.svg" alt="" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-xl-3 col-lg-4 col-md-5 col-10 offset-md-7" data-aos="fade-up" data-aos-duration="800">
-                                    <div className="card__bx">
-                                        <h5>Program Inception</h5>
-                                        <p>Program inception sets the stage for aligning your vision with our UI/UX expertise, laying the groundwork for innovative design solutions</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        ))}
+
                     </div>
                 </div>
             </div>
 
-
             <div className="caseStudies__overview bottom__overview">
-                <div className="container">
-                    <div className="row justify-content-center">
-                        <div className="col-lg-10">
-                            <div className="content__box" data-aos="fade-up" data-aos-duration="800">
-                                <h3>Sketches/Low-fidelity Wireframes</h3>
-                                <p>As we embarked on Panther's project, our initial step involved sketching. We transitioned concepts onto paper, envisioning screen-to-screen interactions to shape
-                                    our design process.</p>
+                {!loading && casestudy && casestudy.sketches.heading && <>
+                    <div className="container">
+                        <div className="row justify-content-center">
+                            <div className="col-lg-10">
+                                <div className="content__box" data-aos="fade-up" data-aos-duration="800">
+                                    <h3 dangerouslySetInnerHTML={{
+                                        __html: DOMPurify.sanitize(!loading && casestudy ? casestudy.sketches.heading : ``)
+                                    }} />
+                                    <p dangerouslySetInnerHTML={{
+                                        __html: DOMPurify.sanitize(!loading && casestudy ? casestudy.sketches.description : ``)
+                                    }} />
+
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                    {!loading && casestudy && casestudy.sketches.imgs.map((img, index) => (
+                        <div className="img__fullContainer" data-aos="fade-up" data-aos-duration="800">
+                            <img src={img && img.filename && `http://localhost:5000/images/${img.filename}`} alt="" />
+                        </div>
+                    ))}
 
-                <div className="img__fullContainer" data-aos="fade-up" data-aos-duration="800">
-                    <img src="assets/img/wireframe-mychoize.jpg" alt="" />
-                </div>
+                </>}
 
                 <div className="container">
                     <div className="row justify-content-center">
                         <div className="col-lg-10">
                             <div className="content__box" data-aos="fade-up" data-aos-duration="800">
-                                <h3>Style Guide and Key Components</h3>
-                                <p>As a team, we collaborated on the style guide to ensure consistency and enhance the overall quality of the product. Our primary focus was on typography, icons,
-                                    and updating colors to align with WCAG standards.</p>
-
-                                <p>To achieve a cohesive and unified look across all elements, we led the creation of the component library. This involved developing components and variants.</p>
-
+                                <h3 dangerouslySetInnerHTML={{
+                                    __html: DOMPurify.sanitize(!loading && casestudy && casestudy.styleGuideSection.heading)
+                                }} />
+                                <p dangerouslySetInnerHTML={{
+                                    __html: DOMPurify.sanitize(!loading && casestudy && casestudy.styleGuideSection.description)
+                                }} />
                             </div>
 
                             <div className="color__palette myChoize__color" data-aos="fade-up" data-aos-duration="800">
-                                <h3>Colors</h3>
+                                <h3 dangerouslySetInnerHTML={{
+                                    __html: DOMPurify.sanitize(!loading && casestudy && casestudy.styleGuideSection.sectionName)
+                                }} />
                                 <div className="brand__colors">
                                     <h5>Brand Colors</h5>
-                                    <div className="color-inr">
-                                        <span className="color color-blue"></span>
-                                        <p>
-                                            Primary / <span>#2196F3</span>
-                                        </p>
-                                    </div>
-                                    <div className="color-inr">
-                                        <span className="color color-yellow"></span>
-                                        <p>
-                                            Secondary / <span>#FFC107</span>
-                                        </p>
-                                    </div>
+                                    {!loading && casestudy && casestudy.styleGuideSection.BrandcolorSections.map((color, index) => (
+                                        <div className="color-inr" key={index}>
+                                            <span className="color" style={{ background: color.hex }}></span>
+                                            <p>
+                                                {color.name} / <span>{color.hex}</span>
+                                            </p>
+                                        </div>
+                                    ))}
                                 </div>
 
                                 <div className="other__colors tribe__color">
                                     <h5>Other Secondary Colors</h5>
-                                    <div className="color-inr">
-                                        <span className="color color-gray"></span>
-                                        <p>
-                                            <span>#000000</span>
-                                        </p>
-                                    </div>
-                                    <div className="color-inr">
-                                        <span className="color color-white"></span>
-                                        <p>
-                                            <span>#FFFFFF</span>
-                                        </p>
-                                    </div>
+                                    {!loading && casestudy && casestudy.styleGuideSection.SecondaryColorSections.map((color, index) => (
+                                        <div className="color-inr" key={index}>
+                                            <span className="color" style={{ background: color.hex }}></span>
+                                            <p>
+                                                <span>{color.hex}</span>
+                                            </p>
+                                        </div>
+                                    ))}
                                 </div>
                             </div>
 
                             <div className="typography" data-aos="fade-up" data-aos-duration="800">
-                                <h3>Typography</h3>
-
+                                <h3 dangerouslySetInnerHTML={{
+                                    __html: DOMPurify.sanitize(!loading && casestudy && casestudy.typographyData.heading)
+                                }} />
                                 <div className="font__family">
-                                    <h2>Poppins</h2>
+                                    <h2 dangerouslySetInnerHTML={{
+                                        __html: DOMPurify.sanitize(!loading && casestudy && casestudy.typographyData.fontFamily)
+                                    }} />
 
                                     <div className="font__table">
                                         <div className="font__heading">
@@ -425,73 +332,25 @@ export default function Casestudy() {
                                         </div>
 
                                         <div className="font__body">
-                                            <div className="font__row">
-                                                <div className="font__data">
-                                                    <div className="large">
-                                                        <span className="bold">Large Text Bold</span>
-                                                        <span className="regular">Large Text Regular</span>
+                                            {!loading && casestudy && casestudy.typographyData.fontTable.map((typo, index) => (
+                                                <div className="font__row">
+                                                    <div className="font__data">
+                                                        <div className={typo.name}>
+                                                            <span className="bold">{typo.name} Text Bold</span>
+                                                            <span className="regular">{typo.name} Text Regular</span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="font__data">
+                                                        <h5>{typo.fontSize}</h5>
+                                                    </div>
+
+                                                    <div className="font__data">
+                                                        <h5>{typo.lineHeight} px</h5>
                                                     </div>
                                                 </div>
+                                            ))}
 
-                                                <div className="font__data">
-                                                    <h5>20</h5>
-                                                </div>
-
-                                                <div className="font__data">
-                                                    <h5>28 px</h5>
-                                                </div>
-                                            </div>
-
-                                            <div className="font__row">
-                                                <div className="font__data">
-                                                    <div className="medium">
-                                                        <span className="bold">Medium Text Bold</span>
-                                                        <span className="regular">Medium Text Regular</span>
-                                                    </div>
-                                                </div>
-
-                                                <div className="font__data">
-                                                    <h5>18</h5>
-                                                </div>
-
-                                                <div className="font__data">
-                                                    <h5>25.2px</h5>
-                                                </div>
-                                            </div>
-
-                                            <div className="font__row">
-                                                <div className="font__data">
-                                                    <div className="normal">
-                                                        <span className="bold">Normal Text Bold</span>
-                                                        <span className="regular">Normal Text Regular</span>
-                                                    </div>
-                                                </div>
-
-                                                <div className="font__data">
-                                                    <h5>16</h5>
-                                                </div>
-
-                                                <div className="font__data">
-                                                    <h5>22.4 px</h5>
-                                                </div>
-                                            </div>
-
-                                            <div className="font__row">
-                                                <div className="font__data">
-                                                    <div className="small">
-                                                        <span className="bold">Small Text Bold</span>
-                                                        <span className="regular">Small Text Regular</span>
-                                                    </div>
-                                                </div>
-
-                                                <div className="font__data">
-                                                    <h5>14</h5>
-                                                </div>
-
-                                                <div className="font__data">
-                                                    <h5>19.6 px</h5>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -500,37 +359,43 @@ export default function Casestudy() {
 
                         <div className="col-lg-10">
                             <div className="content__box" data-aos="fade-up" data-aos-duration="800">
-                                <h3>Updated Look and Feel</h3>
-                                <p>The new design by us features a modern, intuitive layout, clear financial information, simplified navigation, and full mobile optimization, resulting
-                                    in improved user experience and higher engagement.</p>
+                                <h3 dangerouslySetInnerHTML={{
+                                    __html: DOMPurify.sanitize(!loading && casestudy && casestudy.updatedLook.heading)
+                                }} />
+                                <p dangerouslySetInnerHTML={{
+                                    __html: DOMPurify.sanitize(!loading && casestudy && casestudy.updatedLook.description)
+                                }} />
                             </div>
                         </div>
                     </div>
                 </div>
+                {!loading && casestudy && casestudy.updatedLook.imgs.map((img, index) => (
+                    <div className="img__fullWidth" data-aos="fade-up" data-aos-duration="800">
+                        <img src={img && img.filename && `http://localhost:5000/images/${img.filename}`} alt="" />
+                    </div>
+                ))}
 
-                <div className="img__fullWidth" data-aos="fade-up" data-aos-duration="800">
-                    <img src="assets/img/my-choize-01.jpg" alt="" />
-                </div>
-
-                <div className="img__fullWidth" data-aos="fade-up" data-aos-duration="800">
-                    <img src="assets/img/my-choize-02.jpg" alt="" />
-                </div>
 
                 <div className="container" data-aos="fade-up" data-aos-duration="800">
                     <div className="row justify-content-center">
                         <div className="col-lg-10">
                             <div className="content__box">
-                                <h3>How Fifilo Designs Drives Value for MyChoize</h3>
-                                <p>After implementing these enhancements, Interact will significantly improve its UI/UX, providing sales representatives with a more intuitive, efficient, and
-                                    personalized prospecting tool. The platform will feature a cleaner design and responsive interface, ensuring usability across various devices. Enhanced
-                                    functionalities like transcription, AI integration, script management, and noise cancellation will streamline workflows, improve call quality, and offer deeper
-                                    insights, leading to better decision-making. Personalization options and continuous user feedback will ensure the tool evolves with user needs, increasing
-                                    satisfaction and productivity. Ultimately, these improvements will solidify Interact's position as a leading AI-powered prospecting tool, driving higher sales
-                                    performance and user engagement.</p>
+                                <h3 dangerouslySetInnerHTML={{
+                                    __html: DOMPurify.sanitize(!loading && casestudy && casestudy.howFifiloDesignsDrives.heading)
+                                }} />
+                                <p dangerouslySetInnerHTML={{
+                                    __html: DOMPurify.sanitize(!loading && casestudy && casestudy.howFifiloDesignsDrives.description)
+                                }} />
+
                             </div>
                         </div>
                     </div>
                 </div>
+                {!loading && casestudy && casestudy.fullWidthImg.length && casestudy.fullWidthImg.map((img, index) => (
+                    <div className="img__fullWidth" data-aos="fade-up" data-aos-duration="800">
+                        <img src={img && img.filename && `http://localhost:5000/images/${img.filename}`} alt="" />
+                    </div>
+                ))}
             </div>
 
             <div className="our__work bg__dark explore__more rn__section__gapTop">
@@ -541,6 +406,32 @@ export default function Casestudy() {
                         </h2>
                     </div>
                     <div className="inner__gapTop row">
+                        {console.log(!loading && casestudies && casestudy && casestudies.filter((item) => item.heroSection.casestudyName !== casestudy.heroSection.casestudyName).slice(0, 2))}
+                        {!loading && casestudies && casestudy && casestudies.filter((item) => item.heroSection.casestudyName !== casestudy.heroSection.casestudyName).slice(0, 2).map((value, index) => (
+                            <div className="col-lg-6 col-md-6" data-aos={index % 2 == 0 ? "fade-right" : "fade-left"} data-aos-duration="800">
+                                <div className="card__caseStudies">
+                                    <div className="top__keywords">
+                                        {(!loading && value) && value.heroSection.workButtons.map((btn, index) => {
+                                            return <span key={index}>{btn.name}</span>
+                                        })}
+                                    </div>
+                                    <h4>
+                                        <NavLink to={`/casestudy/${value.heroSection.casestudyName.split(" ").join("-")}`}>
+                                            {value.heroSection.casestudyName}{" "}
+                                            <img src="./assets/img/arrow-up-right.svg" alt="case-studies" />
+                                        </NavLink>
+                                    </h4>
+                                    <p>{value.heroSection.description}</p>
+                                    <div className="img__box">
+                                        <NavLink to={`/casestudy/${value.heroSection.casestudyName.split(" ").join("-")}`}>
+                                            <img src={(value.heroSection.cardImg && value.heroSection.cardImg.filename) && `http://localhost:5000/images/${value.heroSection.cardImg.filename}`} alt={value.heroSection.casestudyName} />
+                                        </NavLink>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                    {/* <div className="inner__gapTop row">
                         <div className="col-lg-6 col-md-6" data-aos="fade-right" data-aos-duration="800">
                             <div className="card__caseStudies">
                                 <div className="top__keywords">
@@ -582,9 +473,10 @@ export default function Casestudy() {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
+
         </>
     );
 }

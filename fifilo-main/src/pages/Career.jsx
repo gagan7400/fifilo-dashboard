@@ -353,9 +353,7 @@ export default function Career() {
               }} />
             </div>
             <div data-aos="fade-up" data-aos-duration="800">
-              <NavLink to="/contact-us/" className="btn">
-                Lets Connect <span></span>
-              </NavLink>
+              <NavLink to={!publishedcareerloading && publishedcareerdata ? publishedcareerdata.heroSection.heroButtons.CTA1.url : ""} className="btn" >{!publishedcareerloading && publishedcareerdata ? publishedcareerdata.heroSection.heroButtons.CTA1.name : ""}<span></span></NavLink>
             </div>
 
             <div ref={containerRef} className="animation-wrapper">

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { logout } from '../redux/actions/adminloginaction';
 import { NavLink } from 'react-router-dom';
-import "./dashboard.css";
+ 
 export default function Sidebar() {
   let dispatch = useDispatch();
 
@@ -26,7 +26,7 @@ export default function Sidebar() {
               </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink to="/section/casestudypages" className="nav-link"  >
+              <NavLink to="/section/casestudies" className="nav-link"  >
                 <img src="assets/imgs/task.svg" alt="pages Icon" />Case Studies
               </NavLink>
             </li>

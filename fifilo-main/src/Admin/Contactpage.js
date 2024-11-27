@@ -13,13 +13,15 @@ const Contactpage = () => {
         subHeading: pageData ? pageData.heroSection.subHeading : "",
     });
 
-    const [cardSection, setCardSection] = useState({
-        heading: pageData ? pageData.cardSection.heading : "",
-        contactlist: [{
-            icon: { filename: "", path: "" },
-            value: "",
-        }]
-    });
+    const [cardSection, setCardSection] = useState(pageData ? { ...pageData.cardSection }
+        : {
+            heading: "",
+            contactlist: [{
+                icon: { filename: "", path: "" },
+                name: "",
+                value: "",
+            }]
+        });
 
     const [seoSection, setSeoSection] = useState(pageData ? { ...pageData.seoSection } :
         {
@@ -31,15 +33,16 @@ const Contactpage = () => {
     // Add Contact
     const addContact = () => {
         setCardSection(prevState => ({
-            ...prevState, contactlist: [...prevState.contactlist, { icon: { filename: "", path: "" }, value: "" }]
+            ...prevState, contactlist: [...prevState.contactlist, { icon: { filename: "", path: "" }, name: "", value: "" }]
         }));
     };
 
     // Remove Contact
     const removeContact = (index) => {
-        setCardSection(prevState => ({
-            ...prevState, contactlist: prevState.contactlist.filter((_, i) => i !== index)
-        }));
+        if (window.confirm("Are You Sure ,You Want To Delete This")) {
+            const updatedlist = cardSection.contactlist.filter((_, i) => i !== index);
+            setCardSection({ ...cardSection, contactlist: updatedlist });
+        }
     };
 
     // Update Contact List (Icon or Value)
@@ -128,30 +131,45 @@ const Contactpage = () => {
                             <div className="tab-pane fade" id="pills-cards" role="tabpanel" aria-labelledby="pills-cards-tab">
                                 <div className="edit__tools">
                                     <div className="card__block" >
-                                        <div className="testimonial__box">
-                                            <div className="row">
-                                                <div className="col-lg-12">
-                                                    <div className="input__inr">
-                                                        <label htmlFor="cardHeading">Heading</label>
-                                                        <input required type="text"
-                                                            id="cardheading"
-                                                            name="cardSection.heading"
-                                                            className="form-control"
-                                                            value={cardSection.heading}
-                                                            onChange={(e) => setCardSection({ ...cardSection, heading: e.target.value })}
-                                                            placeholder="Enter Heading"
-                                                        />
-                                                    </div>
+                                        <div className="row">
+                                            <div className="col-lg-12">
+                                                <div className="input__inr">
+                                                    <label htmlFor="cardHeading">Heading</label>
+                                                    <input required type="text"
+                                                        id="cardheading"
+                                                        name="cardSection.heading"
+                                                        className="form-control"
+                                                        value={cardSection.heading}
+                                                        onChange={(e) => setCardSection({ ...cardSection, heading: e.target.value })}
+                                                        placeholder="Enter Heading"
+                                                    />
                                                 </div>
-                                                <div className="col-lg-12">
-                                                    <div className="seo__card">
+                                            </div>
+                                            <div className="col-lg-12">
+                                                <div className="seo__card">
+                                                    {cardSection.contactlist.map((contact, index) => (
                                                         <div className="card__block">
-                                                            {cardSection.contactlist.map((contact, index) => (
-                                                                <div className="row">
+                                                            <div className='testimonial__box'>
+                                                                <div className="top__heading">
+                                                                    <p>Contact {index + 1}</p>
+                                                                    <button className="btn" onClick={() => removeContact(index)} ><img src="assets/imgs/trash.svg" alt="" />Delete</button>
+                                                                </div>
+                                                                <div className="row" key={index}>
                                                                     <SeoImg updateContact={updateContact} index={index} name="icon" data={contact.icon} />
                                                                     <div className="col-lg-12">
                                                                         <div className="input__inr">
-                                                                            <label htmlFor="value">value</label>
+                                                                            <label htmlFor="ContactName">Contact Name</label>
+                                                                            <select className="form-select form-select-sm mb-3" value={contact.name} onChange={(e) => updateContact(index, "name", e.target.value)} aria-label="Small select example" id="ContactName">
+                                                                                <option defaultValue="Open this select menu">Open this select menu</option>
+                                                                                <option value="email">Email</option>
+                                                                                <option value="phonenumber">Phone Number</option>
+                                                                                <option value="other">Other</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="col-lg-12">
+                                                                        <div className="input__inr">
+                                                                            <label htmlFor="value">Contact Value</label>
                                                                             <input type="text" id="value" className="form-control"
                                                                                 value={contact.value}
                                                                                 onChange={(e) => updateContact(index, "value", e.target.value)}
@@ -159,8 +177,11 @@ const Contactpage = () => {
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            ))}
+                                                            </div>
                                                         </div>
+                                                    ))}
+                                                    <div className="add__review">
+                                                        <button className="btn" onClick={addContact}><img src="assets/imgs/plus.svg" alt="" />Add New Review</button>
                                                     </div>
                                                 </div>
                                             </div>

@@ -7,6 +7,7 @@ import { pageReducer } from './reducers/pageReducer.js';
 import { servicesReducer } from './reducers/servicesReducer.js';
 import { aboutPageReducer } from './reducers/aboutReducer.js';
 import { faqPageReducer } from './reducers/faqReducer.js';
+import { casestudyReducer } from './reducers/casestudyReducer.js';
 export const store = configureStore({
     reducer: {
         user: userReducer,
@@ -18,6 +19,7 @@ export const store = configureStore({
         about: aboutPageReducer,
         faq: faqPageReducer,
         contactpage: contactPageReducer,
-        page: pageReducer
+        page: pageReducer,
+        casestudy: casestudyReducer,
     }
 })

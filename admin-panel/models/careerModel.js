@@ -42,6 +42,9 @@ const jobSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 const careerpageSchema = new mongoose.Schema({
+    pageName: {
+        type: String
+    },
     heroSection: {
         heading: String,
         subHeading: String,

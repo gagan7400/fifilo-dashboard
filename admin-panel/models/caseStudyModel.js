@@ -43,6 +43,26 @@ const caseStudySchema = new mongoose.Schema({
     impactAndImprovement: { heading: String, description: String },
     howFifiloDesignsDrives: { heading: String, description: String },
 }, { timestamps: true });
+const casestudypageSchema = new mongoose.Schema({
+    pageName: {type:String ,default : "Casestudypage"},
+    heroSection: {
+        heading: String,
+        subHeading: String,
+        heroButtons: {
+            CTA1: { url: String, name: String }
+        }
+    }, seoSection: {
+        title: String,
+        keywords: String,
+        description: String,
+        seoImg: { filename: String, path: String }
+    },
+    published: {
+        type: Boolean,
+        default: false
+    }
+}, { timestamps: true })
 
 let caseStudyModel = mongoose.model("casestudies", caseStudySchema);
-module.exports = caseStudyModel;
+let caseStudyPageModel = mongoose.model("casestudypage", casestudypageSchema);
+module.exports = { caseStudyModel, caseStudyPageModel };

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Navigate } from 'react-router-dom';
 import { jwtDecode } from "jwt-decode";
 import { logout } from '../redux/actions/adminloginaction';
-
+import '../Admin/dashboard.css'
 export default function ProtectedRoute({ Component }) {
   let dispatch = useDispatch();
   const isTokenExpired = (token) => {

@@ -5,13 +5,18 @@ import anime from "animejs";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { NavLink } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import DOMPurify from 'dompurify';
 import { pageAction } from '../redux/actions/pagedataAction';
 import Loader from "../layout/Loader";
+import { getPublishCasestudyPage } from "../redux/actions/casestudyAction";
 export default function Work() {
   let dispatch = useDispatch();
+  let { publishedcasestudydata, casestudyloading } = useSelector((state) => state.casestudy);
+  useEffect(() => {
+    dispatch(getPublishCasestudyPage());
+  }, [])
   let [casestudy, setCasestudy] = useState(null);
   let [loading, setLoading] = useState(true)
   let alldata = async () => {
@@ -147,28 +152,24 @@ export default function Work() {
   return (
     <>
       <Helmet>
-        <title>Showcasing Outstanding UI/UX Design Projects | Fifilo Design</title>
-        <meta
-          name="description"
-          content="Explore our portfolio to see how we turn innovative ideas into exceptional UI/UX design projects. Discover our creative approach and successful case studies that highlight our expertise in delivering impactful design solutions."
-        />
-        <meta
-          name="keywords"
-          content="UI/UX design portfolio, UI design projects, UX design case studies, best UI/UX design work, creative design solutions, design project showcase, innovative UI/UX designs"
-        />
+        <title>{(!casestudyloading && publishedcasestudydata) && publishedcasestudydata.seoSection.title.trim()}</title>
+        <meta name="keywords" content={(!casestudyloading && publishedcasestudydata) && publishedcasestudydata.seoSection.keywords.trim()} />
+        <meta name="description" content={(!casestudyloading && publishedcasestudydata) && publishedcasestudydata.seoSection.description.trim()} />
       </Helmet>
       <div className="comn__bnr work__bnr">
         {loading && <Loader />}
         <div className="container">
           <div className="bnr__content">
             <div className="left__bx" data-aos="fade-up" data-aos-duration="800">
-              <h2>Showcasing Our<br /><span>Finest Case Studies</span></h2>
-              <h6>Take a look at some of our favorite projects, where creativity meets purpose. See how we've brought ideas to life with designs that make brands stand out and create lasting impressions online.</h6>
+              <h2 dangerouslySetInnerHTML={{
+                __html: DOMPurify.sanitize(!casestudyloading && publishedcasestudydata ? publishedcasestudydata.heroSection.heading : ``)
+              }} />
+              <h6 dangerouslySetInnerHTML={{
+                __html: DOMPurify.sanitize(!casestudyloading && publishedcasestudydata ? publishedcasestudydata.heroSection.subHeading : ``)
+              }} />
             </div>
             <div data-aos="fade-up" data-aos-duration="800">
-              <NavLink to="/contact-us/" className="btn">
-                Lets Connect <span></span>
-              </NavLink>
+              <NavLink to={!casestudyloading && publishedcasestudydata ? publishedcasestudydata.heroSection.heroButtons.CTA1.url : ""} className="btn" >{!casestudyloading && publishedcasestudydata ? publishedcasestudydata.heroSection.heroButtons.CTA1.name : ""}<span></span></NavLink>
             </div>
             <div className="animation-wrapper">
               <div className="sphere-animation">

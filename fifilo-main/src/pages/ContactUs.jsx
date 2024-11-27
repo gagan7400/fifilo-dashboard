@@ -132,14 +132,25 @@ export default function ContactUs() {
                     }} />
                     <div className="card__bx">
                       <h5 dangerouslySetInnerHTML={{
-                        __html: DOMPurify.sanitize(!publishedcontactloading && publishedcontactdata ? publishedcontactdata.cardSection.heading : `Got a project  Or a <br />
-                                                partnership in mind?`)
+                        __html: DOMPurify.sanitize(!publishedcontactloading && publishedcontactdata ? publishedcontactdata.cardSection.heading : ``)
                       }} />
                       <ul>
-                        <li><a href={`mailto:${!publishedcontactloading && publishedcontactdata ? publishedcontactdata.cardSection.email : "hey@fifilo.com"}`}><img src="assets/img/mail-01.svg" alt="mail" />{!publishedcontactloading && publishedcontactdata ? publishedcontactdata.cardSection.email : "hey@fifilo.com"}</a>
-                        </li>
-                        <li><a href={`tel:${!publishedcontactloading && publishedcontactdata ? publishedcontactdata.cardSection.phoneNumber : "+91-7869525027"}`}><img src="assets/img/phone.svg" alt="mail" />{!publishedcontactloading && publishedcontactdata ? publishedcontactdata.cardSection.phoneNumber : "+91-7869525027"}</a>
-                        </li>
+                        {!publishedcontactloading && publishedcontactdata && publishedcontactdata.cardSection.contactlist.map((contact, value) => (
+                          <li>
+                            {contact.name === "email" ?
+                              <a href={`mailto: ${contact && contact.value && contact.value}`}>
+                                <img src={contact && contact.icon && contact.icon.filename && `http://localhost:5000/images/${contact.icon.filename}`} alt="mail" />
+                                {contact.value}  </a>
+                              :
+                              contact.name === "phonenumber" ? <a href={contact.name == "phonenumber" ? `tel:${contact.value}` : "/"}>
+                                <img src={contact && contact.icon && contact.icon.filename && `http://localhost:5000/images/${contact.icon.filename}`} alt="mail" />
+                                {contact.value}  </a>
+                                :
+                                <a href="/contact-us/"> <img src={contact && contact.icon && contact.icon.filename && `http://localhost:5000/images/${contact.icon.filename}`} alt="mail" /> {contact.value}
+                                </a>
+                            }
+                          </li>
+                        ))}
                       </ul>
                     </div>
                   </div>
@@ -147,7 +158,7 @@ export default function ContactUs() {
                 <div className="col-lg-6 col-md-6">
                   <form onSubmit={submithandler}>
                     <div className="form__card">
-                      <div className="contact__form contact_formautofill"  data-aos="fade-up" data-aos-duration="800">
+                      <div className="contact__form contact_formautofill" data-aos="fade-up" data-aos-duration="800">
                         <div className="inr__input" >
                           <span className='icon'><img src="assets/img/user-01.svg" alt="contact__form" /></span>
                           <input
@@ -238,7 +249,7 @@ export default function ContactUs() {
             </div>
           </div>
         </div>
-      </div>
+      </div >
     </>
   )
 }

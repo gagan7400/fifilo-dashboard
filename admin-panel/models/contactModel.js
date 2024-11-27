@@ -34,6 +34,7 @@ let contactPageSchema = new mongoose.Schema({
         contactlist: [{
             icon: { filename: String, path: String },
             value: String,
+            name: String,
         }]
     },
     published: {

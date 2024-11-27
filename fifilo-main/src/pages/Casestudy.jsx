@@ -377,7 +377,7 @@ export default function Casestudy() {
 
                 <div className="container" data-aos="fade-up" data-aos-duration="800">
                     <div className="row justify-content-center">
-                        {!loading &&casestudy.impactAndImprovement &&  casestudy.impactAndImprovement.heading && <div className="col-lg-10">
+                        {!loading && casestudy.impactAndImprovement && casestudy.impactAndImprovement.heading && <div className="col-lg-10">
                             <div className="content__box" data-aos="fade-up" data-aos-duration="800">
                                 <h3 dangerouslySetInnerHTML={{
                                     __html: DOMPurify.sanitize(!loading && casestudy && casestudy.impactAndImprovement.heading)

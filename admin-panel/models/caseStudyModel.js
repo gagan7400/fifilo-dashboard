@@ -44,7 +44,7 @@ const caseStudySchema = new mongoose.Schema({
     howFifiloDesignsDrives: { heading: String, description: String },
 }, { timestamps: true });
 const casestudypageSchema = new mongoose.Schema({
-    pageName: {type:String ,default : "Casestudypage"},
+    pageName: { type: String, default: "Casestudypage" },
     heroSection: {
         heading: String,
         subHeading: String,

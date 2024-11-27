@@ -327,7 +327,7 @@ const CasestudyPage = () => {
                                                             id="heroheading"
                                                             className="form-control"
                                                             value={heroSection.casestudyName}
-                                                            onChange={(e) => setHeroSection({ ...heroSection, heading: e.target.value })}
+                                                            onChange={(e) => setHeroSection({ ...heroSection, casestudyName: e.target.value })}
                                                             placeholder="Enter Heading"
                                                         />
                                                     </div>

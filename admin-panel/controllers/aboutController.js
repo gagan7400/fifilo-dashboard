@@ -7,30 +7,10 @@ const aboutModel = require("../models/aboutModel.js");
 const createAboutPage = async (req, res) => {
     try {
         const { heroSection, aboutSection, processSection, teamSection, membersCard } = req.body;
-
-        // Handling image upload
-        const memberImgs = req.files.map(file => ({
-            filename: file.filename, // Use filename from Multer
-            path: file.path,
-            // Use path from Multer
-        }));
-        const newmemeberSection = membersCard.map((card, index) => ({
-            name: card.name,
-            designation: card.designation,
-            linkedinUrl: card.linkedinUrl,
-            memberImg: { ...memberImgs[index], membernumber: index }
-        }));
-        const aboutPage = new aboutModel({
-            heroSection,
-            aboutSection,
-            processSection,
-            teamSection,
-            membersCard: newmemeberSection,
-        });
+        const aboutPage = new aboutModel({ heroSection, aboutSection, processSection, teamSection, membersCard });
 
         await aboutPage.save();
-
-        res.status(201).json({ success: true, data: aboutPage, files: req.files });
+        res.status(201).json({ success: true, data: aboutPage });
     } catch (err) {
         res.status(500).json({ success: false, message: err.message });
     }
@@ -39,17 +19,17 @@ const createAboutPage = async (req, res) => {
 const getAboutPage = async (req, res) => {
     try {
         const result = await aboutModel.find();
-        res.send({ data: result });
+        res.send({ data: result, success: true });
     } catch (err) {
-        res.status(400).send(err);
+        res.status(400).send({ success: false, data: null, message: err.message });
     }
 };
 const getPublishedAboutPage = async (req, res) => {
     try {
         const result = await aboutModel.findOne({ published: true });
-        res.send({ data: result });
+        res.send({ data: result , success: true});
     } catch (err) {
-        res.status(400).send(err);
+        res.status(400).send({err,success: false});
     }
 };
 const publishAboutPage = async (req, res) => {
@@ -57,9 +37,9 @@ const publishAboutPage = async (req, res) => {
         const newPublishedId = req.params.id;
         await aboutModel.updateMany({ published: true }, { $set: { published: false } });
         const publishedData = await aboutModel.findByIdAndUpdate(newPublishedId, { $set: { published: true } }, { new: true });
-        res.send({ data: publishedData });
+        res.send({ data: publishedData , success: true });
     } catch (err) {
-        res.status(400).send(err);
+        res.status(400).send({err, success: false});
     }
 };
 

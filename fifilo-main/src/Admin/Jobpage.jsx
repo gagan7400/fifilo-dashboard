@@ -90,7 +90,8 @@ export default function Jobpage() {
         setDescription("")
         setResponsibilities("")
         setJobStatus("");
-    }
+    } 
+      
     return (
         <div>
             <Sidebar titles="Job section" />
@@ -130,12 +131,11 @@ export default function Jobpage() {
                                                 <label htmlFor="Category">Category</label>
                                                 <select className="form-select form-select-sm mb-3" value={category} onChange={(e) => { setCategory(e.target.value) }} aria-label="Small select example" id="Category">
                                                     <option defaultValue="Open this select menu">Open this select menu</option>
-                                                    <option value="UI-UX">UI-UX</option>
+                                                    <option value="UI-UX">UI UX</option>
                                                     <option value="Development">Development</option>
-                                                    <option value="Sales">Sales</option>
-                                                    <option value="Marketing">Marketing</option>
-                                                    <option value="HR">HR</option>
-                                                    <option value="Other">Other</option>
+                                                    <option value="Sales&Marketing">Sales & Marketing</option>
+                                                    {/* <option value="HR">HR</option>
+                                                    <option value="Other">Other</option> */}
                                                 </select>
                                             </div>
                                         </div>

@@ -120,14 +120,14 @@ const Casestudypage = () => {
                                         <div className="row">
                                             <div className="col-lg-12">
                                                 <div className="input__inr">
-                                                    <label htmlFor="seotitle">Page Title</label>
+                                                    <label htmlFor="seotitle">Meta Title</label>
                                                     <input required
                                                         type="text"
                                                         name="seotitle"
                                                         id="seotitle"
                                                         value={seoSection.title}
                                                         onChange={(e) => setSeoSection({ ...seoSection, title: e.target.value })}
-                                                        placeholder="Enter Page Title"
+                                                        placeholder="Enter Meta Title"
                                                         className="form-control"
                                                     />
                                                 </div>

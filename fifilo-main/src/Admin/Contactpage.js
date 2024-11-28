@@ -5,6 +5,7 @@ import Accordion from 'react-bootstrap/Accordion';
 import { updateContactPageAction } from '../redux/actions/contactAction';
 import { NavLink } from 'react-router-dom';
 import SeoImg from './SeoImg'
+import ContactImg from './ContactImg';
 const Contactpage = () => {
     let dispatch = useDispatch();
     const { pageData } = useSelector((state) => state.page);
@@ -148,14 +149,14 @@ const Contactpage = () => {
                                             <div className="col-lg-12">
                                                 <div className="seo__card">
                                                     {cardSection.contactlist.map((contact, index) => (
-                                                        <div className="card__block">
+                                                        <div className="card__block" key={index}>
                                                             <div className='testimonial__box'>
                                                                 <div className="top__heading">
                                                                     <p>Contact {index + 1}</p>
                                                                     <button className="btn" onClick={() => removeContact(index)} ><img src="assets/imgs/trash.svg" alt="" />Delete</button>
                                                                 </div>
                                                                 <div className="row" key={index}>
-                                                                    <SeoImg updateContact={updateContact} index={index} name="icon" data={contact.icon} />
+                                                                    <ContactImg updateContact={updateContact} index={index} name="icon" data={contact.icon} />
                                                                     <div className="col-lg-12">
                                                                         <div className="input__inr">
                                                                             <label htmlFor="ContactName">Contact Name</label>
@@ -198,14 +199,14 @@ const Contactpage = () => {
                                         <div className="row">
                                             <div className="col-lg-12">
                                                 <div className="input__inr">
-                                                    <label htmlFor="seotitle">Page Title</label>
+                                                    <label htmlFor="seotitle">Meta Title</label>
                                                     <input required
                                                         type="text"
                                                         name="seotitle"
                                                         id="seotitle"
                                                         value={seoSection.title}
                                                         onChange={(e) => setSeoSection({ ...seoSection, title: e.target.value })}
-                                                        placeholder="Enter Page Title"
+                                                        placeholder="Enter Meta Title"
                                                         className="form-control"
                                                     />
                                                 </div>

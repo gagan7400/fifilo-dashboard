@@ -18,7 +18,7 @@ export const getAboutPage = () => async (dispatch) => {
         if (data.success) {
             dispatch({ type: "ALL_ABOUTPAGE_SUCCESS", payload: data.data });
         } else {
-            dispatch({ type: "ALL_ABOUTPAGE_FAIL", payload: data.message });
+            dispatch({ type: "ALL_ABOUTPAGE_FAIL", payload: data });
         }
     } catch (error) {
         dispatch({ type: "ALL_ABOUTPAGE_FAIL", payload: error.response.data.message });
@@ -37,7 +37,7 @@ export const publishAboutPage = (id) => async (dispatch) => {
             dispatch({ type: "ALL_PUBLISHABOUTPAGE_SUCCESS", payload: data });
             dispatch(getAboutPage());
         } else {
-            dispatch({ type: "ALL_PUBLISHABOUTPAGE_FAIL", payload: data.message });
+            dispatch({ type: "ALL_PUBLISHABOUTPAGE_FAIL", payload: data });
         }
     } catch (error) {
         dispatch({ type: "ALL_PUBLISHABOUTPAGE_FAIL", payload: error.response.data.message });
@@ -51,7 +51,7 @@ export const getPublishAboutPage = () => async (dispatch) => {
         if (data.success) {
             dispatch({ type: "ALL_GETPUBLISHABOUTPAGE_SUCCESS", payload: data.data });
         } else {
-            dispatch({ type: "ALL_GETPUBLISHABOUTPAGE_FAIL", payload: data.message });
+            dispatch({ type: "ALL_GETPUBLISHABOUTPAGE_FAIL", payload: data });
         }
     } catch (error) {
         dispatch({ type: "ALL_GETPUBLISHABOUTPAGE_FAIL", payload: error.response.data.message });
@@ -68,7 +68,7 @@ export const deleteAboutPage = (id) => async (dispatch) => {
         if (data.success) {
             dispatch({ type: "DELETE_ABOUTPAGE_SUCCESS", payload: id });
         } else {
-            dispatch({ type: "DELETE_ABOUTPAGE_FAIL", payload: data.message });
+            dispatch({ type: "DELETE_ABOUTPAGE_FAIL", payload: data });
         }
     } catch (error) {
         dispatch({ type: "DELETE_ABOUTPAGE_FAIL", payload: error.response.data.message });
@@ -87,7 +87,7 @@ export const updateAboutPageAction = ({ aboutData, id }) => async (dispatch) => 
             dispatch({ type: "UPDATE_ABOUTPAGE_SUCCESS", payload: data._id });
             dispatch(getAboutPage());
         } else {
-            dispatch({ type: "UPDATE_ABOUTPAGE_FAIL", payload: data.message });
+            dispatch({ type: "UPDATE_ABOUTPAGE_FAIL", payload: data });
         }
     } catch (error) {
         dispatch({ type: "UPDATE_ABOUTPAGE_FAIL", payload: error.response.data.message });

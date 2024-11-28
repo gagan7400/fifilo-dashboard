@@ -245,7 +245,7 @@ const CasestudyPage = () => {
 
     return (
         <>
-            <Sidebar titles="casestudy" />
+            <Sidebar />
             <div className="main__content" >
                 <div className="page__editors">
                     <nav aria-label="breadcrumb">
@@ -1071,37 +1071,6 @@ const CasestudyPage = () => {
                                     </div>
                                 </div>
                             </div>
-                            {/* <div className="tab-pane fade" id="pills-fullWidthImg" role="tabpanel" aria-labelledby="pills-fullWidthImg-tab">
-                            <div className="edit__tools">
-                                <div className="card__block">
-                                    <div className="row">
-                                        <div className="col-lg-12">
-                                            <div className="seo__card">
-                                                {fullWidthImg.map((img, index) => (
-                                                    <div className="card__block" key={index} >
-                                                        <div className="testimonial__box">
-                                                            <div className="top__heading">
-                                                                <p>Img {index + 1}</p>
-                                                                <button className="btn" onClick={() => removeFullWidthImg(index)} ><img src="assets/imgs/trash.svg" alt="" />Delete</button>
-                                                            </div>
-                                                            <div className="row">
-                                                                <SketchesImg handleFullWidthImg={handleFullWidthImg} index={index} img={img} />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                ))}
-                                                <div className="add__review">
-                                                    <button className="btn" onClick={addFullWidthImg}><img src="assets/imgs/plus.svg" alt="" />Add Img</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="update__block">
-                                        <button className="btn btn__update" type="button" onClick={handleSubmit}>Update</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> */}
                         </div>
                     </div>
                 </div>

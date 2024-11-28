@@ -338,9 +338,11 @@ export default function Career() {
   return (
     <>
       <Helmet>
-        <title>{(!publishedcareerloading && publishedcareerdata) && publishedcareerdata.seoSection.title.trim()}</title>
-        <meta name="keywords" content={(!publishedcareerloading && publishedcareerdata) && publishedcareerdata.seoSection.keywords.trim()} />
-        <meta name="description" content={(!publishedcareerloading && publishedcareerdata) && publishedcareerdata.seoSection.description.trim()} />
+        <title>{(!publishedcareerloading && publishedcareerdata) && publishedcareerdata.seoSection.title}</title>
+        <meta name="keywords" content={(!publishedcareerloading && publishedcareerdata) && publishedcareerdata.seoSection.keywords} />
+        <meta name="description" content={(!publishedcareerloading && publishedcareerdata) && publishedcareerdata.seoSection.description} />
+        {(!publishedcareerloading && publishedcareerdata) && publishedcareerdata.seoSection.seoImg.filename && <meta property="og:image" content={`http://localhost:5000/images/${(!publishedcareerloading && publishedcareerdata) && publishedcareerdata.seoSection.seoImg.filename}`} />}
+        <meta property="og:image:alt" content="Description of the feature image" />
       </Helmet>
 
       <div className="comn__bnr service__bnr">
@@ -403,9 +405,15 @@ export default function Career() {
                 <li className={filter === "Development" ? "is-checked" : ""} onClick={() => setFilter("Development")}>
                   Development
                 </li>
-                <li className={filter === "Marketing" ? "is-checked" : ""} onClick={() => setFilter("Marketing")}>
+                <li className={filter === "Sales&Marketing" ? "is-checked" : ""} onClick={() => setFilter("Sales&Marketing")}>
                   Sales & Marketing
                 </li>
+                {/* <li className={filter === "HR" ? "is-checked" : ""} onClick={() => setFilter("HR")}>
+                  HR
+                </li>
+                <li className={filter === "Other" ? "is-checked" : ""} onClick={() => setFilter("Other")}>
+                  Other
+                </li> */}
               </ul>
             </div>
 

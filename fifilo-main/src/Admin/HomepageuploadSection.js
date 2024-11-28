@@ -14,10 +14,11 @@ export default function HomepageuploadSection({ clientLogos, setClientLogos, too
     // Handle image selection
     const handleImageSelect = (image) => {
         setSelectedImage(image); // Set the selected image data
+        console.log(image)
         if (clientLogos) {
-            setClientLogos([...clientLogos, { filename: image.filename, path: image.path }])
+            setClientLogos([...clientLogos, { filename: image.filename, path: image.filePath }])
         } else if (toolsLogo) {
-            setToolsLogo([...toolsLogo, { filename: image.filename, path: image.path }])
+            setToolsLogo([...toolsLogo, { filename: image.filename, path: image.filePath }])
         }
         setIsModalOpen(false);
     };

@@ -58,9 +58,11 @@ export default function Services() {
   return (
     <>
       <Helmet>
-        <title>{(!publishedServiceLoading && publishedServicePage) && publishedServicePage.seoSection.title.trim()}</title>
-        <meta name="keywords" content={(!publishedServiceLoading && publishedServicePage) && publishedServicePage.seoSection.keywords.trim()} />
-        <meta name="description" content={(!publishedServiceLoading && publishedServicePage) && publishedServicePage.seoSection.description.trim()} />
+        <title>{(!publishedServiceLoading && publishedServicePage) && publishedServicePage.seoSection.title}</title>
+        <meta name="keywords" content={(!publishedServiceLoading && publishedServicePage) && publishedServicePage.seoSection.keywords} />
+        <meta name="description" content={(!publishedServiceLoading && publishedServicePage) && publishedServicePage.seoSection.description} />
+        {(!publishedServiceLoading && publishedServicePage) && publishedServicePage.seoSection.seoImg.filename && <meta property="og:image" content={`http://localhost:5000/images/${(!publishedServiceLoading && publishedServicePage) && publishedServicePage.seoSection.seoImg.filename}`} />}
+        <meta property="og:image:alt" content="Description of the feature image" />
       </Helmet>
 
       <div className="comn__bnr service__bnr">
@@ -72,7 +74,6 @@ export default function Services() {
             </div>
             <div data-aos="fade-up" data-aos-duration="800">
               <NavLink to={!publishedServiceLoading && publishedServicePage ? publishedServicePage.heroSection.heroButtons.CTA1.url : "/contactus"} className="btn">{!publishedServiceLoading && publishedServicePage ? publishedServicePage.heroSection.heroButtons.CTA1.name : "Lets's Talk"}<span></span></NavLink>
-
             </div>
             <div className="animation-wrapper">
               <div className="main-wrapper">

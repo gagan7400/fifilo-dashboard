@@ -23,7 +23,7 @@ const ServicesForm = () => {
             ...card,
             cardDescription: [...card.cardDescription],
         })) : [{
-            cardName: '', cardDescription: [''], cardList: '', serviceImg: { filename: '', path: '', }, cardId: ""
+            cardName: '', cardDescription: [''], cardList: '', cardId: ""
         }]);
     const [toolSection, setToolSection] = useState({
         heading: pageData ? pageData.toolSection.heading : "",
@@ -51,17 +51,11 @@ const ServicesForm = () => {
     };
     // Handle input change for services cards
     const handleServiceCardChange = (index, event, data) => {
-        // const values = [...servicesCards];
         const values = servicesCards.map((card) => ({
             ...card,
             cardDescription: [...card.cardDescription],
-            cardList: ''
         }));
-        if (event === 'serviceImg') {
-            values[index]['serviceImg'] = { ...data };
-        } else {
-            values[index][event.target.name] = event.target.value;
-        }
+        values[index][event.target.name] = event.target.value;
         setServicesCards(values);
     };
     // Handle input for cardDescription
@@ -70,7 +64,6 @@ const ServicesForm = () => {
         const newServicesCards = servicesCards.map((card) => ({
             ...card,
             cardDescription: [...card.cardDescription],
-            cardList: ""
         }));
         // const newServicesCards = [...servicesCards];
         newServicesCards[index].cardDescription[descIndex] = value;
@@ -115,7 +108,7 @@ const ServicesForm = () => {
 
     // Add a new service card
     const addServiceCard = () => {
-        setServicesCards([...servicesCards, { cardId: "", cardName: '', cardDescription: [''], cardList: [''], cardId: "", serviceImg: { filename: "", path: "" } }]);
+        setServicesCards([...servicesCards, { cardId: "", cardName: '', cardDescription: [''], cardList: [''], cardId: "" }]);
     };
 
     let removeCardDescription = (cardIndex, descriptionIndex) => {
@@ -176,7 +169,6 @@ const ServicesForm = () => {
         e.preventDefault();
         dispatch(updateServicePageAction({ servicedata: { heroSection, seoSection, servicesCards, toolSection: { ...toolSection, toolsLogo } }, id: pageData._id }));
         alert("servicePage updated successfully");
-
     };
 
     return (
@@ -294,7 +286,7 @@ const ServicesForm = () => {
                                                     <button className="btn" onClick={() => removeServiceCard(index)}><img src="assets/imgs/trash.svg" alt="trash icon" />Delete</button>
                                                 </div>
                                                 <div className="row">
-                                                    <ServicepageServicecard card={card} index={index} handleServiceCardChange={handleServiceCardChange} />
+                                                    {/* <ServicepageServicecard card={card} index={index} handleServiceCardChange={handleServiceCardChange} /> */}
                                                     <div className="col-lg-12">
                                                         <div className="input__inr">
                                                             <label htmlFor={`cardId${index}`} className="form-label">Service Id</label>
@@ -422,14 +414,14 @@ const ServicesForm = () => {
                                         <div className="row">
                                             <div className="col-lg-12">
                                                 <div className="input__inr">
-                                                    <label htmlFor="seotitle">Page Title</label>
+                                                    <label htmlFor="seotitle">Meta Title</label>
                                                     <input required
                                                         type="text"
                                                         name="seotitle"
                                                         id="seotitle"
                                                         value={seoSection.title}
                                                         onChange={(e) => setSeoSection({ ...seoSection, title: e.target.value })}
-                                                        placeholder="Enter Page Title"
+                                                        placeholder="Enter Meta Title"
                                                         className="form-control"
                                                     />
                                                 </div>

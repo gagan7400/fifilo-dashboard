@@ -170,9 +170,12 @@ export default function Home() {
   return (
     <>
       <Helmet>
-        <title>{(!homeloading && publishedhomepage) && publishedhomepage.seoSection.title.trim()}</title>
-        <meta name='keywords' content={(!homeloading && publishedhomepage) && publishedhomepage.seoSection.keywords.trim()} />
-        <meta name='description' content={(!homeloading && publishedhomepage) && publishedhomepage.seoSection.description.trim()} />
+        {console.log((!homeloading && publishedhomepage) && publishedhomepage.seoSection.title)}
+        <title>{(!homeloading && publishedhomepage) && publishedhomepage.seoSection.title}</title>
+        <meta name='keywords' content={(!homeloading && publishedhomepage) && publishedhomepage.seoSection.keywords} />
+        <meta name='description' content={(!homeloading && publishedhomepage) && publishedhomepage.seoSection.description} />
+        {(!homeloading && publishedhomepage) && publishedhomepage.seoSection.seoImg.filename && <meta property="og:image" content={`http://localhost:5000/images/${(!homeloading && publishedhomepage) && publishedhomepage.seoSection.seoImg.filename}`} />}
+        <meta property="og:image:alt" content="Description of the feature image" />
       </Helmet>
       <div className="hero__bnr dark__bnr">
         {loading && homeloading && <Loader />}
@@ -264,9 +267,14 @@ export default function Home() {
                   <div className="row gx-3" data-aos="fade-up" data-aos-duration={(8 + i) * 100}>
                     <div className="col-lg-9">
                       <div className="content__box">
-                        <h2>{service.heading}</h2>
+                        <h2 dangerouslySetInnerHTML={{
+                          __html: DOMPurify.sanitize(service.heading)
+                        }} />
+
                         <div className="service__inr">
-                          <h6> {service.description}</h6>
+                          <h6 dangerouslySetInnerHTML={{
+                            __html: DOMPurify.sanitize(service.description)
+                          }} />
                           <NavLink to={service.buttonUrl} className="btn btn__primary">
                             {service.buttonText} <img src="assets/img/arrow-up-right.svg" alt="home" />
                           </NavLink>
@@ -282,7 +290,6 @@ export default function Home() {
                 </div>
                   {(i !== publishedhomepage.servicesCardSection.length - 1) && <div className="brdr" data-aos="fade-up" data-aos-duration={(9 + i) * 100}></div>}
                 </div>
-
               }) : ""}
             </div>
           </div>
@@ -310,11 +317,15 @@ export default function Home() {
                       <img src={item.clientImgs && item.clientImgs.filename ? `http://localhost:5000/images/${item.clientImgs.filename}` : "assets/imgs/avatar.svg"} alt="clients" />
                     </div>
                     <div className="content__box">
-                      <h6>{item.clientName ? item.clientName : ""}</h6>
-                      <h6>{item.description ? item.description :
-                        ``}
+                      <h6>
+                        <span dangerouslySetInnerHTML={{
+                          __html: DOMPurify.sanitize(item.company ? item.company : "")
+                        }} />
                       </h6>
-                      <p>{item.company ? item.company : ""}</p>
+                      <h6 dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(item.description ? item.description : ``) }} />
+                      <p dangerouslySetInnerHTML={{
+                        __html: DOMPurify.sanitize(item.clientName ? item.clientName : "")
+                      }} />
                     </div>
                   </div>
                 ))}

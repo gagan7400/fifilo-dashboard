@@ -25,11 +25,11 @@ export default function SeoImg({ seoSection, setSeoSection, updateContact, index
         setSeoSection({ ...seoSection, seoImg: { filename: "", path: '' } })
     }
     return (
-        <div className="col-lg-3">
+        <div className="col-lg-6">
             <div className="uploaded__images">
                 <div className="image__block">
                     <div className="single__img">
-                        {(seoSection && !name) ? <img src={seoSection.seoImg.filename ? `http://localhost:5000/images/${seoSection.seoImg.filename}` : "assets/imgs/avatar.svg"} alt="" />
+                        {(seoSection && !name) ? <img src={seoSection.seoImg.filename ? `http://localhost:5000/images/${seoSection.seoImg.filename}` : "assets/img/img_fullsize.png"} alt="" />
                             : <img src={data && data.filename ? `http://localhost:5000/images/${data.filename}` : "assets/imgs/avatar.svg"} alt="" />
                         }
                     </div>

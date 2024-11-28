@@ -2,10 +2,15 @@ import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { logout } from '../redux/actions/adminloginaction';
 import { NavLink } from 'react-router-dom';
- 
+
 export default function Sidebar() {
   let dispatch = useDispatch();
-
+  useEffect(() => {
+    document.body.style.backgroundColor = "#f0f0f0";
+    return () => {
+      document.body.style.backgroundColor = "";
+    };
+  }, []);
   return (
     <div className="shell">
       <nav className="sidebar">
@@ -38,6 +43,11 @@ export default function Sidebar() {
             <li className="nav-item">
               <NavLink to="/section/faq" className="nav-link"  >
                 <img src="assets/imgs/task.svg" alt="faq Icon" />Faq
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink to="/section/faq" className="nav-link"  >
+                <img src="assets/imgs/task.svg" alt="faq Icon" />Media Library
               </NavLink>
             </li>
           </ul>

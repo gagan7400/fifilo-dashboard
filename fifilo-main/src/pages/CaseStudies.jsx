@@ -152,9 +152,11 @@ export default function Work() {
   return (
     <>
       <Helmet>
-        <title>{(!casestudyloading && publishedcasestudydata) && publishedcasestudydata.seoSection.title.trim()}</title>
-        <meta name="keywords" content={(!casestudyloading && publishedcasestudydata) && publishedcasestudydata.seoSection.keywords.trim()} />
-        <meta name="description" content={(!casestudyloading && publishedcasestudydata) && publishedcasestudydata.seoSection.description.trim()} />
+        <title>{(!casestudyloading && publishedcasestudydata) && publishedcasestudydata.seoSection.title}</title>
+        <meta name="keywords" content={(!casestudyloading && publishedcasestudydata) && publishedcasestudydata.seoSection.keywordstitle} />
+        <meta name="description" content={(!casestudyloading && publishedcasestudydata) && publishedcasestudydata.seoSection.descriptiontitle} />
+        {(!casestudyloading && publishedcasestudydata) && publishedcasestudydata.seoSection.seoImg.filename && <meta property="og:image" content={`http://localhost:5000/images/${(!casestudyloading && publishedcasestudydata) && publishedcasestudydata.seoSection.seoImg.filename}`} />}
+        <meta property="og:image:alt" content="Description of the feature image" />
       </Helmet>
       <div className="comn__bnr work__bnr">
         {loading && <Loader />}

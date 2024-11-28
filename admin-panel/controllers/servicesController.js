@@ -40,16 +40,6 @@ const deleteServicePage = async (req, res) => {
             return res.status(404).json({ success: false, message: 'service page not found' });
         }
 
-        // Step 2: Delete associated images
-        if (servicepage.toolSection && servicepage.toolSection.toolsLogo.length > 0) {
-            servicepage.toolSection.toolsLogo.forEach((card) => {
-                const imagePath = path.join(__dirname, '../', card.path);
-                // Check if file exists and delete
-                if (fs.existsSync(imagePath)) {
-                    fs.unlinkSync(imagePath); // Delete the image file
-                }
-            });
-        }
 
         // Step 3: Delete the service page document
         await servicesModel.findByIdAndDelete(req.params.id);
@@ -123,8 +113,6 @@ const updateService = async (req, res) => {
                 cardList: card.cardList || servicePage.servicesCards[index]?.cardList || "",
                 cardName: card.cardName || servicePage.servicesCards[index]?.cardName || "Default cardName",
                 cardId: card.cardId || servicePage.servicesCards[index]?.cardId || "Default cardId",
-                serviceImg: card.serviceImg || servicePage.servicesCards[index]?.serviceImg || {},
-
             }));
         }
         //toolsection
@@ -144,6 +132,7 @@ const updateService = async (req, res) => {
 
         res.status(200).json({ success: true, data: servicePage });
     } catch (err) {
+        console.log(err)
         res.status(500).json({ success: false, message: err.message });
     }
 };

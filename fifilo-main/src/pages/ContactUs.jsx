@@ -98,23 +98,34 @@ export default function ContactUs() {
         body: formdata,
       })
       await dispatch(contactus({ name: Name, email: Email, phonenumber: Number, message: Message }))
-      if (success) {
-        setEmail('')
-        setMessage("")
-        setNumber("");
-        setName("")
-        nav("/thank-you")
-      }
+      // if (success) {
+      //   setEmail('')
+      //   setMessage("")
+      //   setNumber("");
+      //   setName("")
+      //   nav("/thank-you")
+      // }
     }
   }
+  useEffect(() => {
+    if (success && Email && Name) {
+      setEmail('')
+      setMessage("")
+      setNumber("");
+      setName("")
+      nav("/thank-you")
+    }
+  }, [success])
 
 
   return (
     <>
       <Helmet>
-        <title>{(!publishedcontactloading && publishedcontactdata) && publishedcontactdata.seoSection.title.trim()}</title>
-        <meta name="keywords" content={(!publishedcontactloading && publishedcontactdata) && publishedcontactdata.seoSection.keywords.trim()} />
-        <meta name="description" content={(!publishedcontactloading && publishedcontactdata) && publishedcontactdata.seoSection.description.trim()} />
+        <title>{(!publishedcontactloading && publishedcontactdata) && publishedcontactdata.seoSection.title}</title>
+        <meta name="keywords" content={(!publishedcontactloading && publishedcontactdata) && publishedcontactdata.seoSection.keywords} />
+        <meta name="description" content={(!publishedcontactloading && publishedcontactdata) && publishedcontactdata.seoSection.description} />
+        {(!publishedcontactloading && publishedcontactdata) && publishedcontactdata.seoSection.seoImg.filename && <meta property="og:image" content={`http://localhost:5000/images/${(!publishedcontactloading && publishedcontactdata) && publishedcontactdata.seoSection.seoImg.filename}`} />}
+        <meta property="og:image:alt" content="Description of the feature image" />
       </Helmet>
       <div className="contact__bnr bg__dark">
         <div className="container">
@@ -135,10 +146,10 @@ export default function ContactUs() {
                         __html: DOMPurify.sanitize(!publishedcontactloading && publishedcontactdata ? publishedcontactdata.cardSection.heading : ``)
                       }} />
                       <ul>
-                        {!publishedcontactloading && publishedcontactdata && publishedcontactdata.cardSection.contactlist.map((contact, value) => (
-                          <li>
+                        {!publishedcontactloading && publishedcontactdata && publishedcontactdata.cardSection.contactlist.map((contact, index) => (
+                          <li key={index}>
                             {contact.name === "email" ?
-                              <a href={`mailto: ${contact && contact.value && contact.value}`}>
+                              <a href={`mailto:${contact && contact.value && contact.value}`}>
                                 <img src={contact && contact.icon && contact.icon.filename && `http://localhost:5000/images/${contact.icon.filename}`} alt="mail" />
                                 {contact.value}  </a>
                               :

@@ -26,11 +26,11 @@ const aboutpageSchema = new mongoose.Schema({
                 icon: {
                     filename: {
                         type: String,
-                        required: true,
+
                     },
                     path: {
                         type: String,
-                        required: true,
+
                     },
                 }
             }
@@ -50,11 +50,11 @@ const aboutpageSchema = new mongoose.Schema({
             memberImg: {
                 filename: {
                     type: String,
-                    required: true,
+
                 },
                 path: {
                     type: String,
-                    required: true,
+
                 }
 
             }

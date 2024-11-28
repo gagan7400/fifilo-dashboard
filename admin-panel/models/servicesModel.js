@@ -14,7 +14,6 @@ let servicesSchema = new mongoose.Schema({
             cardName: String,
             cardDescription: [String, String],
             cardList: String,
-            serviceImg: { filename: String, path: String },
             cardId: { type: String }
         }
     ],

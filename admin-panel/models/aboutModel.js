@@ -50,11 +50,9 @@ const aboutpageSchema = new mongoose.Schema({
             memberImg: {
                 filename: {
                     type: String,
-
                 },
                 path: {
                     type: String,
-
                 }
 
             }

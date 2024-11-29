@@ -8,7 +8,6 @@ const createAboutPage = async (req, res) => {
     try {
         const { heroSection, aboutSection, processSection, teamSection, membersCard } = req.body;
         const aboutPage = new aboutModel({ heroSection, aboutSection, processSection, teamSection, membersCard });
-
         await aboutPage.save();
         res.status(201).json({ success: true, data: aboutPage });
     } catch (err) {
@@ -27,9 +26,9 @@ const getAboutPage = async (req, res) => {
 const getPublishedAboutPage = async (req, res) => {
     try {
         const result = await aboutModel.findOne({ published: true });
-        res.send({ data: result , success: true});
+        res.send({ data: result, success: true });
     } catch (err) {
-        res.status(400).send({err,success: false});
+        res.status(400).send({ err, success: false });
     }
 };
 const publishAboutPage = async (req, res) => {
@@ -37,9 +36,9 @@ const publishAboutPage = async (req, res) => {
         const newPublishedId = req.params.id;
         await aboutModel.updateMany({ published: true }, { $set: { published: false } });
         const publishedData = await aboutModel.findByIdAndUpdate(newPublishedId, { $set: { published: true } }, { new: true });
-        res.send({ data: publishedData , success: true });
+        res.send({ data: publishedData, success: true });
     } catch (err) {
-        res.status(400).send({err, success: false});
+        res.status(400).send({ err, success: false });
     }
 };
 

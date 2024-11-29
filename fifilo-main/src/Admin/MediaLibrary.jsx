@@ -25,16 +25,13 @@ const MediaLibrary = ({ onSelectImage, ImageUplaoded }) => {
   };
 
   return (
-    <>
-      <div style={{ display: "flex", flexWrap: "wrap" }}>
-        {images.map((image) => (
-          <div key={image._id} style={{ margin: "10px", border: selectedImage === image ? "2px solid blue" : "none", }} >
-            <img src={`http://localhost:5000/images/${image.filename}`} alt={image.altText} style={{ width: "100px", height: "100px", cursor: "pointer" }}
-              onClick={() => handleImageClick(image)} />
-          </div>
-        ))}
-      </div>
-    </>
+    <ul>
+      {images.map((image, index) => (
+        <li key={index}>
+          <div className="thumbnail"><img src={`http://localhost:5000/images/${image.filename}`} alt="Image 1" onClick={() => handleImageClick(image)} /></div>
+        </li>
+      ))}
+    </ul>
   );
 };
 

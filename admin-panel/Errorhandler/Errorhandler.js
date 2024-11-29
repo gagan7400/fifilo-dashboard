@@ -9,6 +9,7 @@ const errorHandler = (err, req, res, next) => {
 
     let data = {
         ...err,
+        success: false,
         message: "Internal server error",
         ...(process.env.DEBUG_MODE === "true" && { originalError: err.message }),
     };
@@ -16,6 +17,7 @@ const errorHandler = (err, req, res, next) => {
     if (err.code === 11000) {
         statusCode = 400;
         data = {
+            success: false,
             message: err.message,
         };
     }
@@ -24,6 +26,7 @@ const errorHandler = (err, req, res, next) => {
         // 422 mean validation error code
         statusCode = 422;
         data = {
+            success: false,
             message: err.message,
         };
     }
@@ -32,6 +35,7 @@ const errorHandler = (err, req, res, next) => {
     if (err instanceof CustomErrorHandler) {
         statusCode = err.status;
         data = {
+            success: false,
             message: err.message,
         };
     }

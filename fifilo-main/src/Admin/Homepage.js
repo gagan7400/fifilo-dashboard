@@ -7,13 +7,21 @@ import HomepageServiceCard from './HomepageServicecard';
 import HomepageClients from './HomepageClients';
 import HomepageuploadSection from './HomepageuploadSection';
 import SeoImg from './SeoImg';
-import { NavLink } from 'react-router-dom';
-
+import { NavLink, useNavigate } from 'react-router-dom';
+import { oldData } from '../redux/actions/pagedataAction';
+import Loader from '../layout/Loader';
 
 const Homepage = () => {
     let dispatch = useDispatch();
-    const { pageData } = useSelector((state) => state.page);
-
+    const { pageData, pageloading } = useSelector((state) => state.page);
+    console.log(pageData);
+    const [loading, setLoading] = useState(true)
+    useEffect(() => {
+        if (!pageData) {
+            dispatch(oldData())
+        }
+        console.log(pageData)
+    }, [dispatch])
     const [heroSection, setHeroSection] = useState({
         heading: pageData ? pageData.heroSection.heading : "",
         subHeading: pageData ? pageData.heroSection.subHeading : "",
@@ -179,6 +187,7 @@ const Homepage = () => {
     return (
         <>
             <Sidebar titles="Home Page" />
+            {pageloading && <Loader />}
             <div className="main__content">
                 <div className="page__editors">
                     <nav aria-label="breadcrumb">
@@ -571,7 +580,7 @@ const Homepage = () => {
                                                         id="seotitle"
                                                         value={seoSection.title}
                                                         onChange={(e) => setSeoSection({ ...seoSection, title: e.target.value })}
-                                                         placeholder="Enter Meta Title"
+                                                        placeholder="Enter Meta Title"
                                                         className="form-control"
                                                     />
                                                 </div>

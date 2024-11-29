@@ -55,7 +55,7 @@ app.use('/admin/pages', pagesRoute);
 app.use('/api/media', mediaRoute);
 app.use('/admin/casestudy/', caseStudyRoute);
 
-//error handle
+ 
 
 
 let server = app.listen(port, (err) => {

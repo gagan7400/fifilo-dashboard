@@ -124,7 +124,7 @@ const Login = () => {
                 <style>
 
                 </style>
-                <div className="col-lg-6 col-md-6">
+                <div className="col-lg-4 col-md-5">
                     <form onSubmit={submithandler}>
                         <div className="form__card">
                             <div className="contact__form" data-aos="fade-up" data-aos-duration="800">

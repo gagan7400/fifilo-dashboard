@@ -18,8 +18,10 @@ export default function ProtectedRoute({ Component }) {
   // // Usage in your component
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (isTokenExpired(token)) {
-      handleLogout();
+    if (token && token !== 'undefined') {
+      if (isTokenExpired(token)) {
+        handleLogout();
+      }
     }
   }, [Component]);
   useEffect(() => {

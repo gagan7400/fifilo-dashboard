@@ -4,12 +4,12 @@ import Sidebar from './Sidebar';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPublishFaqPage, updateFaqAction } from '../redux/actions/faqAction';
 
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 const Faqpage = () => {
     const dispatch = useDispatch();
-    const { publishedfaqdata, publishedfaqloading } = useSelector((state) => state.faq);
-
+     const { publishedfaqdata, publishedfaqloading } = useSelector((state) => state.faq);
+   
     const [heroSection, setHeroSection] = useState({
         heading: "",
         subHeading: ""

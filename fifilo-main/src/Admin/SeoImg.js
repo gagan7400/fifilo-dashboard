@@ -34,7 +34,7 @@ export default function SeoImg({ seoSection, setSeoSection, updateContact, index
                         }
                     </div>
                     <div className="btn__grp">
-                        <button className="btn" type="button" onClick={openMediaLibrary}><img src="assets/imgs/edit-05.svg"
+                        <button className="btn" type="button" onClick={() => { openMediaLibrary() }}><img src="assets/imgs/edit-05.svg"
                             alt="" /></button>
                         <button className="btn" type="button" onClick={deleteImg}><img src="assets/imgs/trash-03.svg"
                             alt="" /></button>

@@ -216,7 +216,7 @@ export default function Home() {
           </div>
           <div className="inner__gapTop row">
             {!loading && casestudies && casestudies.slice(0, 3).map((card, index) => (
-              <div className="col-12" data-aos={index % 2 == 0 ? "fade-right" : "fade-left"} data-aos-duration="800">
+              <div className="col-12" data-aos={index % 2 === 0 ? "fade-right" : "fade-left"} data-aos-duration="800">
                 <div className="card__caseStudies">
                   <div className="top__keywords">
                     {card.heroSection.workButtons.map((btn, i) => (

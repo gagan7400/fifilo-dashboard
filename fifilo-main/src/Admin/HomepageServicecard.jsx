@@ -27,14 +27,11 @@ export default function HomepageServicecard({ card, index, handleServicesCardCha
                     <img src={card.serviceImgs.filename ? `http://localhost:5000/images/${card.serviceImgs.filename}` : "assets/imgs/avatar.svg"} alt="" />
                 </div>
                 <div className="btn__grp">
-                    <button className="btn"><img src="assets/imgs/edit-05.svg" alt="" onClick={() => { openMediaLibrary() }} /></button>
+                    <button className="btn"  data-bs-toggle="modal" data-bs-target="#MediaModal"><img src="assets/imgs/edit-05.svg" alt="" /></button>
                     {/* <button className="btn"><img src="assets/imgs/trash-03.svg" alt="" onClick={() => { deleteImg() }} /></button> */}
                 </div>
             </div>
-            <MediaLibraryModal
-                isOpen={isModalOpen}
-                onClose={closeMediaLibrary}
-                onSelectImage={handleImageSelect} // Pass the image selection handler
+            <MediaLibraryModal isOpen={isModalOpen} onClose={closeMediaLibrary} onSelectImage={handleImageSelect} // Pass the image selection handler
             />
         </div>
     )

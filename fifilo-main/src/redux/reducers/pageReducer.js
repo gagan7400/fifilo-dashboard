@@ -1,11 +1,15 @@
-export const pageReducer = (state = { pageData: null, loading: true }, action) => {
+export const pageReducer = (state = { pageData: null, pageloading: true }, action) => {
     switch (action.type) {
         case "PAGEDATA":
             return {
-                loading: false,
-                pageData: action.payload,
+                pageloading: false,
+                pageData: action.payload
             };
-
+        case "OLDDATA":
+            return {
+                pageloading: false,
+                pageData: action.payload
+            };
         default:
             return state;
     }

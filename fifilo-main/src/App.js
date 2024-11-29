@@ -43,6 +43,8 @@ import Layout from "./pages/Layout.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import Newcasestudy from "./Admin/Newcasestudy.js";
 import Casestudypage from "./Admin/Casestudypage.jsx";
+import MediaLibraryModal from "./Admin/MediaLibraryModal.js";
+import MediaSection from "./Admin/MediaSection.js";
 function App() {
   let dispatch = useDispatch();
 
@@ -71,7 +73,14 @@ function App() {
   useEffect(() => {
     dispatch(loaduser())
   }, [dispatch])
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
 
+  // Open the modal to select an image
+  const openMediaLibrary = () => setIsModalOpen(true);
+
+  // Close the modal
+  const closeMediaLibrary = () => setIsModalOpen(false);
   return (
     <Layout>
       <ScrollToTop />
@@ -89,6 +98,7 @@ function App() {
         <Route path="/pages/contact" element={<ProtectedRoute Component={<Contactpage />} />} />
         <Route path="/pages/services" element={<ProtectedRoute Component={<Servicespage />} />} />
         <Route path="/section/faq" element={<ProtectedRoute Component={<Faqpage />} />} />
+        <Route path="/section/editor" element={<ProtectedRoute Component={<MediaSection isOpen={isModalOpen} onClose={closeMediaLibrary} />} />} />
         <Route path="/admin" element={<Login />} />
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />

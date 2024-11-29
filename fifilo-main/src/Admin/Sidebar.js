@@ -46,7 +46,7 @@ export default function Sidebar() {
               </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink to="/section/faq" className="nav-link"  >
+              <NavLink to="/section/editor" className="nav-link"  >
                 <img src="assets/imgs/task.svg" alt="faq Icon" />Media Library
               </NavLink>
             </li>

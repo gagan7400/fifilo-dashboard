@@ -10,8 +10,7 @@ import 'owl.carousel';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
 import { loaduser, login } from '../redux/actions/adminloginaction';
-import Footer from '../layout/Footer';
-import Navbar from '../layout/Navbar';
+
 const Login = () => {
     let nav = useNavigate();
     const { isAuthenticated, error } = useSelector((state) => state.user);
@@ -81,7 +80,7 @@ const Login = () => {
         e.preventDefault();
         const validationErrors = validate();
         if (Object.keys(validationErrors).length > 0) {
-         setErrors(validationErrors);
+            setErrors(validationErrors);
             setShowErrors(true);
             if (validationErrors.email) {
                 toast.error(validationErrors.email, {
@@ -101,7 +100,7 @@ const Login = () => {
         }
 
     }
-     
+
     useEffect(() => {
         if (error) {
             setShowErrors(true);
@@ -115,27 +114,43 @@ const Login = () => {
         if (isAuthenticated) {
             setTimeout(() => {
                 nav('/dashboard')
-            }, 100);
+            }, 10);
         }
     }, [dispatch, nav, isAuthenticated])
     return (
         <>
-             <div className="contact__bnr hero__bnr" ref={heroBnrRef}>
+            <div className="contact__bnr hero__bnr" ref={heroBnrRef} >
                 <ToastContainer autoClose={2000} />
-                 <div className="col-lg-6 col-md-6">
+                <style>
+
+                </style>
+                <div className="col-lg-6 col-md-6">
                     <form onSubmit={submithandler}>
                         <div className="form__card">
                             <div className="contact__form" data-aos="fade-up" data-aos-duration="800">
                                 <div className="inr__input" >
                                     <span className='icon'><img src="assets/img/mail-02.svg" alt="contact__form" /></span>
-                                    <input type="email" name="Email" value={Email} id="loginEmailinput" onChange={(e) => { setEmail(e.target.value) }}
-                                        className="form-control" placeholder="Your E-mail" autoComplete='false' />
+                                    <input
+                                        type="email"
+                                        name="Email"
+                                        id="loginEmailinput"
+                                        value={Email}
+                                        onChange={(e) => { setEmail(e.target.value) }}
+                                        className="form-control"
+                                        placeholder="Your E-mail"
+                                    />
                                     {errors.email && <div className="error text-danger position-absolute" style={{ color: "#f0f1f1" }} >{errors.email}</div>}
                                 </div>
                                 <div className="inr__input" >
                                     <span className='icon'><img src="assets/img/mail-02.svg" alt="contact__form" /></span>
-                                    <input type="password" name="Password" value={Password}
-                                        onChange={(e) => { setPassword(e.target.value) }} className="form-control" placeholder="Your password" autoComplete='false' />
+                                    <input
+                                        type="password"
+                                        name="Password"
+                                        value={Password}
+                                        onChange={(e) => { setPassword(e.target.value) }}
+                                        className="form-control"
+                                        placeholder="Your password"
+                                        autoComplete='false' />
                                     {errors.password && <div className="error text-danger position-absolute" style={{ color: "#f0f1f1" }} >{errors.password}</div>}
                                 </div>
 

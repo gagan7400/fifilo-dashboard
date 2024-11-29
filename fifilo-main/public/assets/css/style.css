@@ -3188,8 +3188,23 @@ select:autofill,
 select:autofill:hover,
 select:autofill:focus {
   -webkit-text-fill-color: #f0f1f1;
+  box-shadow: 0 0 0px 1000px #1e1e1e inset;
   -webkit-box-shadow: 0 0 0px 1000px #1e1e1e inset;
   transition: background-color 5000s ease-in-out 0s;
+}
+
+#loginEmailinput:-internal-autofill-selected {
+  background-color: #1e1e1e !important;
+  color: var(--color-white) !important;
+}
+
+#loginEmailinput:autofill,
+#loginEmailinput:autofill:hover,
+#loginEmailinput:autofill:focus {
+  -webkit-text-fill-color: #f0f1f1 !important;
+  box-shadow: 0 0 0px 1000px #1e1e1e inset !important;
+  -webkit-box-shadow: 0 0 0px 1000px #1e1e1e inset !important;
+  transition: background-color 5000s ease-in-out 0s !important;
 }
 
 .thankYou__box {

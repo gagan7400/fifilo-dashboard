@@ -32,7 +32,7 @@ const registerAdmin = async (email, password) => {
   return admin;
 };
 
- 
+
 router.post('/login', async (req, res, next) => {
   try {
     const { email, password } = req.body;

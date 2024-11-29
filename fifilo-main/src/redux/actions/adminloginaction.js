@@ -11,9 +11,11 @@ export const login = (email, password) => async (dispatch) => {
       { email, password },
       config
     );
+    console.log(data)
     await localStorage.setItem("token", data.token)
     dispatch({ type: "LOGIN_SUCCESS", payload: data });
   } catch (error) {
+    console.log(error.message)
     dispatch({ type: "LOGIN_FAIL", payload: error.response.data.message });
   }
 };

@@ -21,6 +21,8 @@ import PrivacyPolicy from "./pages/PrivacyPolicy.jsx";
 import ScrollToTop from "./layout/Scrolltotop.jsx";
 import AOS from "aos";
 import "owl.carousel";
+import { useDispatch } from 'react-redux';
+import { loaduser } from './redux/actions/adminloginaction.js';
 import "aos/dist/aos.css";
 import Login from './Admin/Login.jsx';
 import ProtectedRoute from './Protectedroute/ProtectedRoute.jsx';
@@ -29,9 +31,6 @@ import Careerpage from './Admin/Careerpage.js';
 import Aboutpage from './Admin/Aboutpage.js';
 import Contactpage from './Admin/Contactpage.js';
 import Servicespage from './Admin/Servicespage.js';
-import Profile from './Admin/Profile.jsx';
-import { useDispatch } from 'react-redux';
-import { loaduser } from './redux/actions/adminloginaction.js';
 import Careerform from './pages/CareerForm.jsx';
 import Homepage from './Admin/Homepage.js';
 import Faqpage from './Admin/Faqpage.js';
@@ -91,7 +90,6 @@ function App() {
         <Route path="/pages/services" element={<ProtectedRoute Component={<Servicespage />} />} />
         <Route path="/section/faq" element={<ProtectedRoute Component={<Faqpage />} />} />
         <Route path="/admin" element={<Login />} />
-        <Route path="/profile" element={<ProtectedRoute Component={<Profile />} />} />
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/services" element={<Services />} />

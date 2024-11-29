@@ -170,7 +170,6 @@ export default function Home() {
   return (
     <>
       <Helmet>
-        {console.log((!homeloading && publishedhomepage) && publishedhomepage.seoSection.title)}
         <title>{(!homeloading && publishedhomepage) && publishedhomepage.seoSection.title}</title>
         <meta name='keywords' content={(!homeloading && publishedhomepage) && publishedhomepage.seoSection.keywords} />
         <meta name='description' content={(!homeloading && publishedhomepage) && publishedhomepage.seoSection.description} />
@@ -216,7 +215,6 @@ export default function Home() {
             </h2>
           </div>
           <div className="inner__gapTop row">
-            {console.log(!loading && casestudies)}
             {!loading && casestudies && casestudies.slice(0, 3).map((card, index) => (
               <div className="col-12" data-aos={index % 2 == 0 ? "fade-right" : "fade-left"} data-aos-duration="800">
                 <div className="card__caseStudies">
@@ -308,7 +306,6 @@ export default function Home() {
 
         <div className="inner__gapTop" data-aos="fade-up" data-aos-duration="800">
           <div className="slider__card">
-            {/* <div className="testimonials__slide owl-carousel"> */}
             {!homeloading && publishedhomepage && publishedhomepage.reviewsSection.length > 0 && (
               <div className="testimonials__slide owl-carousel" data-aos="fade-up" data-aos-duration="800">
                 {publishedhomepage.reviewsSection.map((item, index) => (

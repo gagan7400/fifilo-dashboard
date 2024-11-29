@@ -1,11 +1,13 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Navigate } from 'react-router-dom';
 import { jwtDecode } from "jwt-decode";
 import { logout } from '../redux/actions/adminloginaction';
-import '../Admin/dashboard.css'
+import '../Admin/dashboard.css';
+import Loader from "../layout/Loader";
 export default function ProtectedRoute({ Component }) {
   let dispatch = useDispatch();
+  const [loading, setLoading] = useState(true)
   const isTokenExpired = (token) => {
     if (!token) return true; // If no token, consider it expired
     const decodedToken = jwtDecode(token);
@@ -20,7 +22,14 @@ export default function ProtectedRoute({ Component }) {
       handleLogout();
     }
   }, [Component]);
-
+  useEffect(() => {
+    const loadData = async () => {
+      setLoading(false);
+    };
+    loadData();
+    return () => {
+    };
+  }, []);
   const handleLogout = () => {
     // Clear token and redirect to login
     localStorage.removeItem("adminToken");
@@ -30,8 +39,8 @@ export default function ProtectedRoute({ Component }) {
   };
   const { isAuthenticated } = useSelector((state) => state.user);
   return (
-    <div>
-      {isAuthenticated ? <>{Component}</> : <Navigate to="/admin" />}
+    <div>  {loading && <Loader />}
+      {isAuthenticated ? <>{Component}</> : loading ? <Loader /> : <Navigate to="/admin" />}
     </div>
   )
 }

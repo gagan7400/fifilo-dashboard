@@ -8,20 +8,22 @@ import HomepageClients from './HomepageClients';
 import HomepageuploadSection from './HomepageuploadSection';
 import SeoImg from './SeoImg';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { oldData } from '../redux/actions/pagedataAction';
+// import { oldData } from '../redux/actions/pagedataAction';
 import Loader from '../layout/Loader';
+import { pageAction } from '../redux/actions/pagedataAction';
 
 const Homepage = () => {
     let dispatch = useDispatch();
+    // dispatch(pageAction(null));
     const { pageData, pageloading } = useSelector((state) => state.page);
-    console.log(pageData);
-    const [loading, setLoading] = useState(true)
-    useEffect(() => {
-        if (!pageData) {
-            dispatch(oldData())
-        }
-        console.log(pageData)
-    }, [dispatch])
+    // console.log(pageData);
+    // const [loading, setLoading] = useState(true)
+    // useEffect(() => {
+    //     if (!pageData) {
+    //         dispatch(oldData())
+    //     }
+    //     console.log(pageData)
+    // }, [dispatch])
     const [heroSection, setHeroSection] = useState({
         heading: pageData ? pageData.heroSection.heading : "",
         subHeading: pageData ? pageData.heroSection.subHeading : "",
@@ -187,7 +189,6 @@ const Homepage = () => {
     return (
         <>
             <Sidebar titles="Home Page" />
-            {pageloading && <Loader />}
             <div className="main__content">
                 <div className="page__editors">
                     <nav aria-label="breadcrumb">

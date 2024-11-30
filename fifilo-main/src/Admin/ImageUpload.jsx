@@ -7,6 +7,7 @@ const ImageUpload = () => {
     const fileInputRef = useRef(null);
     const handleFileChange = (e) => {
         setFile(e.target.files[0]);
+        console.log(e.target.files[0])
         handleUpload()
     };
     const handledivclick = () => {
@@ -17,13 +18,13 @@ const ImageUpload = () => {
         const formData = new FormData();
         formData.append("image", file);
         formData.append("altText", altText);
-
         try {
             const response = await axios.post("http://localhost:5000/api/media/upload", formData, {
                 headers: { "Content-Type": "multipart/form-data" },
             });
             // onUploadSuccess(response.data.image);
             setFile(null);
+            alert("img uploaded successfully")
         } catch (error) {
             console.error("Error uploading image", error);
         }

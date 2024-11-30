@@ -28,7 +28,9 @@ const MediaLibrary = ({ onSelectImage, ImageUplaoded }) => {
     <ul>
       {images.map((image, index) => (
         <li key={index}>
-          <div className="thumbnail"><img src={`http://localhost:5000/images/${image.filename}`} alt="Image 1" onClick={() => handleImageClick(image)} /></div>
+          <div className="thumbnail">
+            <img src={`http://localhost:5000/images/${image.filename}`} alt="Image 1" onClick={() => handleImageClick(image)} />
+          </div>
         </li>
       ))}
     </ul>

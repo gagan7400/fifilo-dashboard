@@ -25,17 +25,14 @@ export default function ProtectedRoute({ Component }) {
     }
   }, [Component]);
   useEffect(() => {
-    const loadData = async () => {
-      setLoading(false);
-    };
-    loadData();
-    return () => {
-    };
+    setTimeout(() => {
+      setLoading(false)
+    }, 1000);
   }, []);
   const handleLogout = () => {
     // Clear token and redirect to login
     localStorage.removeItem("adminToken");
-    dispatch(logout())
+    dispatch(logout());
     window.location.href = "/admin"; // or use React Router to navigate
     return ""
   };

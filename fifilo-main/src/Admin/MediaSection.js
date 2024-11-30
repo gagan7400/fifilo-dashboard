@@ -11,14 +11,14 @@ const MediaSection = () => {
         <>
             <Sidebar />
             <div className="main__content" >
-                <div class="page__editors">
-                    <div class="page__title">
+                <div className="page__editors">
+                    <div className="page__title">
                         <h5>Media Library</h5>
-                        <button class="btn btn__update" onClick={() => { setSection(!section) }}>{section ?<> <img src="assets/imgs/arrow-back.svg" />Back</> : "Add New Media File"}</button>
+                        <button className="btn btn__update" onClick={() => { setSection(!section) }}>{section ? <> <img src="assets/imgs/arrow-back.svg" />Back</> : "Add New Media File"}</button>
                     </div>
 
                     {section ? <ImageUpload /> : ""}
-                    <div class="media__grids">
+                    <div className="media__grids">
                         <MediaLibrary />
                     </div>
 

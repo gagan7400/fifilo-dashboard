@@ -7,6 +7,7 @@ import { NavLink } from 'react-router-dom';
 import SeoImg from './SeoImg';
 const Careerpage = () => {
     const { pageData } = useSelector((state) => state.page);
+    const { publishedcareerdata, loading } = useSelector((state) => state.careerpage);
     let dispatch = useDispatch();
     //  career page states 
     const [heroSection, setHeroSection] = useState({

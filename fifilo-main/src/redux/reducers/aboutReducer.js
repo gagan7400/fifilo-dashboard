@@ -1,9 +1,9 @@
- export const aboutPageReducer = (
+export const aboutPageReducer = (
     state = {
         loading: true,
         updateLoading: true,
         deleteLoading: true,
-        publishedLoading: true,
+        publishedLoading: false,
         aboutData: null,
         publishedData: null,
         error: null,

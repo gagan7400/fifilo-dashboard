@@ -8,8 +8,8 @@ import { NavLink, useNavigate } from 'react-router-dom';
 
 const Faqpage = () => {
     const dispatch = useDispatch();
-     const { publishedfaqdata, publishedfaqloading } = useSelector((state) => state.faq);
-   
+    const { publishedfaqdata, publishedfaqloading } = useSelector((state) => state.faq);
+
     const [heroSection, setHeroSection] = useState({
         heading: "",
         subHeading: ""

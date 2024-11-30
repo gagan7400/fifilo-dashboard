@@ -1,42 +1,123 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Sidebar from './Sidebar';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateAboutPageAction } from '../redux/actions/aboutAction';
+import { getPublishAboutPage, updateAboutPageAction } from '../redux/actions/aboutAction';
 import MemberCard from './MemberCard';
 import ProcessIcon from './ProcessIcon';
 import SeoImg from './SeoImg';
 const Aboutpage = () => {
     const { pageData } = useSelector((state) => state.page);
+    const { publishedLoading, publishedData } = useSelector((state) => state.about);
     let dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(getPublishAboutPage())
+    }, [])
+
     const [heroSection, setHeroSection] = useState({
-        heading: pageData ? pageData.heroSection.heading : "",
-        subHeading: pageData ? pageData.heroSection.subHeading : "",
-        heroButtons: pageData ? { ...pageData.heroSection.heroButtons } : { CTA1: { url: "", name: "" } }
+        heading: "",
+        subHeading: "",
+        heroButtons: {
+            CTA1: { url: "", name: "" },
+        },
     });
+
     const [aboutSection, setAboutSection] = useState({
-        heading: pageData ? pageData.aboutSection.heading : "",
-        preHeading: pageData ? pageData.aboutSection.preHeading : "",
-        description: pageData ? pageData.aboutSection.description : ""
+        heading: "",
+        preHeading: "",
+        description: "",
     });
+
     const [processSection, setProcessSection] = useState({
-        heading: pageData ? pageData.processSection.heading : "",
-        preHeading: pageData ? pageData.processSection.preHeading : "",
-        content: pageData ? [...pageData.processSection.content] : [{ heading: '', description: '', icon: { filename: "", path: "" } }],
+        heading: "",
+        preHeading: "",
+        content: [
+            { heading: "", description: "", icon: { filename: "", path: "" } },
+        ],
     });
-    const [seoSection, setSeoSection] = useState(pageData ? { ...pageData.seoSection } :
-        {
-            title: "",
-            keywords: "",
-            description: "",
-            seoImg: { filename: "", path: "" }
-        });
+
+    const [seoSection, setSeoSection] = useState({
+        title: "",
+        keywords: "",
+        description: "",
+        seoImg: { filename: "", path: "" },
+    });
+
     const [teamSection, setTeamSection] = useState({
-        heading: pageData ? pageData.teamSection.heading : "",
-        preHeading: pageData ? pageData.teamSection.preHeading : "",
-        description: pageData ? pageData.teamSection.description : ""
+        heading: "",
+        preHeading: "",
+        description: "",
     });
-    const [membersCard, setMembersCard] = useState(pageData ? [...pageData.membersCard] : [{ name: '', designation: '', linkedinUrl: '', memberImg: { filename: "", path: "" } }]);
+
+    const [membersCard, setMembersCard] = useState([
+        {
+            name: "",
+            designation: "",
+            linkedinUrl: "",
+            memberImg: { filename: "", path: "" },
+        },
+    ]);
+
+    useEffect(() => {
+        if (publishedData) {
+            setHeroSection({
+                heading: publishedData.heroSection.heading,
+                subHeading: publishedData.heroSection.subHeading,
+                heroButtons: { ...publishedData.heroSection.heroButtons },
+            });
+
+            setAboutSection({
+                heading: publishedData.aboutSection.heading,
+                preHeading: publishedData.aboutSection.preHeading,
+                description: publishedData.aboutSection.description,
+            });
+
+            setProcessSection({
+                heading: publishedData.processSection.heading,
+                preHeading: publishedData.processSection.preHeading,
+                content: [...publishedData.processSection.content],
+            });
+
+            setSeoSection({ ...publishedData.seoSection });
+
+            setTeamSection({
+                heading: publishedData.teamSection.heading,
+                preHeading: publishedData.teamSection.preHeading,
+                description: publishedData.teamSection.description,
+            });
+
+            setMembersCard([...publishedData.membersCard]);
+        }
+    }, [publishedData]);
+
+    // const [heroSection, setHeroSection] = useState({
+    //     heading: pageData ? pageData.heroSection.heading : "",
+    //     subHeading: pageData ? pageData.heroSection.subHeading : "",
+    //     heroButtons: pageData ? { ...pageData.heroSection.heroButtons } : { CTA1: { url: "", name: "" } }
+    // });
+    // const [aboutSection, setAboutSection] = useState({
+    //     heading: pageData ? pageData.aboutSection.heading : "",
+    //     preHeading: pageData ? pageData.aboutSection.preHeading : "",
+    //     description: pageData ? pageData.aboutSection.description : ""
+    // });
+    // const [processSection, setProcessSection] = useState({
+    //     heading: pageData ? pageData.processSection.heading : "",
+    //     preHeading: pageData ? pageData.processSection.preHeading : "",
+    //     content: pageData ? [...pageData.processSection.content] : [{ heading: '', description: '', icon: { filename: "", path: "" } }],
+    // });
+    // const [seoSection, setSeoSection] = useState(pageData ? { ...pageData.seoSection } :
+    //     {
+    //         title: "",
+    //         keywords: "",
+    //         description: "",
+    //         seoImg: { filename: "", path: "" }
+    //     });
+    // const [teamSection, setTeamSection] = useState({
+    //     heading: pageData ? pageData.teamSection.heading : "",
+    //     preHeading: pageData ? pageData.teamSection.preHeading : "",
+    //     description: pageData ? pageData.teamSection.description : ""
+    // });
+    // const [membersCard, setMembersCard] = useState(pageData ? [...pageData.membersCard] : [{ name: '', designation: '', linkedinUrl: '', memberImg: { filename: "", path: "" } }]);
     const handleMembersCardChange = (index, event, data) => {
         // const values = [...membersCard];
         const values = membersCard.map((card) => ({ ...card }));
@@ -77,7 +158,7 @@ const Aboutpage = () => {
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
-        dispatch(updateAboutPageAction({ aboutData: { heroSection, aboutSection, seoSection, processSection, teamSection, membersCard }, id: pageData._id }));
+        dispatch(updateAboutPageAction({ aboutData: { heroSection, aboutSection, seoSection, processSection, teamSection, membersCard }, id: publishedData._id }));
         alert("aboutPage updated successfully");
     };
     return (

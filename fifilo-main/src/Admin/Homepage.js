@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Sidebar from './Sidebar';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateHomePageAction } from '../redux/actions/homeAction';
+import { getpublishHomePage, updateHomePageAction } from '../redux/actions/homeAction';
 import ReviewCard from './ReviewCard';
 import HomepageServiceCard from './HomepageServicecard';
 import HomepageClients from './HomepageClients';
@@ -14,65 +14,154 @@ import { pageAction } from '../redux/actions/pagedataAction';
 
 const Homepage = () => {
     let dispatch = useDispatch();
-    // dispatch(pageAction(null));
-    const { pageData, pageloading } = useSelector((state) => state.page);
-    // console.log(pageData);
-    // const [loading, setLoading] = useState(true)
-    // useEffect(() => {
-    //     if (!pageData) {
-    //         dispatch(oldData())
+    useEffect(() => {
+        dispatch(getpublishHomePage())
+    }, [])
+    const { publishedhomepage, homeloading } = useSelector((state) => state.homepage);
+
+    // const [heroSection, setHeroSection] = useState({
+    //     heading: publishedhomepage ? publishedhomepage.heroSection.heading : "",
+    //     subHeading: publishedhomepage ? publishedhomepage.heroSection.subHeading : "",
+    //     heroButtons: publishedhomepage ? publishedhomepage.heroSection.heroButtons : {
+    //         CTA1: { name: "", url: "" },
+    //         CTA2: { name: "", url: "" },
+    //         CTA3: { name: "", url: "" },
     //     }
-    //     console.log(pageData)
-    // }, [dispatch])
+    // });
+
+    // const [aboutSection, setAboutSection] = useState(publishedhomepage ? publishedhomepage.aboutSection : "");
+
+    // const [servicesSection, setServicesSection] = useState({
+    //     preHeading: publishedhomepage ? publishedhomepage.servicesSection.preHeading : "",
+    //     heading: publishedhomepage ? publishedhomepage.servicesSection.heading : "",
+    // });
+
+    // const [servicesCardSection, setServicesCardSection] = useState(
+    //     publishedhomepage ? publishedhomepage.servicesCardSection.map(card => ({ ...card, servicePointList: [...card.servicePointList] }))
+    //         : [{ heading: '', servicePointList: [], description: '', serviceImgs: { filename: "", path: "" }, buttonText: "", buttonUrl: "" }]
+    // );
+    // const [testimonialSection, setTestimonialSection] = useState({
+    //     heading: publishedhomepage ? publishedhomepage.testimonialSection.heading : "",
+    //     preHeading: publishedhomepage ? publishedhomepage.testimonialSection.preHeading : "",
+    // });
+
+    // const [seoSection, setSeoSection] = useState(publishedhomepage ? { ...publishedhomepage.seoSection } : {
+    //     title: "",
+    //     keywords: "",
+    //     description: "",
+    //     seoImg: { filename: "", path: "" }
+    // });
+
+    // const [reviewsSection, setReviewsSection] = useState(
+    //     publishedhomepage ? publishedhomepage.reviewsSection.map(review => ({ ...review }))
+    //         : [{ company: '', clientName: '', description: '', clientImgs: { filename: "", path: "" } }]
+    // );
+    // const [clientSection, setClientSection] = useState({
+    //     heading: publishedhomepage ? publishedhomepage.clientSection.heading : "",
+    //     subHeading: publishedhomepage ? publishedhomepage.clientSection.subHeading : "",
+    // });
+
+    // const [clientLogos, setClientLogos] = useState(publishedhomepage ?
+    //     [...publishedhomepage.clientSection.clientLogos] : [{ filename: '', path: '' }]
+    // );
     const [heroSection, setHeroSection] = useState({
-        heading: pageData ? pageData.heroSection.heading : "",
-        subHeading: pageData ? pageData.heroSection.subHeading : "",
-        heroButtons: pageData ? pageData.heroSection.heroButtons : {
+        heading: "",
+        subHeading: "",
+        heroButtons: {
             CTA1: { name: "", url: "" },
             CTA2: { name: "", url: "" },
             CTA3: { name: "", url: "" },
-        }
+        },
     });
 
-    const [aboutSection, setAboutSection] = useState(pageData ? pageData.aboutSection : "");
-    // const [servicesSection, setServicesSection] = useState({
-    //     preHeading: pageData ? pageData.servicesSection.preHeading : "",
-    //     heading: pageData ? pageData.servicesSection.heading : "",
-    // });
+    const [aboutSection, setAboutSection] = useState("");
+
     const [servicesSection, setServicesSection] = useState({
-        preHeading: pageData ? pageData.servicesSection.preHeading : "",
-        heading: pageData ? pageData.servicesSection.heading : "",
+        preHeading: "",
+        heading: "",
     });
 
-    const [servicesCardSection, setServicesCardSection] = useState(
-        pageData ? pageData.servicesCardSection.map(card => ({ ...card, servicePointList: [...card.servicePointList] }))
-            : [{ heading: '', servicePointList: [], description: '', serviceImgs: { filename: "", path: "" }, buttonText: "", buttonUrl: "" }]
-    );
+    const [servicesCardSection, setServicesCardSection] = useState([
+        {
+            heading: "",
+            servicePointList: [],
+            description: "",
+            serviceImgs: { filename: "", path: "" },
+            buttonText: "",
+            buttonUrl: "",
+        },
+    ]);
+
     const [testimonialSection, setTestimonialSection] = useState({
-        heading: pageData ? pageData.testimonialSection.heading : "",
-        preHeading: pageData ? pageData.testimonialSection.preHeading : "",
+        heading: "",
+        preHeading: "",
     });
 
-    const [seoSection, setSeoSection] = useState(pageData ? { ...pageData.seoSection } : {
+    const [seoSection, setSeoSection] = useState({
         title: "",
         keywords: "",
         description: "",
-        seoImg: { filename: "", path: "" }
+        seoImg: { filename: "", path: "" },
     });
 
-    const [reviewsSection, setReviewsSection] = useState(
-        pageData ? pageData.reviewsSection.map(review => ({ ...review }))
-            : [{ company: '', clientName: '', description: '', clientImgs: { filename: "", path: "" } }]
-    );
+    const [reviewsSection, setReviewsSection] = useState([
+        {
+            company: "",
+            clientName: "",
+            description: "",
+            clientImgs: { filename: "", path: "" },
+        },
+    ]);
+
     const [clientSection, setClientSection] = useState({
-        heading: pageData ? pageData.clientSection.heading : "",
-        subHeading: pageData ? pageData.clientSection.subHeading : "",
+        heading: "",
+        subHeading: "",
     });
 
-    const [clientLogos, setClientLogos] = useState(pageData ?
-        [...pageData.clientSection.clientLogos] : [{ filename: '', path: '' }]
-    );
+    const [clientLogos, setClientLogos] = useState([
+        { filename: "", path: "" },
+    ]);
+    useEffect(() => {
+        if (publishedhomepage) {
+            setHeroSection({
+                heading: publishedhomepage.heroSection.heading,
+                subHeading: publishedhomepage.heroSection.subHeading,
+                heroButtons: publishedhomepage.heroSection.heroButtons,
+            });
 
+            setAboutSection(publishedhomepage.aboutSection);
+
+            setServicesSection({
+                preHeading: publishedhomepage.servicesSection.preHeading,
+                heading: publishedhomepage.servicesSection.heading,
+            });
+
+            setServicesCardSection(
+                publishedhomepage.servicesCardSection.map(card => ({
+                    ...card,
+                    servicePointList: [...card.servicePointList],
+                }))
+            );
+
+            setTestimonialSection({
+                heading: publishedhomepage.testimonialSection.heading,
+                preHeading: publishedhomepage.testimonialSection.preHeading,
+            });
+
+            setSeoSection({ ...publishedhomepage.seoSection });
+
+            setReviewsSection(
+                publishedhomepage.reviewsSection.map(review => ({ ...review }))
+            );
+
+            setClientSection({
+                heading: publishedhomepage.clientSection.heading,
+                subHeading: publishedhomepage.clientSection.subHeading,
+            });
+
+            setClientLogos([...publishedhomepage.clientSection.clientLogos]);
+        }
+    }, [publishedhomepage]);
 
     const handleServicesCardChange = (index, event, data) => {
         const values = servicesCardSection.map((card) => ({ ...card, servicePointList: [...card.servicePointList] }));
@@ -181,7 +270,9 @@ const Homepage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        dispatch(updateHomePageAction({ homedata: { heroSection, servicesSection, aboutSection, seoSection, servicesCardSection, testimonialSection, reviewsSection, clientSection: { ...clientSection, clientLogos } }, id: pageData._id }));
+        if (publishedhomepage && publishedhomepage._id) {
+            dispatch(updateHomePageAction({ homedata: { heroSection, servicesSection, aboutSection, seoSection, servicesCardSection, testimonialSection, reviewsSection, clientSection: { ...clientSection, clientLogos } }, id: publishedhomepage._id }));
+        }
         alert("homePage updated successfully");
     };
 
@@ -200,6 +291,7 @@ const Homepage = () => {
                     </nav>
 
                     <div className="page__title">
+                        {homeloading && <Loader />}
                         <h5>Home Page</h5>
                     </div>
 

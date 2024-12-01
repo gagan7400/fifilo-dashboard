@@ -135,11 +135,10 @@ export default function ContactUs() {
                 <div className="col-lg-5 col-md-5">
                   <div className="left__bx" data-aos="fade-up" data-aos-duration="800">
                     <h2 dangerouslySetInnerHTML={{
-                      __html: DOMPurify.sanitize(!publishedcontactloading && publishedcontactdata ? publishedcontactdata.heroSection.heading : `Contact with Us`)
+                      __html: DOMPurify.sanitize(!publishedcontactloading && publishedcontactdata ? publishedcontactdata.heroSection.heading : ``)
                     }} />
                     <p dangerouslySetInnerHTML={{
-                      __html: DOMPurify.sanitize(!publishedcontactloading && publishedcontactdata ? publishedcontactdata.heroSection.subHeading : `We're here to connect, collaborate, and bring your ideas to life. Whether you're ready to embark on
-                                            an exciting project or simply wish to explore how we can support your vision.`)
+                      __html: DOMPurify.sanitize(!publishedcontactloading && publishedcontactdata ? publishedcontactdata.heroSection.subHeading : ``)
                     }} />
                     <div className="card__bx">
                       <h5 dangerouslySetInnerHTML={{
@@ -154,10 +153,10 @@ export default function ContactUs() {
                                 {contact.value}  </a>
                               :
                               contact.name === "phonenumber" ? <a href={contact.name == "phonenumber" ? `tel:${contact.value}` : "/"}>
-                                <img src={contact && contact.icon && contact.icon.filename && `http://localhost:5000/images/${contact.icon.filename}`} alt="mail" />
+                                <img src={contact && contact.icon && contact.icon.filename && `http://localhost:5000/images/${contact.icon.filename}`} alt="phonenumber" />
                                 {contact.value}  </a>
                                 :
-                                <a href="/contact-us/"> <img src={contact && contact.icon && contact.icon.filename && `http://localhost:5000/images/${contact.icon.filename}`} alt="mail" /> {contact.value}
+                                <a href="/contact-us/"> <img src={contact && contact.icon && contact.icon.filename && `http://localhost:5000/images/${contact.icon.filename}`} alt="contact" /> {contact.value}
                                 </a>
                             }
                           </li>

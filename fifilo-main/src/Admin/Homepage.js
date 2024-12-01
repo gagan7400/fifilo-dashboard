@@ -19,51 +19,6 @@ const Homepage = () => {
     }, [])
     const { publishedhomepage, homeloading } = useSelector((state) => state.homepage);
 
-    // const [heroSection, setHeroSection] = useState({
-    //     heading: publishedhomepage ? publishedhomepage.heroSection.heading : "",
-    //     subHeading: publishedhomepage ? publishedhomepage.heroSection.subHeading : "",
-    //     heroButtons: publishedhomepage ? publishedhomepage.heroSection.heroButtons : {
-    //         CTA1: { name: "", url: "" },
-    //         CTA2: { name: "", url: "" },
-    //         CTA3: { name: "", url: "" },
-    //     }
-    // });
-
-    // const [aboutSection, setAboutSection] = useState(publishedhomepage ? publishedhomepage.aboutSection : "");
-
-    // const [servicesSection, setServicesSection] = useState({
-    //     preHeading: publishedhomepage ? publishedhomepage.servicesSection.preHeading : "",
-    //     heading: publishedhomepage ? publishedhomepage.servicesSection.heading : "",
-    // });
-
-    // const [servicesCardSection, setServicesCardSection] = useState(
-    //     publishedhomepage ? publishedhomepage.servicesCardSection.map(card => ({ ...card, servicePointList: [...card.servicePointList] }))
-    //         : [{ heading: '', servicePointList: [], description: '', serviceImgs: { filename: "", path: "" }, buttonText: "", buttonUrl: "" }]
-    // );
-    // const [testimonialSection, setTestimonialSection] = useState({
-    //     heading: publishedhomepage ? publishedhomepage.testimonialSection.heading : "",
-    //     preHeading: publishedhomepage ? publishedhomepage.testimonialSection.preHeading : "",
-    // });
-
-    // const [seoSection, setSeoSection] = useState(publishedhomepage ? { ...publishedhomepage.seoSection } : {
-    //     title: "",
-    //     keywords: "",
-    //     description: "",
-    //     seoImg: { filename: "", path: "" }
-    // });
-
-    // const [reviewsSection, setReviewsSection] = useState(
-    //     publishedhomepage ? publishedhomepage.reviewsSection.map(review => ({ ...review }))
-    //         : [{ company: '', clientName: '', description: '', clientImgs: { filename: "", path: "" } }]
-    // );
-    // const [clientSection, setClientSection] = useState({
-    //     heading: publishedhomepage ? publishedhomepage.clientSection.heading : "",
-    //     subHeading: publishedhomepage ? publishedhomepage.clientSection.subHeading : "",
-    // });
-
-    // const [clientLogos, setClientLogos] = useState(publishedhomepage ?
-    //     [...publishedhomepage.clientSection.clientLogos] : [{ filename: '', path: '' }]
-    // );
     const [heroSection, setHeroSection] = useState({
         heading: "",
         subHeading: "",

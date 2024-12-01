@@ -19,13 +19,13 @@ export const createFaqPage = ({ heroSection, faqSection }) => async (dispatch) =
         }).catch((err) => {
             dispatch({
                 type: "CREATE_FAQPAGE_FAIL",
-                payload: err,
+                payload: err.message,
             });
         })
     } catch (error) {
         dispatch({
             type: "CREATE_FAQPAGE_FAIL",
-            payload: error,
+            payload: error.message,
         });
     }
 };
@@ -35,14 +35,21 @@ export const getFaqPage = () => async (dispatch) => {
     try {
         dispatch({ type: "ALL_FAQPAGE_REQUEST" });
         const { data } = await axios.get('http://localhost:5000/admin/faq/getfaqpage');
-        dispatch({
-            type: "ALL_FAQPAGE_SUCCESS",
-            payload: data.data,
-        });
+        if (data.success) {
+            dispatch({
+                type: "ALL_FAQPAGE_SUCCESS",
+                payload: data.data,
+            });
+        } else {
+            dispatch({
+                type: "ALL_FAQPAGE_FAIL",
+                payload: data.message,
+            });
+        }
     } catch (error) {
         dispatch({
             type: "ALL_FAQPAGE_FAIL",
-            payload: error.response.data.message,
+            payload: error.message,
         });
     }
 };
@@ -57,15 +64,22 @@ export const publishFaqPage = (id) => async (dispatch) => {
         };
 
         const { data } = await axios.put(`http://localhost:5000/admin/faq/publishfaqpage/${id}`, {}, config);
-        dispatch({
-            type: "ALL_PUBLISHFAQPAGE_SUCCESS",
-            payload: data,
-        });
-        dispatch(getFaqPage())
+        if (data.success) {
+            dispatch({
+                type: "ALL_PUBLISHFAQPAGE_SUCCESS",
+                payload: data,
+            });
+            dispatch(getFaqPage())
+        } else {
+            dispatch({
+                type: "ALL_PUBLISHFAQPAGE_FAIL",
+                payload: data.message,
+            });
+        }
     } catch (error) {
         dispatch({
             type: "ALL_PUBLISHFAQPAGE_FAIL",
-            payload: error.response.data.message,
+            payload: error.message,
         });
     }
 };
@@ -75,14 +89,22 @@ export const getPublishFaqPage = () => async (dispatch) => {
 
         const { data } = await axios.get('http://localhost:5000/admin/faq/getpublishedfaqpage');
 
-        dispatch({
-            type: "ALL_GETPUBLISHFAQPAGE_SUCCESS",
-            payload: data.data,
-        });
+        if (data.success) {
+
+            dispatch({
+                type: "ALL_GETPUBLISHFAQPAGE_SUCCESS",
+                payload: data.data,
+            });
+        } else {
+            dispatch({
+                type: "ALL_GETPUBLISHFAQPAGE_FAIL",
+                payload: data.message,
+            });
+        }
     } catch (error) {
         dispatch({
             type: "ALL_GETPUBLISHFAQPAGE_FAIL",
-            payload: error.response.data.message,
+            payload: error.message,
         });
     }
 };
@@ -95,15 +117,23 @@ export const deletefaqPage = (id) => async (dispatch) => {
             }
         };
         const { data } = await axios.delete(`http://localhost:5000/admin/faq/deletefaqpage/${id}`, config);
-        await dispatch({
-            type: "DELETE_FAQPAGE_SUCCESS",
-            payload: data.data,
-        });
-        dispatch(getFaqPage());
+        if (data.success) {
+
+            await dispatch({
+                type: "DELETE_FAQPAGE_SUCCESS",
+                payload: data.data,
+            });
+            dispatch(getFaqPage());
+        } else {
+            dispatch({
+                type: "DELETE_FAQPAGE_FAIL",
+                payload: data.message,
+            });
+        }
     } catch (error) {
         dispatch({
             type: "DELETE_FAQPAGE_FAIL",
-            payload: error.response.data.message,
+            payload: error.message,
         });
     }
 };
@@ -121,15 +151,22 @@ export const updateFaqAction = ({ faqData, id }) => async (dispatch) => {
             faqData,
             config
         );
-        dispatch({
-            type: "UPDATE_FAQPAGE_SUCCESS",
-            payload: data._id,
-        });
-        dispatch(getPublishFaqPage())
+        if (data.success) {
+            dispatch({
+                type: "UPDATE_FAQPAGE_SUCCESS",
+                payload: data._id,
+            });
+            dispatch(getPublishFaqPage())
+        } else {
+            dispatch({
+                type: "UPDATE_FAQPAGE_FAIL",
+                payload: data.message,
+            });
+        }
     } catch (error) {
         dispatch({
             type: "UPDATE_FAQPAGE_FAIL",
-            payload: error,
+            payload: error.message,
         });
     }
 };

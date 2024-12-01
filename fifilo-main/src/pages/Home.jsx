@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-import FreqentlyAsk from "./FreqentlyAsk";
+// import FreqentlyAsk from "./FreqentlyAsk";
 import $ from "jquery";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -216,7 +216,7 @@ export default function Home() {
           </div>
           <div className="inner__gapTop row">
             {!loading && casestudies && casestudies.slice(0, 3).map((card, index) => (
-              <div className="col-12" data-aos={index % 2 === 0 ? "fade-right" : "fade-left"} data-aos-duration="800">
+              <div className="col-12" key={index} data-aos={index % 2 === 0 ? "fade-right" : "fade-left"} data-aos-duration="800">
                 <div className="card__caseStudies">
                   <div className="top__keywords">
                     {card.heroSection.workButtons.map((btn, i) => (
@@ -232,7 +232,7 @@ export default function Home() {
                   <p>{card.heroSection.description}</p>
                   <div className="img__box"  >
                     <NavLink to={`/casestudy/${card.heroSection.casestudyName.split(" ").join("-")}`} >
-                      <img src={(card.heroSection.cardImg && card.heroSection.cardImg.filename) && `http://localhost:5000/images/${card.heroSection.cardImg.filename}`} alt={card.heroSection.casestudyName} />
+                      <img src={(card.heroSection.homeImg && card.heroSection.homeImg.filename) && `http://localhost:5000/images/${card.heroSection.homeImg.filename}`} alt={card.heroSection.casestudyName} />
                     </NavLink>
                   </div>
                 </div>
@@ -359,7 +359,7 @@ export default function Home() {
         </div>
       </div>
 
-      <FreqentlyAsk />
+      {/* <FreqentlyAsk /> */}
     </>
   );
 }

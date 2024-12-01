@@ -125,7 +125,7 @@ const updateCaseStudy = async (req, res) => {
         res.status(200).json({ success: true, data: casestudy });
     } catch (err) {
         console.error("Error updating casestudy:", err);
-        res.status(500).json({ success: false, message: err.message });
+        res.status(500).json({ success: false, message: err });
     }
 };
 

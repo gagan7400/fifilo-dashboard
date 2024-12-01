@@ -32,29 +32,29 @@ export default function Sidebar() {
             </li>
             <li className="nav-item">
               <NavLink to="/section/casestudies" className="nav-link"  >
-                <img src="assets/imgs/task.svg" alt="pages Icon" />Case Studies
+                <img src="assets/img/casestudy.svg" alt="pages Icon" />Case Studies
               </NavLink>
             </li>
             <li className="nav-item">
               <NavLink to="/section/job" className="nav-link"  >
-                <img src="assets/imgs/project.svg" alt="Jobs Icon" />Jobs
+                <img src="assets/img/job.svg" alt="Jobs Icon" />Jobs
               </NavLink>
             </li>
             <li className="nav-item">
               <NavLink to="/section/faq" className="nav-link"  >
-                <img src="assets/imgs/task.svg" alt="faq Icon" />Faq
+                <img src="assets/imgs/faq.svg" alt="faq Icon" />Faq
               </NavLink>
             </li>
             <li className="nav-item">
               <NavLink to="/section/editor" className="nav-link"  >
-                <img src="assets/imgs/task.svg" alt="faq Icon" />Media Library
+                <img src="assets/imgs/media.svg" alt="media Icon" />Media Library
               </NavLink>
             </li>
           </ul>
         </div>
         <div className="btm-bar">
           <button className="btn btn-logout" onClick={() => { dispatch(logout()) }}>
-            <img src="assets/imgs/logout.svg" alt="faq Icon" />Logout
+            <img src="assets/imgs/logout.svg" alt="logout Icon" />Logout
           </button>
         </div>
       </nav>

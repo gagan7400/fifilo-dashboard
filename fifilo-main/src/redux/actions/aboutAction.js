@@ -21,7 +21,7 @@ export const getAboutPage = () => async (dispatch) => {
             dispatch({ type: "ALL_ABOUTPAGE_FAIL", payload: data });
         }
     } catch (error) {
-        dispatch({ type: "ALL_ABOUTPAGE_FAIL", payload: error.response.data.message });
+        dispatch({ type: "ALL_ABOUTPAGE_FAIL", payload: error.message });
     }
 };
 
@@ -40,7 +40,7 @@ export const publishAboutPage = (id) => async (dispatch) => {
             dispatch({ type: "ALL_PUBLISHABOUTPAGE_FAIL", payload: data });
         }
     } catch (error) {
-        dispatch({ type: "ALL_PUBLISHABOUTPAGE_FAIL", payload: error.response.data.message });
+        dispatch({ type: "ALL_PUBLISHABOUTPAGE_FAIL", payload: error.message });
     }
 };
 
@@ -54,7 +54,7 @@ export const getPublishAboutPage = () => async (dispatch) => {
             dispatch({ type: "ALL_GETPUBLISHABOUTPAGE_FAIL", payload: data });
         }
     } catch (error) {
-        dispatch({ type: "ALL_GETPUBLISHABOUTPAGE_FAIL", payload: error.response.data.message });
+        dispatch({ type: "ALL_GETPUBLISHABOUTPAGE_FAIL", payload: error.message });
     }
 };
 
@@ -71,7 +71,7 @@ export const deleteAboutPage = (id) => async (dispatch) => {
             dispatch({ type: "DELETE_ABOUTPAGE_FAIL", payload: data });
         }
     } catch (error) {
-        dispatch({ type: "DELETE_ABOUTPAGE_FAIL", payload: error.response.data.message });
+        dispatch({ type: "DELETE_ABOUTPAGE_FAIL", payload: error.message });
     }
 };
 
@@ -90,6 +90,6 @@ export const updateAboutPageAction = ({ aboutData, id }) => async (dispatch) => 
             dispatch({ type: "UPDATE_ABOUTPAGE_FAIL", payload: data });
         }
     } catch (error) {
-        dispatch({ type: "UPDATE_ABOUTPAGE_FAIL", payload: error.response.data.message });
+        dispatch({ type: "UPDATE_ABOUTPAGE_FAIL", payload: error.message });
     }
 };

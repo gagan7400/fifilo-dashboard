@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { pageAction } from '../redux/actions/pagedataAction';
 
-export default function CasestudyPages() {
+export default function Casestudies() {
     let dispatch = useDispatch();
     const [allData, setAllData] = useState([]);
     let alldata = async () => {
@@ -67,8 +67,23 @@ export default function CasestudyPages() {
                                 {allData.map((v, i) => {
                                     return <tr key={i}>
                                         <td>{v.heroSection.casestudyName}</td>
-                                        <td>{v.createdAt}</td>
-                                        <td>{v.updatedAt}</td>
+                                 
+                                        <td>{v.createdAt && new Date(v.createdAt).toLocaleDateString('en-US', {
+                                            year: 'numeric',
+                                            month: 'short',
+                                            day: 'numeric',  hour: '2-digit', 
+                                            minute: '2-digit', 
+                                            second: '2-digit',
+                                        })
+                                        }</td>
+                                        <td>{v.updatedAt && new Date(v.updatedAt).toLocaleDateString('en-US', {
+                                            year: 'numeric',
+                                            month: 'short',
+                                            day: 'numeric',  hour: '2-digit', 
+                                            minute: '2-digit', 
+                                            second: '2-digit',
+                                        })
+                                        }</td>
                                         <td> <NavLink to={`/pages/casestudy/${v.heroSection.casestudyName.split(" ").join("-")}`} onClick={() => { dispatch(pageAction({ ...v })) }} className="btn"> <img src="/assets/imgs/edit.svg" alt="Edit icon" /></NavLink> </td>
                                         <td> <button className='btn' onClick={() => { deleteCaseStudy(v._id) }}> <img src="/assets/imgs/trash.svg" alt="Edit icon" /> </button> </td>
                                     </tr>

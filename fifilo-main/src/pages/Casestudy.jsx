@@ -184,7 +184,7 @@ export default function Casestudy() {
 
                                 <div className="inner__gapTop card__inr horizontal-scroll-wrapper">
                                     {!loading && casestudy && casestudy.designProcessSection.content.map((card, index) => (
-                                        <div className="card__bx horizontal-scroll-container">
+                                        <div className="card__bx horizontal-scroll-container" key={index}>
                                             <div className="scroll-border">
                                                 <div className="horizontal-border"></div>
                                                 <div className="horizontal-stroke active">
@@ -221,7 +221,7 @@ export default function Casestudy() {
 
                     <div className="inner__gapTop row justify-content-center">
                         {!loading && casestudy && casestudy.designProcessSection.content.map((card, index) => (
-                            <div className="col-lg-12">
+                            <div className="col-lg-12" key={index}>
                                 <div className="row">
                                     <div className="col-xl-3 col-lg-4 col-md-5 col-10 offset-xl-2 offset-lg-1" data-aos="fade-up" data-aos-duration="800">
                                         <div className="card__bx">
@@ -267,7 +267,7 @@ export default function Casestudy() {
                         </div>
                     </div>
                     {!loading && casestudy && casestudy.sketches.imgs.map((img, index) => (
-                        <div className="img__fullContainer" data-aos="fade-up" data-aos-duration="800">
+                        <div className="img__fullContainer" data-aos="fade-up" data-aos-duration="800" key={index}>
                             <img src={img && img.filename && `http://localhost:5000/images/${img.filename}`} alt="" />
                         </div>
                     ))}
@@ -321,7 +321,7 @@ export default function Casestudy() {
                                 }} />
                                 <div className="font__family">
                                     <h2 style={{ fontFamily: !loading && casestudy && casestudy.typographyData.fontFamily }} dangerouslySetInnerHTML={{
-                                        __html: DOMPurify.sanitize(!loading && casestudy && casestudy.typographyData.fontFamily)
+                                        __html: DOMPurify.sanitize(!loading && casestudy && casestudy.typographyData.fontFamilyName)
                                     }} />
 
                                     <div className="font__table">
@@ -333,7 +333,7 @@ export default function Casestudy() {
 
                                         <div className="font__body">
                                             {!loading && casestudy && casestudy.typographyData.fontTable.map((typo, index) => (
-                                                <div className="font__row">
+                                                <div className="font__row" key={index}>
                                                     <div className="font__data">
                                                         <div className={typo.name}>
                                                             <span className="bold">{typo.name} Text Bold</span>
@@ -370,7 +370,7 @@ export default function Casestudy() {
                     </div>
                 </div>
                 {!loading && casestudy && casestudy.updatedLook.imgs.map((img, index) => (
-                    <div className="img__fullWidth" data-aos="fade-up" data-aos-duration="800">
+                    <div className="img__fullWidth" data-aos="fade-up" data-aos-duration="800" key={index}>
                         <img src={img && img.filename && `http://localhost:5000/images/${img.filename}`} alt="" />
                     </div>
                 ))}
@@ -400,7 +400,7 @@ export default function Casestudy() {
                     </div>
                 </div>
                 {!loading && casestudy && casestudy.fullWidthImg.length && casestudy.fullWidthImg.map((img, index) => (
-                    <div className="img__fullWidth" data-aos="fade-up" data-aos-duration="800">
+                    <div className="img__fullWidth" data-aos="fade-up" data-aos-duration="800" key={index}>
                         <img src={img && img.filename && `http://localhost:5000/images/${img.filename}`} alt="" />
                     </div>
                 ))}

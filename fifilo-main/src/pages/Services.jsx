@@ -73,7 +73,7 @@ export default function Services() {
               <h6 dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(!publishedServiceLoading && publishedServicePage ? publishedServicePage.heroSection.subHeading : "") }} />
             </div>
             <div data-aos="fade-up" data-aos-duration="800">
-              <NavLink to={!publishedServiceLoading && publishedServicePage ? publishedServicePage.heroSection.heroButtons.CTA1.url : "/contactus"} className="btn">{!publishedServiceLoading && publishedServicePage ? publishedServicePage.heroSection.heroButtons.CTA1.name : "Lets's Talk"}<span></span></NavLink>
+              <NavLink to={!publishedServiceLoading && publishedServicePage ? publishedServicePage.heroSection.heroButtons.CTA1.url : ""} className="btn">{!publishedServiceLoading && publishedServicePage ? publishedServicePage.heroSection.heroButtons.CTA1.name : ""}<span></span></NavLink>
             </div>
             <div className="animation-wrapper">
               <div className="main-wrapper">
@@ -1448,7 +1448,7 @@ export default function Services() {
       <div className="our__tools rn__section__gapTop">
         <div className="container">
           <div className="main__heading" data-aos="fade-up" data-aos-duration="800">
-            <h2 dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(!publishedServiceLoading && publishedServicePage ? publishedServicePage.toolSection.heading : " <span>Tools</span> we use <br /> to get the job done.") }} ></h2>
+            <h2 dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(!publishedServiceLoading && publishedServicePage ? publishedServicePage.toolSection.heading : "") }} ></h2>
           </div>
 
           <div className="row gx-lg-4 gx-md-3 gx-2 inner__gapTop justify-content-center">

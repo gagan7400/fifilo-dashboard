@@ -142,7 +142,7 @@ const Login = () => {
                                     {errors.email && <div className="error text-danger position-absolute" style={{ color: "#f0f1f1" }} >{errors.email}</div>}
                                 </div>
                                 <div className="inr__input" >
-                                    <span className='icon'><img src="assets/img/mail-02.svg" alt="contact__form" /></span>
+                                    <span className='icon'><img src="assets/imgs/password.svg" alt="contact__form" /></span>
                                     <input
                                         type="password"
                                         name="Password"

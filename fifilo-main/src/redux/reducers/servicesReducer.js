@@ -1,105 +1,12 @@
-// export const servicesReducer = (state = { updateserviceloading: true, updateserviceerror: null, allservicesdata: null, getservicesloading: true, publishedservicecontent: null, publishloading: true, deleteloading: true, publishedserviceloading: true, publisherror: null, publishedservicepage: null }, action) => {
-//     switch (action.type) {
-//         case "GET_SERVICE_REQUEST":
-//             return {
-//                 ...state,
-//                 getservicesloading: true,
-//                 success: false,
-//                 allservicesdata: null
-//             };
-//         case "GET_SERVICE_SUCCESS":
-//             return {
-//                 ...state,
-//                 getservicesloading: false,
-//                 success: true,
-//                 allservicesdata: action.payload
-//             };
-//         case "GET_SERVICE_FAIL":
-//             return {
-//                 ...state,
-//                 getservicesloading: false,
-//                 error: action.payload,
-//                 success: false
-//             };
-//         case "DELETE_SERVICEPAGE_REQUEST":
-//             return {
-//                 ...state,
-//                 deleteloading: true,
-//             };
-//         case "DELETE_SERVICEPAGE_SUCCESS":
-//             return {
-//                 ...state,
-//                 deleteloading: false,
-//                 allservicesdata: state.allservicesdata.filter(service => service._id !== action.payload), // Filter out the deleted service
-//             };
-//         case "DELETE_SERVICEPAGE_FAIL":
-//             return {
-//                 ...state,
-//                 deleteloading: false,
-//                 deleteerror: action.payload,
-//             };
-//         case "UPDATE_SERVICEPAGE_REQUEST":
-//             return {
-//                 updateserviceloading: true,
-//             };
-//         case "UPDATE_SERVICEPAGE_SUCCESS":
-//             return {
-//                 updateserviceloading: false,
-//             };
-//         case "UPDATE_SERVICEPAGE_FAIL":
-//             return {
-//                 updateserviceloading: false,
-//                 updateserviceerror: action.payload.response ? action.payload.response.data.message : action.payload.message,
-//             };
-//         case "PUBLISH_SERVICEPAGE_REQEUST":
-//             return {
-//                 ...state,
-//                 publishloading: true,
-//                 publishedservicecontent: {},
-//             };
-//         case "PUBLISH_SERVICEPAGE_SUCCESS":
-//             return {
-//                 ...state,
-//                 publishloading: false,
-//                 publishedservicecontent: action.payload,
-//             };
-//         case "PUBLISH_SERVICEPAGE_FAIL":
-//             return {
-//                 ...state,
-//                 publishloading: false,
-//                 publisherror: action.payload,
-//             };
-//         case "GET_SERVICEPUBLISH_REQEUST":
-//             return {
-//                 ...state,
-//                 publishedserviceloading: true,
-//                 publishedservicepage: null,
-//             };
-//         case "GET_SERVICEPUBLISH_SUCCESS":
-//             return {
-//                 ...state,
-//                 publishedserviceloading: false,
-//                 publishedservicepage: action.payload,
-//             };
-//         case "GET_SERVICEPUBLISH_FAIL":
-//             return {
-//                 ...state,
-//                 publishedserviceloading: false,
-//                 publisherror: action.payload,
-//             };
-//         default:
-//             return state;
-//     }
-// };
-
+ 
 export const servicesReducer = (
     state = {
-        loading: true,
-        updateServiceLoading: true,
-        deleteLoading: true,
-        publishLoading: true,
-        getServiceLoading: true,
-        publishedServiceLoading: true,
+        loading: false,
+        updateServiceLoading: false,
+        deleteLoading: false,
+        publishLoading: false,
+        getServiceLoading: false,
+        publishedServiceLoading: false,
         allServicesData: null,
         publishedServiceContent: null,
         publishedServicePage: null,

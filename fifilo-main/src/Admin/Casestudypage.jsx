@@ -3,31 +3,52 @@ import Sidebar from './Sidebar';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import SeoImg from './SeoImg';
-import { updateCasestudyPageAction } from '../redux/actions/casestudyAction';
+import { getPublishCasestudyPage, updateCasestudyPageAction } from '../redux/actions/casestudyAction';
 
 const Casestudypage = () => {
     const { pageData } = useSelector((state) => state.page);
     let dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(getPublishCasestudyPage())
+    }, [])
+    const { publishedcasestudydata, casestudyloading } = useSelector((state) => state.casestudy);
 
-    const [heroSection, setHeroSection] = useState(pageData ? { ...pageData.heroSection } : {
+    const [heroSection, setHeroSection] = useState({
         heading: "",
         subHeading: "",
-        heroButtons: { CTA1: { url: "", name: "" } }
+        heroButtons: { CTA1: { url: "", name: "" } },
     });
 
-    const [seoSection, setSeoSection] = useState(pageData ? { ...pageData.seoSection } :
-        { title: "", keywords: "", description: "", seoImg: { filename: "", path: "" } });
+    const [seoSection, setSeoSection] = useState({
+        title: "",
+        keywords: "",
+        description: "",
+        seoImg: { filename: "", path: "" },
+    });
+
+    useEffect(() => {
+        if (publishedcasestudydata) {
+            setHeroSection({ ...publishedcasestudydata.heroSection });
+            setSeoSection({ ...publishedcasestudydata.seoSection });
+        }
+    }, [publishedcasestudydata]);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        dispatch(updateCasestudyPageAction({ casestudydata: { heroSection, seoSection }, id: pageData._id }));
-        alert("Casestudy  updated successfully");
+        dispatch(
+            updateCasestudyPageAction({
+                casestudydata: { heroSection, seoSection },
+                id: publishedcasestudydata._id,
+            })
+        );
+        alert("Case study updated successfully");
     };
-
 
     return (
         <>
             <Sidebar titles="Career Page" />
             <div className="main__content" >
+                
                 <div className="page__editors">
                     <nav aria-label="breadcrumb">
                         <ol className="breadcrumb">

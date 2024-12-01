@@ -36,7 +36,7 @@ export const getContactPage = () => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: "ALL_CONTACTPAGE_FAIL",
-            payload: error.response.data.message,
+            payload: error.message,
         });
     }
 };
@@ -59,7 +59,7 @@ export const publishContactPage = (id) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: "ALL_PUBLISHCONTACTPAGE_FAIL",
-            payload: error.response.data.message,
+            payload: error.message,
         });
     }
 };
@@ -77,7 +77,7 @@ export const getPublishContactPage = () => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: "ALL_GETPUBLISHCONTACTPAGE_FAIL",
-            payload: error.response.data.message,
+            payload: error.message,
         });
     }
 };
@@ -99,7 +99,7 @@ export const deleteContactPage = (id) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: "DELETE_CONTACTPAGE_FAIL",
-            payload: error.response.data.message,
+            payload: error.message,
         });
     }
 };

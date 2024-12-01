@@ -321,14 +321,14 @@ const CasestudyPage = () => {
                                             <div className="row">
                                                 <div className="col-lg-12">
                                                     <div className="input__inr">
-                                                        <label htmlFor="heroheading">Heading</label>
+                                                        <label htmlFor="heroheading">Casestudy Name</label>
                                                         <input required type="text"
                                                             name="heroSection"
                                                             id="heroheading"
                                                             className="form-control"
                                                             value={heroSection.casestudyName}
                                                             onChange={(e) => setHeroSection({ ...heroSection, casestudyName: e.target.value })}
-                                                            placeholder="Enter Heading"
+                                                            placeholder="Enter Casestudy Name"
                                                         />
                                                     </div>
                                                 </div>

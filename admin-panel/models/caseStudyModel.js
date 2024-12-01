@@ -7,7 +7,8 @@ const caseStudySchema = new mongoose.Schema({
         buttonsContent: String,
         workButtons: [{ url: String, name: String, _id: false }],
         heroImg: { filename: String, path: String },
-        cardImg: { filename: String, path: String }
+        cardImg: { filename: String, path: String },
+        homeImg: { filename: String, path: String },
     },
     overviewSection: {
         briefInsight: {
@@ -36,13 +37,37 @@ const caseStudySchema = new mongoose.Schema({
     typographyData: {
         heading: String,
         fontFamily: String,
+        fontFamilyName: String,
         fontTable: [{ name: String, fontSize: String, lineHeight: String, _id: false }],
     },
-    updatedLook: { heading: String, description: String, imgs: [{ filename: String, path: String, _id: false }] },
-    fullWidthImg: [{ filename: String, path: String, _id: false }],
-    impactAndImprovement: { heading: String, description: String },
-    howFifiloDesignsDrives: { heading: String, description: String },
+    updatedLook: {
+        heading: String,
+        description: String,
+        imgs: [{ filename: String, path: String, _id: false }]
+    },
+
+    fullWidthImg: [
+        {
+            filename: String,
+            path: String,
+            _id: false
+        }
+    ],
+
+    impactAndImprovement: {
+        heading: String,
+        description: String
+    },
+
+    howFifiloDesignsDrives: {
+        heading: String,
+        description: String
+    },
+
 }, { timestamps: true });
+
+
+
 const casestudypageSchema = new mongoose.Schema({
     pageName: { type: String, default: "Casestudypage" },
     heroSection: {

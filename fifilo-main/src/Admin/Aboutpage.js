@@ -6,6 +6,7 @@ import { getPublishAboutPage, updateAboutPageAction } from '../redux/actions/abo
 import MemberCard from './MemberCard';
 import ProcessIcon from './ProcessIcon';
 import SeoImg from './SeoImg';
+import Loader from '../layout/Loader';
 const Aboutpage = () => {
     const { pageData } = useSelector((state) => state.page);
     const { publishedLoading, publishedData } = useSelector((state) => state.about);
@@ -165,6 +166,7 @@ const Aboutpage = () => {
         <>
             <Sidebar titles="About Page" />
             <div className="main__content" >
+                {publishedLoading && <Loader/>}
                 <div className="page__editors">
                     <nav aria-label="breadcrumb">
                         <ol className="breadcrumb">
@@ -363,7 +365,7 @@ const Aboutpage = () => {
                                                                             <input required type="text"
                                                                                 className="form-control"
                                                                                 name="heading"
-                                                                                id="cardheading"
+                                                                                  id="cardheading"
                                                                                 value={card.heading}
                                                                                 onChange={(event) => handleContentCardChange(index, event)}
                                                                                 placeholder="Enter Heading"

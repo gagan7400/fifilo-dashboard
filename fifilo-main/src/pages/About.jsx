@@ -315,17 +315,15 @@ export default function About() {
           <div className="bnr__content">
             <div className="left__bx" data-aos="fade-up" data-aos-duration="800">
               <h2 dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(!publishedLoading && publishedData ? publishedData.heroSection.heading : `Explore Our <br />
-                <span>Design Studio's Story</span>`)
+                __html: DOMPurify.sanitize(!publishedLoading && publishedData ? publishedData.heroSection.heading : ``)
               }} />
               <h6 dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(!publishedLoading && publishedData ? publishedData.heroSection.subHeading : `— Syntask is the very first AI-driven software that helps you to craft<br /> your videos faster & cheaper
-                  while maintaining the highest quality`)
+                __html: DOMPurify.sanitize(!publishedLoading && publishedData ? publishedData.heroSection.subHeading : ``)
               }} />
             </div>
 
             <div data-aos="fade-up" data-aos-duration="800">
-              <NavLink to={`${!publishedLoading && publishedData ? publishedData.heroSection.heroButtons.CTA1.url : "/contactus"}`} className="btn">{!publishedLoading && publishedData ? publishedData.heroSection.heroButtons.CTA1.name : 'Lets Conect'} <span></span ></NavLink>
+              <NavLink to={`${!publishedLoading && publishedData ? publishedData.heroSection.heroButtons.CTA1.url : ""}`} className="btn">{!publishedLoading && publishedData ? publishedData.heroSection.heroButtons.CTA1.name : ''} <span></span ></NavLink>
             </div>
 
             <div id="canvas-about" className="animation-wrapper">
@@ -338,9 +336,9 @@ export default function About() {
       <div className="about__fifilo rn__section__gapTop">
         <div className="container">
           <div className="main__heading" data-aos="fade-up" data-aos-duration="800">
-            <p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(!publishedLoading && publishedData ? publishedData.aboutSection.preHeading : "Who we are") }} />
+            <p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(!publishedLoading && publishedData ? publishedData.aboutSection.preHeading : "") }} />
             <h2 dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(!publishedLoading && publishedData ? publishedData.aboutSection.heading : `<span>About</span> FIFILO`)
+              __html: DOMPurify.sanitize(!publishedLoading && publishedData ? publishedData.aboutSection.heading : ``)
             }} />
           </div>
           <div className="row gx-lg-4 gx-md-3 inner__gapTop">
@@ -363,7 +361,7 @@ export default function About() {
           </div>
 
           <div className="inner__gapTop row justify-content-center">
-            {!publishedLoading && publishedData.processSection.content.map((v, i) => {
+            {!publishedLoading && publishedData?.processSection && publishedData.processSection.content.map((v, i) => {
               return <div className="col-lg-12" key={i}>
                 <div className="row">
                   {i % 2 === 0 ? <>
@@ -381,9 +379,8 @@ export default function About() {
                     </div>
                     <div className="col-xl-3 col-lg-4 col-md-5 col-10 offset-md-7" data-aos="fade-up" data-aos-duration="800">
                       <div className="card__bx">
-                        <h5>{v.heading ? v.heading : "Program Inception"}</h5>
-                        <p>{v.description ? v.description : `Program inception sets the stage for aligning your vision with our UI/UX expertise, laying the
-                          groundwork for innovative design solutions`}</p>
+                        <h5>{v.heading ? v.heading : ""}</h5>
+                        <p>{v.description ? v.description : ``}</p>
                       </div>
                     </div>
                   </>
@@ -391,11 +388,8 @@ export default function About() {
                     <>
                       <div className="col-xl-3 col-lg-4 col-md-5 col-10 offset-xl-2 offset-lg-1" data-aos="fade-up" data-aos-duration="800">
                         <div className="card__bx">
-                          <h5>{v.heading ? v.heading : "Program Inception"}</h5>
-                          <p>{v.description ? v.description : `Program inception sets the stage for aligning your vision with our UI/UX expertise, laying the
-                          groundwork for innovative design solutions`}</p>
-                          {/* <h5>Strategy:</h5>
-                            <p>We develop a tailored strategy that outlines the best approach for your project, whether it’s a new design, a website overhaul, or a marketing campaign.</p> */}
+                          <h5>{v.heading ? v.heading : ""}</h5>
+                          <p>{v.description ? v.description : ``}</p>
                         </div>
                       </div>
                       <div className="col-lg-1 col-2 center__bx">
@@ -424,13 +418,12 @@ export default function About() {
           <div className="row gx-3 gx-xl-4">
             <div className="col-lg-3 col-md-12">
               <div className="main__heading" data-aos="fade-up" data-aos-duration="800">
-                <p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(!publishedLoading && publishedData ? publishedData.teamSection.preHeading : "Team") }} />
+                <p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(!publishedLoading && publishedData ? publishedData.teamSection.preHeading : "") }} />
                 <h2 dangerouslySetInnerHTML={{
-                  __html: DOMPurify.sanitize(!publishedLoading && publishedData ? publishedData.teamSection.heading : `Our <span>Team</span>,<br />
-                  Your Design Partners`)
+                  __html: DOMPurify.sanitize(!publishedLoading && publishedData ? publishedData.teamSection.heading : ``)
                 }} />
                 <span className="title" dangerouslySetInnerHTML={{
-                  __html: DOMPurify.sanitize(!publishedLoading && publishedData ? publishedData.teamSection.description : `Revolutionizing digital landscapes with intuitive design, we craft seamless user experiences that transcend`)
+                  __html: DOMPurify.sanitize(!publishedLoading && publishedData ? publishedData.teamSection.description : ``)
                 }} />
               </div>
             </div>

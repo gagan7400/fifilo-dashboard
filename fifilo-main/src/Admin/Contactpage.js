@@ -1,36 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Sidebar from './Sidebar';
 import { useDispatch, useSelector } from 'react-redux';
 import Accordion from 'react-bootstrap/Accordion';
-import { updateContactPageAction } from '../redux/actions/contactAction';
+import { getPublishContactPage, updateContactPageAction } from '../redux/actions/contactAction';
 import { NavLink } from 'react-router-dom';
 import SeoImg from './SeoImg'
 import ContactImg from './ContactImg';
+import Loader from '../layout/Loader';
 const Contactpage = () => {
     let dispatch = useDispatch();
     const { pageData } = useSelector((state) => state.page);
+    const { publishedcontactdata, publishedcontactloading } = useSelector((state) => state.contactpage);
+    useEffect(() => {
+        dispatch(getPublishContactPage())
+    }, [])
     const [heroSection, setHeroSection] = useState({
-        heading: pageData ? pageData.heroSection.heading : "",
-        subHeading: pageData ? pageData.heroSection.subHeading : "",
+        heading: "",
+        subHeading: "",
     });
 
-    const [cardSection, setCardSection] = useState(pageData ? { ...pageData.cardSection }
-        : {
-            heading: "",
-            contactlist: [{
+    const [cardSection, setCardSection] = useState({
+        heading: "",
+        contactlist: [
+            {
                 icon: { filename: "", path: "" },
                 name: "",
                 value: "",
-            }]
-        });
+            },
+        ],
+    });
 
-    const [seoSection, setSeoSection] = useState(pageData ? { ...pageData.seoSection } :
-        {
-            title: "",
-            keywords: "",
-            description: "",
-            seoImg: { filename: "", path: "" }
-        });
+    const [seoSection, setSeoSection] = useState({
+        title: "",
+        keywords: "",
+        description: "",
+        seoImg: { filename: "", path: "" },
+    });
+
+    useEffect(() => {
+        if (publishedcontactdata) {
+            setHeroSection({
+                heading: publishedcontactdata.heroSection.heading,
+                subHeading: publishedcontactdata.heroSection.subHeading,
+            });
+
+            setCardSection({
+                heading: publishedcontactdata.cardSection.heading,
+                contactlist: [...publishedcontactdata.cardSection.contactlist],
+            });
+
+            setSeoSection({ ...publishedcontactdata.seoSection });
+        }
+    }, [publishedcontactdata]);
+
     // Add Contact
     const addContact = () => {
         setCardSection(prevState => ({
@@ -57,13 +79,14 @@ const Contactpage = () => {
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
-        dispatch(updateContactPageAction({ contactPageData: { heroSection, seoSection, cardSection }, id: pageData._id }));
+        dispatch(updateContactPageAction({ contactPageData: { heroSection, seoSection, cardSection }, id: publishedcontactdata._id }));
         alert("ContactPage Updated Successfully");
     };
     return (
         <>
             <Sidebar titles="Contact Page" />
             <div className="main__content" >
+            {publishedcontactloading && <Loader />}
                 <div className="page__editors">
                     <nav aria-label="breadcrumb">
                         <ol className="breadcrumb">

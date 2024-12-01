@@ -1,37 +1,71 @@
 import React, { useEffect, useState } from 'react';
 import Sidebar from './Sidebar';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateCareerPageAction } from '../redux/actions/careeraction';
+import { getpublishCareerPage, updateCareerPageAction } from '../redux/actions/careeraction';
 import CareerCardSection from './CareerCardSection';
 import { NavLink } from 'react-router-dom';
 import SeoImg from './SeoImg';
+import Loader from '../layout/Loader';
 const Careerpage = () => {
     const { pageData } = useSelector((state) => state.page);
     const { publishedcareerdata, loading } = useSelector((state) => state.careerpage);
     let dispatch = useDispatch();
-    //  career page states 
+    useEffect(() => {
+        dispatch(getpublishCareerPage())
+    }, [])
+    // Career page states
     const [heroSection, setHeroSection] = useState({
-        heading: pageData ? pageData.heroSection.heading : "",
-        subHeading: pageData ? pageData.heroSection.subHeading : "",
-        heroButtons: pageData ? { ...pageData.heroSection.heroButtons } : { CTA1: { url: "", name: "" } }
+        heading: "",
+        subHeading: "",
+        heroButtons: {
+            CTA1: { url: "", name: "" },
+        },
     });
-    const [jobSection, setJobSection] = useState({
-        heading: pageData ? pageData.jobSection.heading : "",
-        subHeading: pageData ? pageData.jobSection.subHeading : ""
-    });
-    const [cardsSection, setCardsSection] = useState(
-        pageData ? pageData.cardsSection.map(card => ({ ...card, cardImg: { ...card.cardImg } }))
-            : [{ cardHeading: '', cardDescription: '', cardImg: { filename: "", path: "" } }]
-    );
-    //seo handlers
 
-    const [seoSection, setSeoSection] = useState(pageData ? { ...pageData.seoSection } :
+    const [jobSection, setJobSection] = useState({
+        heading: "",
+        subHeading: "",
+    });
+
+    const [cardsSection, setCardsSection] = useState([
         {
-            title: "",
-            keywords: "",
-            description: "",
-            seoImg: { filename: "", path: "" }
-        });
+            cardHeading: "",
+            cardDescription: "",
+            cardImg: { filename: "", path: "" },
+        },
+    ]);
+
+    const [seoSection, setSeoSection] = useState({
+        title: "",
+        keywords: "",
+        description: "",
+        seoImg: { filename: "", path: "" },
+    });
+
+    useEffect(() => {
+        if (publishedcareerdata) {
+            setHeroSection({
+                heading: publishedcareerdata.heroSection.heading,
+                subHeading: publishedcareerdata.heroSection.subHeading,
+                heroButtons: { ...publishedcareerdata.heroSection.heroButtons },
+            });
+
+            setJobSection({
+                heading: publishedcareerdata.jobSection.heading,
+                subHeading: publishedcareerdata.jobSection.subHeading,
+            });
+
+            setCardsSection(
+                publishedcareerdata.cardsSection.map(card => ({
+                    ...card,
+                    cardImg: { ...card.cardImg },
+                }))
+            );
+
+            setSeoSection({ ...publishedcareerdata.seoSection });
+        }
+    }, [publishedcareerdata]);
+
     const handleCardChange = (index, event, data) => {
         const values = cardsSection.map((card) => ({ ...card, }));
         // const values = [...cardsSection];
@@ -60,7 +94,7 @@ const Careerpage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        dispatch(updateCareerPageAction({ careerdata: { heroSection, jobSection, seoSection, cardsSection }, id: pageData._id }));
+        dispatch(updateCareerPageAction({ careerdata: { heroSection, jobSection, seoSection, cardsSection }, id: publishedcareerdata._id }));
         alert("careerPage updated successfully");
     };
 
@@ -69,6 +103,7 @@ const Careerpage = () => {
         <>
             <Sidebar titles="Career Page" />
             <div className="main__content" >
+                {loading && <Loader />}
                 <div className="page__editors">
                     <nav aria-label="breadcrumb">
                         <ol className="breadcrumb">

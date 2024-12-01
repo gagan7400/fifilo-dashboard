@@ -1,45 +1,82 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Sidebar from './Sidebar';
 import { Editor } from "@tinymce/tinymce-react";
 import { useDispatch, useSelector } from 'react-redux';
-import { updateServicePageAction } from '../redux/actions/servicesAction';
+import { getpublishServicePage, updateServicePageAction } from '../redux/actions/servicesAction';
 import ServicepageServicecard from './ServicepageServicecard';
 import ToolSection from './ToolSection';
 import SeoImg from './SeoImg';
 import { NavLink } from 'react-router-dom';
 import HomepageuploadSection from './HomepageuploadSection';
+import Loader from '../layout/Loader';
 const ServicesForm = () => {
     let dispatch = useDispatch();
     const { pageData } = useSelector((state) => state.page);
+    useEffect(() => {
+        dispatch(getpublishServicePage())
+    }, [])
+    const { publishedServicePage, publishLoading } = useSelector((state) => state.services);
+
     const [heroSection, setHeroSection] = useState({
-        heading: pageData ? pageData.heroSection.heading : "",
-        subHeading: pageData ? pageData.heroSection.subHeading : "",
-        heroButtons: pageData ? { ...pageData.heroSection.heroButtons } : {
+        heading: "",
+        subHeading: "",
+        heroButtons: {
             CTA1: { name: "", url: "" },
-        }
+        },
     });
-    const [servicesCards, setServicesCards] = useState(
-        pageData ? pageData.servicesCards.map(card => ({
-            ...card,
-            cardDescription: [...card.cardDescription],
-        })) : [{
-            cardName: '', cardDescription: [''], cardList: '', cardId: ""
-        }]);
+
+    const [servicesCards, setServicesCards] = useState([
+        {
+            cardName: "",
+            cardDescription: [""],
+            cardList: "",
+            cardId: "",
+        },
+    ]);
+
     const [toolSection, setToolSection] = useState({
-        heading: pageData ? pageData.toolSection.heading : "",
-
+        heading: "",
     });
-    const [toolsLogo, setToolsLogo] = useState(
-        pageData ? pageData.toolSection.toolsLogo.map(tool => ({ ...tool })) : [{ filename: '', path: '' }]
-    ); //seo handlers
 
-    const [seoSection, setSeoSection] = useState(
-        pageData ? { ...pageData.seoSection } : {
-            title: "",
-            keywords: "",
-            description: "",
-            seoImg: { filename: "", path: "" }
-        });
+    const [toolsLogo, setToolsLogo] = useState([
+        { filename: "", path: "" },
+    ]);
+
+    const [seoSection, setSeoSection] = useState({
+        title: "",
+        keywords: "",
+        description: "",
+        seoImg: { filename: "", path: "" },
+    });
+
+    useEffect(() => {
+        console.log(publishedServicePage)
+        if (publishedServicePage) {
+            setHeroSection({
+                heading: publishedServicePage.heroSection.heading,
+                subHeading: publishedServicePage.heroSection.subHeading,
+                heroButtons: { ...publishedServicePage.heroSection.heroButtons },
+            });
+
+            setServicesCards(
+                publishedServicePage.servicesCards.map(card => ({
+                    ...card,
+                    cardDescription: [...card.cardDescription],
+                }))
+            );
+
+            setToolSection({
+                heading: publishedServicePage.toolSection.heading,
+            });
+
+            setToolsLogo(
+                publishedServicePage.toolSection.toolsLogo.map(tool => ({ ...tool }))
+            );
+
+            setSeoSection({ ...publishedServicePage.seoSection });
+        }
+    }, [publishedServicePage]);
+
 
     // Handle input change for hero section
     const handleHeroChange = (e) => {
@@ -167,7 +204,7 @@ const ServicesForm = () => {
     // Submit form data to API
     const handleSubmit = async (e) => {
         e.preventDefault();
-        dispatch(updateServicePageAction({ servicedata: { heroSection, seoSection, servicesCards, toolSection: { ...toolSection, toolsLogo } }, id: pageData._id }));
+        dispatch(updateServicePageAction({ servicedata: { heroSection, seoSection, servicesCards, toolSection: { ...toolSection, toolsLogo } }, id: publishedServicePage._id }));
         alert("servicePage updated successfully");
     };
 
@@ -175,6 +212,7 @@ const ServicesForm = () => {
         <>
             <Sidebar titles="Services  Page" />
             <div className="main__content">
+            {publishLoading && <Loader />}
                 <div className="page__editors">
                     <nav aria-label="breadcrumb">
                         <ol className="breadcrumb">

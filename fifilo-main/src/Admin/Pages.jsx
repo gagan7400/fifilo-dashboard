@@ -5,15 +5,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getHomePage, openHomePage } from '../redux/actions/homeAction';
 import { NavLink } from 'react-router-dom';
 import { pageAction } from '../redux/actions/pagedataAction';
+import Loader from '../layout/Loader';
 
 export default function Dashboard() {
     const [allData, setAllData] = useState([]);
+    const [loading, setLoading] = useState(true);
     let alldata = async () => {
         try {
             let { data } = await axios.get('http://localhost:5000/admin/pages/getallpages');
-            setAllData(data.data)
+            setAllData(data.data);
+            setLoading(false)
         } catch (error) {
-            console.error("ll", error);
+            console.error(error);
+            setLoading(false)
         }
     }
     useEffect(() => {
@@ -23,10 +27,22 @@ export default function Dashboard() {
     useEffect(() => {
         dispatch(getHomePage())
     }, [dispatch])
+    let dateformat = (date) => {
+        let time = new Date(date).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+        })
+        return time
+    }
     return (
         <>
             <Sidebar />
             <div className="main__content">
+                {/* {loading && <Loader />} */}
                 <div id="home" className="card__box" style={{ display: "block" }}>
                     <div className="page__editors">
                         <div className="page__title">
@@ -47,8 +63,8 @@ export default function Dashboard() {
                                 {allData.map((v, i) => {
                                     return <tr key={i}>
                                         <td>{v.pageName.split("p").join(" P")}</td>
-                                        <td>{v.createdAt.split("T")[0] + " " + v.createdAt.split("T")[1].split(".")[0]}</td>
-                                        <td>{v.updatedAt.split("T")[0] + " " + v.updatedAt.split("T")[1].split(".")[0]}</td>
+                                        <td>{v.createdAt && dateformat(v.createdAt)}</td>
+                                        <td>{v.updatedAt && dateformat(v.updatedAt)}</td>
                                         <td> <NavLink to={`/pages/${v.pageName.split("p")[0]}`} onClick={() => { dispatch(pageAction({ ...v })) }} className="btn"> <img src="/assets/imgs/edit.svg" alt="Edit icon" /></NavLink> </td>
                                     </tr>
                                 })}

@@ -1,51 +1,111 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Sidebar from './Sidebar';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import ProcessIcon from './ProcessIcon';
 import { Editor } from "@tinymce/tinymce-react";
 import SketchesImg from './SketchesImg';
 import "./dashboard.css";
-const CasestudyPage = () => {
+import CasestudyImg from './CasestudyImg';
+const Casestudy = () => {
     const { pageData } = useSelector((state) => state.page);
-    const [heroSection, setHeroSection] = useState(pageData ? { ...pageData.heroSection } : {
+    let { name } = useParams();
+    let [casestudy, setCasestudy] = useState(null);
+    let [loading, setLoading] = useState(true);
+
+    const [heroSection, setHeroSection] = useState({
         casestudyName: "",
         description: "",
         buttonsContent: "",
         workButtons: [{ url: "", name: "" }],
         heroImg: { filename: "", path: "" },
-        cardImg: { filename: "", path: "" }
+        cardImg: { filename: "", path: "" },
+        homeImg: { filename: "", path: "" },
     });
-    const [overviewSection, setOverviewSection] = useState(pageData ? { ...pageData.overviewSection } : {
+
+    const [overviewSection, setOverviewSection] = useState({
         briefInsight: {
             contentBox: { heading: "", description: "" },
-            overviewBox: [{ name: "", value: "" }]
+            overviewBox: [{ name: "", value: "" }],
         },
         coreIssue: { heading: "", description: "" },
-        Strategy: { heading: "", description: "" }
+        Strategy: { heading: "", description: "" },
     });
-    const [designProcessSection, setDesignProcessSection] = useState(pageData ? { ...pageData.designProcessSection } : {
+
+    const [designProcessSection, setDesignProcessSection] = useState({
         heading: "",
-        content: [{ heading: '', description: '', icon: { filename: "", path: "" } }],
+        content: [{ heading: "", description: "", icon: { filename: "", path: "" } }],
     });
-    const [sketches, setSketches] = useState(pageData ? { ...pageData.sketches } : { heading: "", description: "", imgs: [{ filename: "", path: "" }], });
-    const [styleGuideSection, setStyleGuideSection] = useState(pageData ? { ...pageData.styleGuideSection } : {
+
+    const [sketches, setSketches] = useState({
+        heading: "",
+        description: "",
+        imgs: [{ filename: "", path: "" }],
+    });
+
+    const [styleGuideSection, setStyleGuideSection] = useState({
         heading: "",
         description: "",
         sectionName: "",
         BrandcolorSections: [{ name: "", hex: "" }],
         SecondaryColorSections: [{ name: "", hex: "" }],
-    })
-    const [typographyData, setTypographyData] = useState(pageData ? { ...pageData.typographyData } : {
+    });
+
+    const [typographyData, setTypographyData] = useState({
         heading: "",
         fontFamily: "",
-        fontTable: [{ name: "", fontSize: "", lineHeight: "", }],
-    })
-    const [impactAndImprovement, setImpactAndImprovement] = useState(pageData ? { ...pageData.impactAndImprovement } : { heading: "", description: "" });
-    const [howFifiloDesignsDrives, setHowFifiloDesignsDrives] = useState(pageData ? { ...pageData.howFifiloDesignsDrives } : { heading: "", description: "" });
-    const [updatedLook, setUpdatedLook] = useState(pageData ? { ...pageData.updatedLook } : { heading: "", description: "", imgs: [{ filename: "", path: "" }] })
-    const [fullWidthImg, setFullWidthImg] = useState(pageData ? [...pageData.fullWidthImg] : [{ filename: "", path: "" }]);
+        fontFamilyName: "",
+        fontTable: [{ name: "", fontSize: "", lineHeight: "" }],
+    });
+
+    const [impactAndImprovement, setImpactAndImprovement] = useState({
+        heading: "",
+        description: "",
+    });
+
+    const [howFifiloDesignsDrives, setHowFifiloDesignsDrives] = useState({
+        heading: "",
+        description: "",
+    });
+
+    const [updatedLook, setUpdatedLook] = useState({
+        heading: "",
+        description: "",
+        imgs: [{ filename: "", path: "" }],
+    });
+
+    const [fullWidthImg, setFullWidthImg] = useState([{ filename: "", path: "" }]);
+
+    useEffect(() => {
+        const getCasestudy = async () => {
+            try {
+                let { data } = await axios.get(`http://localhost:5000/admin/casestudy/getcasestudy/${name}`);
+                if (data.success) {
+                    setCasestudy(data.data);
+                    setHeroSection({ ...data.data.heroSection });
+                    setOverviewSection({ ...data.data.overviewSection });
+                    setDesignProcessSection({ ...data.data.designProcessSection });
+                    setSketches({ ...data.data.sketches });
+                    setStyleGuideSection({ ...data.data.styleGuideSection });
+                    setTypographyData({ ...data.data.typographyData });
+                    setImpactAndImprovement({ ...data.data.impactAndImprovement });
+                    setHowFifiloDesignsDrives({ ...data.data.howFifiloDesignsDrives });
+                    setUpdatedLook({ ...data.data.updatedLook });
+                    setFullWidthImg([...data.data.fullWidthImg]);
+                    setLoading(false);
+                } else {
+                    setCasestudy(null);
+                    alert("Error occurred p");
+                }
+            } catch (error) {
+                setCasestudy(null);
+                setLoading(false);
+            }
+        };
+
+        getCasestudy();
+    }, [name]);
     const addFullWidthImg = () => {
         let newImg = { filename: "", path: "" }
         setFullWidthImg(prevState => ([...prevState, { ...newImg }]));
@@ -220,8 +280,7 @@ const CasestudyPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            if (heroSection) {
-                let { data } = await axios.put('http://localhost:5000/admin/casestudy/updatecasestudy/' + pageData._id,
+                 let { data } = await axios.put('http://localhost:5000/admin/casestudy/updatecasestudy/' + casestudy._id,
                     {
                         heroSection, overviewSection, designProcessSection, impactAndImprovement,
                         sketches, styleGuideSection, typographyData, howFifiloDesignsDrives, updatedLook, fullWidthImg
@@ -236,8 +295,9 @@ const CasestudyPage = () => {
                     alert("updated succesfully")
                 } else {
                     alert("error occured");
+                    console.log(data)
                 }
-            }
+             
         } catch (error) {
             alert("Error Occured")
         }
@@ -321,14 +381,14 @@ const CasestudyPage = () => {
                                             <div className="row">
                                                 <div className="col-lg-12">
                                                     <div className="input__inr">
-                                                        <label htmlFor="heroheading">Heading</label>
+                                                        <label htmlFor="heroheading">Casestudy Name</label>
                                                         <input required type="text"
                                                             name="heroSection"
                                                             id="heroheading"
                                                             className="form-control"
                                                             value={heroSection.casestudyName}
                                                             onChange={(e) => setHeroSection({ ...heroSection, casestudyName: e.target.value })}
-                                                            placeholder="Enter Heading"
+                                                            placeholder="Enter Casestudy Name"
                                                         />
                                                     </div>
                                                 </div>
@@ -397,10 +457,18 @@ const CasestudyPage = () => {
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div className="col-lg-12">
+                                                    <div className="seo__card">
+                                                        <div className="card__block">
+                                                            <div className="row">
+                                                                <CasestudyImg heroSection={heroSection} name="heroImg" setHeroSection={setHeroSection} />
+                                                                <CasestudyImg heroSection={heroSection} name="cardImg" setHeroSection={setHeroSection} /></div>
+                                                            <CasestudyImg heroSection={heroSection} name="homeImg" setHeroSection={setHeroSection} />
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <label htmlFor="buttonsContent">Hero IMg</label>
-                                                <ProcessIcon heroSection={heroSection} name="heroImg" setHeroSection={setHeroSection} />
-                                                <label htmlFor="buttonsContent">Card Img</label>
-                                                <ProcessIcon heroSection={heroSection} name="cardImg" setHeroSection={setHeroSection} />
+
                                             </div>
                                             <div className="update__block">
                                                 <button className="btn btn__update" type="button" onClick={handleSubmit}>Update</button>
@@ -422,8 +490,6 @@ const CasestudyPage = () => {
                                                             name="briefInsightHeading"
                                                             id="briefInsightHeading"
                                                             className="form-control"
-                                                            // value={overviewSection.briefInsight.contentBox.heading}
-                                                            // onChange={(e) => setOverviewSection({ ...overviewSection, briefInsight: { ...overviewSection.briefInsight, contentBox: { ...overviewSection.briefInsight.contentBox, heading: e.target.value } } })}
                                                             value={overviewSection.briefInsight.contentBox.heading}
                                                             onChange={(e) => handleOverviewSectionChange("briefInsight", "contentBox", { heading: e.target.value })}
                                                             placeholder="Enter BriefInsight Heading"
@@ -710,7 +776,7 @@ const CasestudyPage = () => {
                                             <div className="col-lg-12">
                                                 <div className="input__inr">
                                                     <label htmlFor="styleGuideSectiondescription" className="form-label">Description</label>
-                                                    <input required type="text"
+                                                    <textarea required rows={4}
                                                         id="styleGuideSectionDescription"
                                                         name="styleGuideSectionDescription"
                                                         className="form-control"
@@ -840,6 +906,19 @@ const CasestudyPage = () => {
                                                         value={typographyData.heading}
                                                         onChange={(e) => setTypographyData({ ...typographyData, heading: e.target.value })}
                                                         placeholder="Enter Heading"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="col-lg-12">
+                                                <div className="input__inr">
+                                                    <label htmlFor="typographyDatafontFamily" className="form-label">fontFamily Name</label>
+                                                    <input required type="text"
+                                                        id="typographyDatafontFamily"
+                                                        name="typographyDatafontFamily"
+                                                        className="form-control"
+                                                        value={typographyData.fontFamilyName}
+                                                        onChange={(e) => setTypographyData({ ...typographyData, fontFamilyName: e.target.value })}
+                                                        placeholder="Enter fontFamily"
                                                     />
                                                 </div>
                                             </div>
@@ -1110,4 +1189,4 @@ const CasestudyPage = () => {
     );
 };
 
-export default CasestudyPage;
+export default Casestudy;

@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getPublishFaqPage, updateFaqAction } from '../redux/actions/faqAction';
 
 import { NavLink, useNavigate } from 'react-router-dom';
+import Loader from '../layout/Loader';
 
 const Faqpage = () => {
     const dispatch = useDispatch();

@@ -46,7 +46,7 @@ export default function Career() {
   }, []);
 
   const [filter, setFilter] = useState('*');
-  const filteredJobs = !jobloading && jobs && filter === '*' ? jobs : jobs.filter(job => job.category === filter);
+  const filteredJobs = !jobloading && jobs && filter === '*' ? jobs : jobs && jobs.filter(job => job.category === filter);
 
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
@@ -418,7 +418,7 @@ export default function Career() {
             </div>
 
             <div className="rows inner__gapTop grid" data-aos="fade-up" data-aos-duration="800">
-              {filteredJobs.map((job, index) => (
+              {jobs && filteredJobs.map((job, index) => (
                 <Job job={job} key={index} />
               ))}
             </div>

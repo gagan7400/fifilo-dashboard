@@ -11,7 +11,7 @@ export const getjobs = () => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: "ALL_JOBS_FAIL",
-            payload: error.response.data.message,
+            payload: error.message,
         });
     }
 };
@@ -36,7 +36,7 @@ export const deleteJob = (id) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: "DELETE_JOBS_FAIL",
-            payload: error.response.data.message,
+            payload: error.message,
         });
     }
 };

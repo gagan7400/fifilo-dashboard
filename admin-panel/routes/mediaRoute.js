@@ -3,6 +3,7 @@ const path = require('path');
 const express = require("express");
 const mongoose = require("mongoose");
 const multer = require('multer');
+const fs = require('fs');
 const { isAdmin, authenticate } = require("../auth/Auth")
 // Image Schema  
 
@@ -55,16 +56,20 @@ router.delete("/:id", async (req, res) => {
     try {
         const image = await Image.findById(req.params.id);
         if (image) {
-            fs.unlinkSync(`.${image.filePath}`); // Delete the file from the server
-            await image.remove();
-            res.json({ success: true });
+            const filePath = `.${image.filePath}`;
+            if (fs.existsSync(filePath)) {
+                fs.unlinkSync(filePath); // Delete the file from the server
+            }
+            await Image.findByIdAndDelete(req.params.id) // Remove the database record
+            res.json({ success: true, message: "Image Deleted Successfully" });
         } else {
-            res.status(404).json({ error: "Image not found" });
+            res.status(404).json({ message: "Image not found", success: false });
         }
     } catch (error) {
-        res.status(500).json({ error: "Failed to delete image" });
+        res.status(500).json({ error: error, message: "Failed to delete image", success: false });
     }
 });
+
 
 
 

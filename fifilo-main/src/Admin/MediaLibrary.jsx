@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const MediaLibrary = ({ onSelectImage, ImageUplaoded }) => {
+const MediaLibrary = ({ onSelectImage, imageUploaded, showModal, setShowModal, selectedImage, setSelectedImage }) => {
   const [images, setImages] = useState([]);
-  const [selectedImage, setSelectedImage] = useState(null);
-
   useEffect(() => {
     const fetchImages = async () => {
       try {
@@ -15,25 +13,27 @@ const MediaLibrary = ({ onSelectImage, ImageUplaoded }) => {
       }
     };
     fetchImages();
-  }, [ImageUplaoded]);
+  }, [imageUploaded]);
 
   const handleImageClick = (image) => {
     setSelectedImage(image);
-    if (onSelectImage) {
-      onSelectImage(image);
-    }
+    setShowModal(true);
   };
 
+
+
   return (
-    <ul>
-      {images.map((image, index) => (
-        <li key={index}>
-          <div className="thumbnail">
-            <img src={`http://localhost:5000/images/${image.filename}`} alt="Image 1" onClick={() => handleImageClick(image)} />
-          </div>
-        </li>
-      ))}
-    </ul>
+    <div>
+      <ul>
+        {images.map((image, index) => (
+          <li key={index}>
+            <div className="thumbnail" onClick={() => handleImageClick(image)} >
+              <img src={`http://localhost:5000/images/${image.filename}`} alt={image.filename} />
+            </div>
+          </li>
+        )).reverse()}
+      </ul>
+    </div>
   );
 };
 

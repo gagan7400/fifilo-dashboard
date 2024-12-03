@@ -38,7 +38,7 @@ export default function FreqentlyAsk() {
             </div>
             <div className="col-lg-8 col-md-8">
               <div className="accordion" id="accordionExample">
-                {!publishedfaqloading && publishedfaqdata.faqSection.map((v, i) => {
+                {!publishedfaqloading && publishedfaqdata?.faqSection.map((v, i) => {
                   return <div className="accordion-item" data-aos="fade-up" data-aos-duration="900" key={i + 1}>
                     <h2 className="accordion-header" id={`heading${i + 1}`}>
                       <button className={`accordion-button ${i !== 0 && 'collapsed'} `} type="button" data-bs-toggle="collapse"

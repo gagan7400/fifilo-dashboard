@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-// import FreqentlyAsk from "./FreqentlyAsk";
+import FreqentlyAsk from "./FreqentlyAsk";
 import $ from "jquery";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -359,7 +359,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* <FreqentlyAsk /> */}
+      <FreqentlyAsk />
     </>
   );
 }

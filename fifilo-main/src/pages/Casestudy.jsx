@@ -75,17 +75,8 @@ export default function Casestudy() {
     useEffect(() => {
         AOS.init();
     }, [casestudy, casestudies]);
-    // useEffect(() => {
-    //     const loadData = async () => {
-    //         setLoading(false);
-    //     };
 
-    //     loadData();
-    //     return () => {
-    //     };
-
-    // }, []);
-    console.log(casestudy)
+    let classes = ["large", "medium", "normal", "small"]
     return (
         <>
             <Helmet>
@@ -335,7 +326,7 @@ export default function Casestudy() {
                                             {!loading && casestudy && casestudy.typographyData.fontTable.map((typo, index) => (
                                                 <div className="font__row" key={index}>
                                                     <div className="font__data">
-                                                        <div className={typo.name}>
+                                                        <div className={classes[index]}>
                                                             <span className="bold">{typo.name} Text Bold</span>
                                                             <span className="regular">{typo.name} Text Regular</span>
                                                         </div>

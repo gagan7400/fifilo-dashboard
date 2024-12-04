@@ -22,6 +22,7 @@ const ImageUpload = ({ imageUploaded, setImageUplaoded }) => {
             const response = await axios.post("http://localhost:5000/api/media/upload", formData, {
                 headers: { "Content-Type": "multipart/form-data" },
             });
+            console.log(response)
             setFile(null);
             setImageUplaoded(response)
             alert("img uploaded successfully")

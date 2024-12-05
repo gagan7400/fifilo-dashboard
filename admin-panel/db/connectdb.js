@@ -9,4 +9,4 @@ const db = async (url) => {
     }
 }
 
-module.exports = db
+module.exports = db;

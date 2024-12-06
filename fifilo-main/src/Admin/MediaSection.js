@@ -50,6 +50,8 @@ const MediaSection = () => {
         setShowModal(false);
         setSelectedImage(null);
     };
+    const baseUrl = `${window.location.protocol}//${window.location.host}`;
+    console.log(baseUrl);
     return (
         <>
             <Sidebar />
@@ -91,7 +93,7 @@ const MediaSection = () => {
                                             <button className="btn" onClick={() => handleDelete(selectedImage._id)} > Delete Permanently  </button>
                                         </div>
                                             <div className="input__inr">
-                                                <input ref={inputRef} value={`http://localhost:5000/images/${selectedImage.filename}`} />
+                                                <input ref={inputRef} value={`${baseUrl}/images/${selectedImage.filename}`} />
                                             </div>
                                             <div className="position-relative">
                                                 <button class="btn btn__copy" onClick={handleCopy}>Clip to clipboard </button>

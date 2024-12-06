@@ -14,7 +14,7 @@ import { getPublishCasestudyPage } from "../redux/actions/casestudyAction";
 export default function Work() {
   let dispatch = useDispatch();
   let { publishedcasestudydata, casestudyloading } = useSelector((state) => state.casestudy);
-  console.log("hdbckshdbc")
+
   useEffect(() => {
     dispatch(getPublishCasestudyPage());
   }, [])
@@ -167,7 +167,7 @@ export default function Work() {
               <h2 dangerouslySetInnerHTML={{
                 __html: DOMPurify.sanitize(!casestudyloading && publishedcasestudydata ? publishedcasestudydata.heroSection.heading : ``)
               }} />
-              
+
               <h6 dangerouslySetInnerHTML={{
                 __html: DOMPurify.sanitize(!casestudyloading && publishedcasestudydata ? publishedcasestudydata.heroSection.subHeading : ``)
               }} />
@@ -217,7 +217,7 @@ export default function Work() {
         <div className="container">
           <div className="inner__gapTop row">
             {(!loading && casestudy) ? casestudy.map((v, i) => (
-              <div key={i} className={i == 0 ? "col-12" : i % 2 == 0 ? "col-lg-5 col-md-12" : "col-lg-7 col-md-12"} data-aos="fade-right" data-aos-duration="800">
+              <div key={i} className={(i == 0 || i == casestudy.length - 1) ? "col-12" : i % 2 == 0 ? "col-lg-5 col-md-12" : "col-lg-7 col-md-12"} data-aos="fade-right" data-aos-duration="800">
                 <div className="card__caseStudies">
                   <div className="top__keywords">
                     {v.heroSection.workButtons.map((btn, index) => {
@@ -225,186 +225,19 @@ export default function Work() {
                     })}
                   </div>
                   <h4>
-                    <NavLink to={`/${v.heroSection.casestudyName}`} onClick={() => { dispatch(pageAction({ ...v })) }}>
-                      {v.heroSection.casestudyName}{" "}
+                    <NavLink to={`/${v.heroSection.pageName}/`} style={{ textTransform: "capitalize" }}>
+                      {v.heroSection.casestudyName.split("-").join(" ")}{" "}
                       <img src="./assets/img/arrow-up-right.svg" alt="work" />
                     </NavLink>
                   </h4>
                   <p>{v.heroSection.description}</p>
                   <div className="img__box">
-                    <NavLink to={`/${v.heroSection.casestudyName}`} onClick={() => { dispatch(pageAction({ ...v })) }} >
+                    <NavLink to={`/${v.heroSection.pageName}/`} >
                       <img src={(v.heroSection.cardImg && v.heroSection.cardImg.filename) && `http://localhost:5000/images/${v.heroSection.cardImg.filename}`} alt={v.heroSection.casestudyName} />
                     </NavLink>
                   </div>
                 </div>
               </div>)) : ""}
-            {/* <div className="col-12" data-aos="fade-right" data-aos-duration="800">
-              <div className="card__caseStudies">
-                <div className="top__keywords">
-                  <span>UI/UX Design</span>
-                  <span>Website Development</span>
-                  <span>Mobile App</span>
-                </div>
-                <h4>
-                  <NavLink to="/my-choize/">
-                    Mychoize{" "}
-                    <img src="./assets/img/arrow-up-right.svg" alt="work" />
-                  </NavLink>
-                </h4>
-                <p>India's largest Car Rental Company Owned by ORIX</p>
-                <div className="img__box">
-                  <NavLink to="/my-choize/">
-                    <img src="./assets/img/case-studies-05.png" alt="case-studies" />
-                  </NavLink>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-lg-7 col-md-12" data-aos="fade-right" data-aos-duration="800">
-              <div className="card__caseStudies">
-                <div className="top__keywords">
-                  <span>Development</span>
-                  <span>UI/UX Design</span>
-                </div>
-                <h4>
-                  <NavLink to="/tribe-stays/">
-                    TribeStays{" "}
-                    <img src="./assets/img/arrow-up-right.svg" alt="case-studies" />
-                  </NavLink>
-                </h4>
-                <p>Creating a new hub for vital research & resources</p>
-                <div className="img__box">
-                  <NavLink to="/tribe-stays/">
-                    <img src="./assets/img/cs-1.png" alt="case-studies" />
-                  </NavLink>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-lg-5 col-md-12" data-aos="fade-left" data-aos-duration="800">
-              <div className="card__caseStudies">
-                <div className="top__keywords">
-                  <span>Branding</span>
-                  <span>UI/UX Design</span>
-                </div>
-                <h4>
-                  <NavLink to="/curehub/">
-                    Cure Hub{" "}
-                    <img src="./assets/img/arrow-up-right.svg" alt="case-studies" />
-                  </NavLink>
-                </h4>
-                <p>Make hitting the GYM a habit you will love the App.</p>
-                <div className="img__box">
-                  <NavLink to="/curehub/">
-                    <img src="./assets/img/cs-2.png" alt="case-studies" />
-                  </NavLink>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-lg-5 col-md-12" data-aos="fade-right" data-aos-duration="800">
-              <div className="card__caseStudies">
-                <div className="top__keywords">
-                  <span>UI/UX Design</span>
-                </div>
-                <h4>
-                  <NavLink to="/interact/">
-                    Interact{" "}
-                    <img src="./assets/img/arrow-up-right.svg" alt="case-studies" />
-                  </NavLink>
-                </h4>
-                <p>Turn all your Calls into AI-Powered conversation intelligence tools</p>
-                <div className="img__box">
-                  <NavLink to="/interact/">
-                    <img src="./assets/img/cs-3.png" alt="case-studies" />
-                  </NavLink>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-lg-7 col-md-12" data-aos="fade-right" data-aos-duration="800">
-              <div className="card__caseStudies">
-                <div className="top__keywords">
-                  <span>UI/UX Design</span>
-                  <span>Website Development</span>
-                </div>
-                <h4>
-                  <NavLink to="/festive-folks/">
-                    Festive Folks{" "}
-                    <img src="./assets/img/arrow-up-right.svg" alt="case-studies" />
-                  </NavLink>
-                </h4>
-                <p>Take your shopping Fashion needs to next level</p>
-                <div className="img__box">
-                  <NavLink to="/festive-folks/">
-                    <img src="./assets/img/cs-5.png" alt="case-studies" />
-                  </NavLink>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-lg-7 col-md-12" data-aos="fade-right" data-aos-duration="800">
-              <div className="card__caseStudies">
-                <div className="top__keywords">
-                  <span>Website Development</span>
-                  <span>UI/UX Design</span>
-                </div>
-                <h4>
-                  <NavLink to="/tw-challenge/">
-                    TWChallenge{" "}
-                    <img src="./assets/img/arrow-up-right.svg" alt="case-studies" />
-                  </NavLink>
-                </h4>
-                <p>Cultivating culture of engagement</p>
-                <div className="img__box">
-                  <NavLink to="/tw-challenge/">
-                    <img src="./assets/img/case-studies-04.png" alt="case-studies" />
-                  </NavLink>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-lg-5 col-md-12" data-aos="fade-left" data-aos-duration="800">
-              <div className="card__caseStudies">
-                <div className="top__keywords">
-                  <span>Branding</span>
-                  <span>UI/UX Design</span>
-                </div>
-                <h4>
-                  <NavLink to="/flipfolder/">
-                    Flip Folder{" "}
-                    <img src="./assets/img/arrow-up-right.svg" alt="case-studies" />
-                  </NavLink>
-                </h4>
-                <p>Dive into the hassle free world of sheet music</p>
-                <div className="img__box">
-                  <NavLink to="/flipfolder/">
-                    <img src="./assets/img/cs-7.png" alt="case-studies" />
-                  </NavLink>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-12" data-aos="fade-right" data-aos-duration="800">
-              <div className="card__caseStudies">
-                <div className="top__keywords">
-                  <span>UI/UX Design</span>
-                  <span>Website Development</span>
-                </div>
-                <h4>
-                  <NavLink to="/spv-mortgages/">
-                    SPV Mortgages{" "}
-                    <img src="./assets/img/arrow-up-right.svg" alt="work" />
-                  </NavLink>
-                </h4>
-                <p>Maximizing Tax Efficiency with SPV Limited Company Mortgages</p>
-                <div className="img__box">
-                  <NavLink to="/spv-mortgages/">
-                    <img src="./assets/img/case-studies-03.png" alt="case-studies" />
-                  </NavLink>
-                </div>
-              </div>
-            </div> */}
           </div>
         </div>
       </div>

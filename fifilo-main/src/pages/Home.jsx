@@ -175,7 +175,7 @@ export default function Home() {
         <meta property="og:image:alt" content="Description of the feature image" />
       </Helmet>
       <div className="hero__bnr dark__bnr">
-        {loading && homeloading && <Loader />}
+        {homeloading && <Loader />}
         <div className="container">
           <div className="bnr__content">
             <h1 data-aos="fade-up" data-aos-duration="800" dangerouslySetInnerHTML={{
@@ -222,14 +222,14 @@ export default function Home() {
                     ))}
                   </div>
                   <h4>
-                    <NavLink to={`/casestudy/${card.heroSection.casestudyName.split(" ").join("-")}`}>
+                    <NavLink to={`/casestudy/${card.heroSection.pageName}/`}>
                       {card.heroSection.casestudyName}{" "}
                       <img src="assets/img/arrow-up-right.svg" alt="case-studies" />
                     </NavLink>
                   </h4>
                   <p>{card.heroSection.description}</p>
                   <div className="img__box"  >
-                    <NavLink to={`/casestudy/${card.heroSection.casestudyName.split(" ").join("-")}`} >
+                    <NavLink to={`/casestudy/${card.heroSection.pageName}/`} >
                       <img src={(card.heroSection.homeImg && card.heroSection.homeImg.filename) && `http://localhost:5000/images/${card.heroSection.homeImg.filename}`} alt={card.heroSection.casestudyName} />
                     </NavLink>
                   </div>

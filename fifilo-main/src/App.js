@@ -85,31 +85,32 @@ function App() {
     <Layout>
       <ScrollToTop />
       <Routes>
-        <Route path="/pages" element={<ProtectedRoute Component={<Pages />} />} />
-        <Route path="/dashboard" element={<ProtectedRoute Component={<Dashboard />} />} />
-        <Route path="/pages/home" element={<ProtectedRoute Component={<Homepage />} />} />
-        <Route path="/section/casestudies" element={<ProtectedRoute Component={<CasestudyPages />} />} />
-        <Route path="/pages/casestudy" element={<ProtectedRoute Component={<Casestudypage />} />} />
-        <Route path="/pages/casestudy/:name" element={<ProtectedRoute Component={<Casestudyadmin />} />} />
-        <Route path="/pages/casestudy/newcasestudy" element={<ProtectedRoute Component={<Newcasestudy />} />} />
-        <Route path="/pages/career" element={<ProtectedRoute Component={<Careerpage />} />} />
-        <Route path="/section/job" element={<ProtectedRoute Component={<Jobpage />} />} />
-        <Route path="/pages/about" element={<ProtectedRoute Component={<Aboutpage />} />} />
-        <Route path="/pages/contact" element={<ProtectedRoute Component={<Contactpage />} />} />
-        <Route path="/pages/services" element={<ProtectedRoute Component={<Servicespage />} />} />
-        <Route path="/section/faq" element={<ProtectedRoute Component={<Faqpage />} />} />
-        <Route path="/section/editor" element={<ProtectedRoute Component={<MediaSection isOpen={isModalOpen} onClose={closeMediaLibrary} />} />} />
-        <Route path="/admin" element={<Login />} />
+        <Route path="/pages/" element={<ProtectedRoute Component={<Pages />} />} />
+        <Route path="/dashboard/" element={<ProtectedRoute Component={<Dashboard />} />} />
+        <Route path="/pages/home/" element={<ProtectedRoute Component={<Homepage />} />} />
+        <Route path="/section/casestudies/" element={<ProtectedRoute Component={<CasestudyPages />} />} />
+        <Route path="/pages/casestudy/" element={<ProtectedRoute Component={<Casestudypage />} />} />
+        <Route path="/pages/casestudy/:name/" element={<ProtectedRoute Component={<Casestudyadmin />} />} />
+        <Route path="/pages/casestudy/newcasestudy/" element={<ProtectedRoute Component={<Newcasestudy />} />} />
+        <Route path="/pages/career/" element={<ProtectedRoute Component={<Careerpage />} />} />
+        <Route path="/section/job/" element={<ProtectedRoute Component={<Jobpage />} />} />
+        <Route path="/pages/about/" element={<ProtectedRoute Component={<Aboutpage />} />} />
+        <Route path="/pages/contact/" element={<ProtectedRoute Component={<Contactpage />} />} />
+        <Route path="/pages/services/" element={<ProtectedRoute Component={<Servicespage />} />} />
+        <Route path="/section/faq/" element={<ProtectedRoute Component={<Faqpage />} />} />
+        <Route path="/section/editor/" element={<ProtectedRoute Component={<MediaSection isOpen={isModalOpen} onClose={closeMediaLibrary} />} />} />
+        <Route path="/admin/" element={<Login />} />
         <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/services" element={<Services />} />
-        <Route path="/career" element={<Career />} />
-        <Route path="/careerform/:jobtype" element={<Careerform />} />
-        <Route path="/contact-us" element={<ContactUs />} />
-        <Route path="/case-studies" element={<CaseStudies />} />
-        <Route path="/:name" element={<Casestudy />} />
-        <Route path="/thank-you" element={<ThankYou />} />
-        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/about/" element={<About />} />
+        <Route path="/services/" element={<Services />} />
+        <Route path="/career/" element={<Career />} />
+        <Route path="/careerform/:jobtype/" element={<Careerform />} />
+        <Route path="/contact-us/" element={<ContactUs />} />
+        <Route path="/case-studies/" element={<CaseStudies />} />
+        <Route path="/:name/" element={<Casestudy />} />
+        <Route path="/thank-you/" element={<ThankYou />} />
+        <Route path="/privacy-policy/" element={<PrivacyPolicy />} />
+        <Route path="/not-found/" element={<NotFound />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Layout>

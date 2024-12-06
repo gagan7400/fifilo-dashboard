@@ -157,8 +157,6 @@ export default function Home() {
     };
   }, [publishedhomepage]);
 
-
-
   useEffect(() => {
     const loadData = async () => {
       setLoading(false);

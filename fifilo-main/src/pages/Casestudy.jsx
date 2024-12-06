@@ -10,7 +10,8 @@ import DOMPurify from 'dompurify';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from "../layout/Loader";
 export default function Casestudy() {
-    let { name } = useParams()
+    let { name } = useParams();
+    console.log(name)
     // const { pageData } = useSelector((state) => state.page);
     let [casestudy, setCasestudy] = useState(null);
     let [casestudies, setCasestudies] = useState(null);
@@ -19,7 +20,7 @@ export default function Casestudy() {
     let getCasestudy = async () => {
         try {
             console.log(name, name.split("-").join(""))
-            let { data } = await axios.get('http://localhost:5000/admin/casestudy/getcasestudy/' + name.split("-").join(""));
+            let { data } = await axios.get('http://localhost:5000/admin/casestudy/getcasestudy/' + name);
             if (data.success) {
                 setCasestudy(data.data);
                 setLoading(false)
@@ -78,7 +79,10 @@ export default function Casestudy() {
 
     let classes = ["large", "medium", "normal", "small"]
     return (
+
         <>
+
+            {console.log(!loading && casestudy && casestudy.heroSection.casestudyName)}
             <Helmet>
                 <title>MyChoize | Enhancing Car Rental Experiences | Fifilo Design</title>
                 <meta
@@ -89,9 +93,10 @@ export default function Casestudy() {
             <div className="caseStudies__bnr myChoize__bnr">
                 {(loading && !casestudy) && <Loader />}
                 <div className="container">
+
                     <div className="top__bx" data-aos="fade-up" data-aos-duration="800">
                         <h1 dangerouslySetInnerHTML={{
-                            __html: DOMPurify.sanitize(!loading && casestudy ? casestudy.heroSection.casestudyName : ``)
+                            __html: DOMPurify.sanitize(!loading && casestudy ? casestudy.heroSection.casestudyName.split("-").join("") : ``)
                         }} />
                         <h6 dangerouslySetInnerHTML={{
                             __html: DOMPurify.sanitize(!loading && casestudy ? casestudy.heroSection.description : ``)
@@ -368,7 +373,7 @@ export default function Casestudy() {
 
                 <div className="container" data-aos="fade-up" data-aos-duration="800">
                     <div className="row justify-content-center">
-                        {!loading && casestudy.impactAndImprovement && casestudy.impactAndImprovement.heading && <div className="col-lg-10">
+                        {!loading && casestudy.impactAndImprovement && casestudy.impactAndImprovement.heading == "" && <div className="col-lg-10">
                             <div className="content__box" data-aos="fade-up" data-aos-duration="800">
                                 <h3 dangerouslySetInnerHTML={{
                                     __html: DOMPurify.sanitize(!loading && casestudy && casestudy.impactAndImprovement.heading)
@@ -415,14 +420,14 @@ export default function Casestudy() {
                                         })}
                                     </div>
                                     <h4>
-                                        <NavLink to={`/casestudy/${value.heroSection.casestudyName.split(" ").join("-")}`}>
+                                        <NavLink to={`/${value.heroSection.casestudyName}`} >
                                             {value.heroSection.casestudyName}{" "}
                                             <img src="./assets/img/arrow-up-right.svg" alt="case-studies" />
                                         </NavLink>
                                     </h4>
                                     <p>{value.heroSection.description}</p>
                                     <div className="img__box">
-                                        <NavLink to={`/casestudy/${value.heroSection.casestudyName.split(" ").join("-")}`}>
+                                        <NavLink to={`/${value.heroSection.casestudyName}`}  >
                                             <img src={(value.heroSection.cardImg && value.heroSection.cardImg.filename) && `http://localhost:5000/images/${value.heroSection.cardImg.filename}`} alt={value.heroSection.casestudyName} />
                                         </NavLink>
                                     </div>

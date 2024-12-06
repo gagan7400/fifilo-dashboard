@@ -14,6 +14,7 @@ import { getPublishCasestudyPage } from "../redux/actions/casestudyAction";
 export default function Work() {
   let dispatch = useDispatch();
   let { publishedcasestudydata, casestudyloading } = useSelector((state) => state.casestudy);
+  console.log("hdbckshdbc")
   useEffect(() => {
     dispatch(getPublishCasestudyPage());
   }, [])
@@ -166,6 +167,7 @@ export default function Work() {
               <h2 dangerouslySetInnerHTML={{
                 __html: DOMPurify.sanitize(!casestudyloading && publishedcasestudydata ? publishedcasestudydata.heroSection.heading : ``)
               }} />
+              
               <h6 dangerouslySetInnerHTML={{
                 __html: DOMPurify.sanitize(!casestudyloading && publishedcasestudydata ? publishedcasestudydata.heroSection.subHeading : ``)
               }} />
@@ -223,14 +225,14 @@ export default function Work() {
                     })}
                   </div>
                   <h4>
-                    <NavLink to={`/casestudy/${v.heroSection.casestudyName.split(" ").join("-")}`} onClick={() => { dispatch(pageAction({ ...v })) }}>
+                    <NavLink to={`/${v.heroSection.casestudyName}`} onClick={() => { dispatch(pageAction({ ...v })) }}>
                       {v.heroSection.casestudyName}{" "}
                       <img src="./assets/img/arrow-up-right.svg" alt="work" />
                     </NavLink>
                   </h4>
                   <p>{v.heroSection.description}</p>
                   <div className="img__box">
-                    <NavLink to={`/casestudy/${v.heroSection.casestudyName.split(" ").join("-")}`} onClick={() => { dispatch(pageAction({ ...v })) }} >
+                    <NavLink to={`/${v.heroSection.casestudyName}`} onClick={() => { dispatch(pageAction({ ...v })) }} >
                       <img src={(v.heroSection.cardImg && v.heroSection.cardImg.filename) && `http://localhost:5000/images/${v.heroSection.cardImg.filename}`} alt={v.heroSection.casestudyName} />
                     </NavLink>
                   </div>

@@ -106,16 +106,8 @@ function App() {
         <Route path="/career" element={<Career />} />
         <Route path="/careerform/:jobtype" element={<Careerform />} />
         <Route path="/contact-us" element={<ContactUs />} />
-        <Route path="/casestudy/:name" element={<Casestudy />} />
         <Route path="/case-studies" element={<CaseStudies />} />
-        <Route path="/curehub" element={<CureHub />} />
-        <Route path="/festive-folks" element={<FestiveFolks />} />
-        <Route path="/interact" element={<Interact />} />
-        <Route path="/spv-mortgages" element={<SPVMortgages />} />
-        <Route path="/tribe-stays" element={<TribeStays />} />
-        <Route path="/my-choize" element={<MyChoize />} />
-        <Route path="/tw-challenge" element={<TwChallenge />} />
-        <Route path="/flipfolder" element={<FlipFolder />} />
+        <Route path="/:name" element={<Casestudy />} />
         <Route path="/thank-you" element={<ThankYou />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="*" element={<NotFound />} />

@@ -11,6 +11,7 @@ import CasestudyImg from './CasestudyImg';
 const Casestudy = () => {
     const { pageData } = useSelector((state) => state.page);
     let { name } = useParams();
+    console.log(name);
     let [casestudy, setCasestudy] = useState(null);
     let [loading, setLoading] = useState(true);
 
@@ -80,6 +81,7 @@ const Casestudy = () => {
     useEffect(() => {
         const getCasestudy = async () => {
             try {
+                console.log(name.split("-").join(" "))
                 let { data } = await axios.get(`http://localhost:5000/admin/casestudy/getcasestudy/${name}`);
                 if (data.success) {
                     setCasestudy(data.data);
@@ -280,24 +282,24 @@ const Casestudy = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-                 let { data } = await axios.put('http://localhost:5000/admin/casestudy/updatecasestudy/' + casestudy._id,
-                    {
-                        heroSection, overviewSection, designProcessSection, impactAndImprovement,
-                        sketches, styleGuideSection, typographyData, howFifiloDesignsDrives, updatedLook, fullWidthImg
-                    }, {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'x-auth-token': localStorage.getItem('token')
-                    }
-                });
-                if (data.success) {
-                    console.log(data)
-                    alert("updated succesfully")
-                } else {
-                    alert("error occured");
-                    console.log(data)
+            let { data } = await axios.put('http://localhost:5000/admin/casestudy/updatecasestudy/' + casestudy._id,
+                {
+                    heroSection, overviewSection, designProcessSection, impactAndImprovement,
+                    sketches, styleGuideSection, typographyData, howFifiloDesignsDrives, updatedLook, fullWidthImg
+                }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-auth-token': localStorage.getItem('token')
                 }
-             
+            });
+            if (data.success) {
+                console.log(data)
+                alert("updated succesfully")
+            } else {
+                alert("error occured");
+                console.log(data)
+            }
+
         } catch (error) {
             alert("Error Occured")
         }

@@ -90,7 +90,7 @@ export default function Casestudy() {
                     content="Discover how Fifilo Design transformed MyChoize, India’s largest car rental company, by streamlining the booking process, improving website performance, and enhancing personalization features. Boost customer satisfaction and conversion rates with a user-friendly design."
                 />
             </Helmet>
-            <div className="caseStudies__bnr myChoize__bnr">
+            <div className={`caseStudies__bnr ${!loading && casestudy ? casestudy.heroSection.casestudyName.toLowerCase() : ``} `}>
                 {(loading && !casestudy) && <Loader />}
                 <div className="container">
 

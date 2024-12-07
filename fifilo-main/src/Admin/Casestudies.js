@@ -28,7 +28,11 @@ export default function Casestudies() {
     let deleteCaseStudy = async (id) => {
         if (window.confirm("Are You Want To Delete This")) {
             try {
-                let { data } = await axios.delete('http://localhost:5000/admin/casestudy/deletecasestudy/' + id);
+                let { data } = await axios.delete('http://localhost:5000/admin/casestudy/deletecasestudy/' + id, {
+                    headers: {
+                        "x-auth-token": localStorage.getItem("token"),
+                    },
+                });
                 if (data.success) {
                     alldata()
                 } else {

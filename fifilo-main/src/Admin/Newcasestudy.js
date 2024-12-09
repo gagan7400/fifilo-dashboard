@@ -6,60 +6,81 @@ import axios from 'axios';
 import ProcessIcon from './ProcessIcon';
 import { Editor } from "@tinymce/tinymce-react";
 import SketchesImg from './SketchesImg';
+import CasestudyImg from './CasestudyImg';
+import SeoImg from './SeoImg';
 const CasestudyPage = () => {
-
+    let Statisticsname = ["Client", "Timeline", "Screens", "Business Type"]
     const [heroSection, setHeroSection] = useState({
         casestudyName: "",
+        pageName: "",
         description: "",
         buttonsContent: "",
-        workButtons: [{ url: "", name: "" }],
+        workButtons: [{ name: "" }],
         heroImg: { filename: "", path: "" },
-        cardImg: { filename: "", path: "" }
+        cardImg: { filename: "", path: "" },
+        homeImg: { filename: "", path: "" },
     });
+
     const [overviewSection, setOverviewSection] = useState({
         briefInsight: {
             contentBox: { heading: "", description: "" },
-            overviewBox: [{ name: "", value: "" }]
+            overviewBox: [{ value: "" }],
         },
         coreIssue: { heading: "", description: "" },
-        Strategy: { heading: "", description: "" }
+        Strategy: { heading: "", description: "" },
     });
+
     const [designProcessSection, setDesignProcessSection] = useState({
         heading: "",
-        content: [{ heading: '', description: '', icon: { filename: "", path: "" } }],
+        content: [{ heading: "", description: "", icon: { filename: "", path: "" } }],
     });
-    const [sketches, setSketches] = useState({ heading: "", description: "", imgs: [{ filename: "", path: "" }], });
+
+    const [sketches, setSketches] = useState({
+        heading: "",
+        description: "",
+        imgs: [{ filename: "", path: "" }],
+    });
+
     const [styleGuideSection, setStyleGuideSection] = useState({
         heading: "",
         description: "",
         sectionName: "",
         BrandcolorSections: [{ name: "", hex: "" }],
-        SecondaryColorSections: [{ name: "", hex: "" }],
-    })
+        SecondaryColorSections: [{ hex: "" }],
+    });
+
     const [typographyData, setTypographyData] = useState({
         heading: "",
         fontFamily: "",
-        fontTable: [{ name: "", fontSize: "", lineHeight: "", }],
-    })
-    const [impactAndImprovement, setImpactAndImprovement] = useState({ heading: "", description: "" });
-    const [howFifiloDesignsDrives, setHowFifiloDesignsDrives] = useState({ heading: "", description: "" });
-    const [updatedLook, setUpdatedLook] = useState({ heading: "", description: "", imgs: [{ filename: "", path: "" }] })
-    const [fullWidthImg, setFullWidthImg] = useState([{ name: "", filename: "", path: "" }]);
-    const addFullWidthImg = () => {
-        let newImg = { filename: "", path: "" }
-        setFullWidthImg(prevState => ([...prevState, { ...newImg }]));
-    }
-    const removeFullWidthImg = (index) => {
-        if (window.confirm("Are You Sure ,You Want To Delete This")) {
-            const updatedContent = fullWidthImg.filter((_, i) => i !== index);
-            setFullWidthImg([...updatedContent]);
-        }
-    }
-    const handleFullWidthImg = (index, data) => {
-        const newImg = fullWidthImg.map((img) => ({ ...img }));
-        newImg[index] = data;
-        setFullWidthImg([...newImg])
-    }
+        fontFamilyName: "",
+        fontTable: [{ name: "", fontSize: "", lineHeight: "" }],
+    });
+
+    const [impactAndImprovement, setImpactAndImprovement] = useState({
+        heading: "",
+        description: "",
+    });
+
+    const [howFifiloDesignsDrives, setHowFifiloDesignsDrives] = useState({
+        heading: "",
+        description: "",
+    });
+
+    const [updatedLook, setUpdatedLook] = useState({
+        heading: "",
+        description: "",
+        imgs: [{ filename: "", path: "" }],
+    });
+    const [seoSection, setSeoSection] = useState({
+        title: "",
+        keywords: "",
+        description: "",
+        seoImg: { filename: "", path: "" },
+    });
+
+
+    const [fullWidthImg, setFullWidthImg] = useState([{ filename: "", path: "" }]);
+
     const addFontTable = () => {
         setTypographyData((prevState) => ({
             ...prevState,
@@ -203,7 +224,7 @@ const CasestudyPage = () => {
             ...prev,
             briefInsight: {
                 ...prev.briefInsight,
-                overviewBox: [...prev.briefInsight.overviewBox, { name: "", value: "" }]
+                overviewBox: [...prev.briefInsight.overviewBox, { value: "" }]
             }
         }));
     };
@@ -223,7 +244,7 @@ const CasestudyPage = () => {
             try {
                 let { data } = await axios.post('http://localhost:5000/admin/casestudy/createcasestudy/', {
                     heroSection, overviewSection, designProcessSection, impactAndImprovement,
-                    sketches, styleGuideSection, typographyData, howFifiloDesignsDrives, updatedLook, fullWidthImg
+                    sketches, styleGuideSection, typographyData, howFifiloDesignsDrives, updatedLook, fullWidthImg, seoSection
                 }, {
                     headers: {
                         'Content-Type': 'application/json',
@@ -306,11 +327,15 @@ const CasestudyPage = () => {
                                     data-bs-target="#pills-howFifiloDesignsDrives" type="button" role="tab" aria-controls="pills-howFifiloDesignsDrives"
                                     aria-selected="false">How Fifilo Designs</button>
                             </li>
+                            <li className="nav-item" role="presentation">
+                                <button className="nav-link" id="pills-seo-tab" data-bs-toggle="pill" data-bs-target="#pills-seo"
+                                    type="button" role="tab" aria-controls="pills-seo" aria-selected="false">SEO</button>
+                            </li>
                             {/* <li className="nav-item" role="presentation">
-                            <button className="nav-link" id="pills-fullWidthImg-tab" data-bs-toggle="pill"
-                                data-bs-target="#pills-fullWidthImg" type="button" role="tab" aria-controls="pills-fullWidthImg"
-                                aria-selected="false">FullWidthImg</button>
-                        </li> */}
+                                <button className="nav-link" id="pills-fullWidthImg-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-fullWidthImg" type="button" role="tab" aria-controls="pills-fullWidthImg"
+                                    aria-selected="false">FullWidthImg</button>
+                            </li> */}
                         </ul>
                         <div className="tab-content" id="pills-tabContent">
                             <div className="tab-pane fade show active" id="pills-hero" role="tabpanel"
@@ -319,12 +344,25 @@ const CasestudyPage = () => {
                                     <div className="card__block">
                                         <div className="testimonial__box">
                                             <div className="row">
-                                                <div className="col-lg-12">
+                                                <div className="col-lg-6 ">
                                                     <div className="input__inr">
-                                                        <label htmlFor="heroheading">Casestudy Name</label>
+                                                        <label htmlFor="heroPagename">Page Url</label>
                                                         <input required type="text"
-                                                            name="heroSection"
-                                                            id="heroheading"
+                                                            name="heroPagename"
+                                                            id="heroPagename"
+                                                            className="form-control"
+                                                            value={heroSection.pageName}
+                                                            onChange={(e) => setHeroSection({ ...heroSection, pageName: e.target.value })}
+                                                            placeholder="Enter page Name"
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div className="col-lg-6">
+                                                    <div className="input__inr">
+                                                        <label htmlFor="casestudyName">Casestudy Name</label>
+                                                        <input required type="text"
+                                                            name="casestudyName"
+                                                            id="casestudyName"
                                                             className="form-control"
                                                             value={heroSection.casestudyName}
                                                             onChange={(e) => setHeroSection({ ...heroSection, casestudyName: e.target.value })}
@@ -345,7 +383,7 @@ const CasestudyPage = () => {
                                                 </div>
                                                 <div className="col-lg-12">
                                                     <div className="input__inr">
-                                                        <label htmlFor="buttonsContent">ButtonsContent</label>
+                                                        <label htmlFor="buttonsContent">Solution</label>
                                                         <input type="text" id="buttonsContent"
                                                             name="buttonsContent"
                                                             className="form-control"
@@ -360,11 +398,11 @@ const CasestudyPage = () => {
                                                             <div className="card__block" key={index} >
                                                                 <div className="testimonial__box">
                                                                     <div className="top__heading">
-                                                                        <p>Button  {index + 1}</p>
+                                                                        <p>Tag  {index + 1}</p>
                                                                         <button className="btn" onClick={() => { removeWorkButtons(index) }}><img src="assets/imgs/trash.svg" alt="" />Delete</button>
                                                                     </div>
                                                                     <div className='row'>
-                                                                        <div className="col-lg-6 col-md-6">
+                                                                        <div className="col-lg-12">
                                                                             <div className="input__inr">
                                                                                 <label htmlFor="workButtonsName">WorkButton Name</label>
                                                                                 <input required type="text"
@@ -376,18 +414,6 @@ const CasestudyPage = () => {
                                                                                     placeholder="Enter Button Text" />
                                                                             </div>
                                                                         </div>
-                                                                        <div className="col-lg-6 col-md-6">
-                                                                            <div className="input__inr">
-                                                                                <label htmlFor="workButtonsurl">WorkButton Url</label>
-                                                                                <input required type="text"
-                                                                                    id="workButtons"
-                                                                                    name="url"
-                                                                                    className="form-control"
-                                                                                    value={v.url}
-                                                                                    onChange={(e) => HandleWorkButtons(index, e)}
-                                                                                    placeholder="Enter Button Url" />
-                                                                            </div>
-                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -397,13 +423,20 @@ const CasestudyPage = () => {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <label htmlFor="buttonsContent">Hero IMg</label>
-                                                <ProcessIcon heroSection={heroSection} name="heroImg" setHeroSection={setHeroSection} />
-                                                <label htmlFor="buttonsContent">Card Img</label>
-                                                <ProcessIcon heroSection={heroSection} name="cardImg" setHeroSection={setHeroSection} />
+                                                <div className="col-lg-12">
+                                                    <div className="seo__card">
+                                                        <div className="card__block">
+                                                            <div className="row">
+                                                                <CasestudyImg heroSection={heroSection} casestudy="Casestudy Banner Image" name="heroImg" setHeroSection={setHeroSection} />
+                                                                <CasestudyImg heroSection={heroSection} casestudy="Casestudy Listing Image" name="cardImg" setHeroSection={setHeroSection} />
+                                                                <CasestudyImg heroSection={heroSection} casestudy="Homepage Listing Image" name="homeImg" setHeroSection={setHeroSection} />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div className="update__block">
-                                                <button className="btn btn__update" type="button" onClick={handleSubmit}>Update</button>
+                                                <button className="btn btn__update" type="button" onClick={handleSubmit}>Submit</button>
                                             </div>
                                         </div>
                                     </div>
@@ -417,13 +450,11 @@ const CasestudyPage = () => {
                                             <div className="row">
                                                 <div className="col-lg-12">
                                                     <div className="input__inr">
-                                                        <label htmlFor="briefInsightHeading">BriefInsight Heading</label>
+                                                        <label htmlFor="briefInsightHeading">Brief Insight Heading</label>
                                                         <input required type="text"
                                                             name="briefInsightHeading"
                                                             id="briefInsightHeading"
                                                             className="form-control"
-                                                            // value={overviewSection.briefInsight.contentBox.heading}
-                                                            // onChange={(e) => setOverviewSection({ ...overviewSection, briefInsight: { ...overviewSection.briefInsight, contentBox: { ...overviewSection.briefInsight.contentBox, heading: e.target.value } } })}
                                                             value={overviewSection.briefInsight.contentBox.heading}
                                                             onChange={(e) => handleOverviewSectionChange("briefInsight", "contentBox", { heading: e.target.value })}
                                                             placeholder="Enter BriefInsight Heading"
@@ -433,7 +464,7 @@ const CasestudyPage = () => {
                                                 </div>
                                                 <div className="col-lg-12">
                                                     <div className="input__inr">
-                                                        <label htmlFor="briefInsightdescription">BriefInsight Description</label>
+                                                        <label htmlFor="briefInsightdescription">Brief Insight Description</label>
                                                         <textarea required rows={5}
                                                             name="briefInsightdescription"
                                                             id="briefInsightdescription"
@@ -445,33 +476,17 @@ const CasestudyPage = () => {
                                                     </div>
                                                 </div>
                                                 <div className="col-lg-12">
+                                                    <div className="input__inr">
+                                                        <label htmlFor="tg">Statistics</label>
+                                                    </div>
                                                     <div className="seo__card">
-                                                        {overviewSection.briefInsight.overviewBox.map((item, index) => (
-                                                            <div className="card__block" key={index} >
-                                                                <div className="testimonial__box">
-                                                                    <div className="top__heading">
-                                                                        <p>Step {index + 1}</p>
-
-                                                                        <button type="button" className="btn" onClick={() => removeOverviewBox(index)}><img src="assets/imgs/trash.svg" alt="" />Delete</button>
-                                                                    </div>
-                                                                    <div className='row'>
-                                                                        <div className="col-lg-6 col-md-6">
+                                                        <div className="card__block" >
+                                                            <div className="testimonial__box">
+                                                                <div className='row'>
+                                                                    {overviewSection.briefInsight.overviewBox.map((item, index) => (
+                                                                        <div className="col-lg-6 col-md-6" key={index}>
                                                                             <div className="input__inr">
-                                                                                <label htmlFor="Name">Name :</label>
-                                                                                <input required type="text"
-                                                                                    id="Name"
-                                                                                    name="Name"
-                                                                                    className="form-control"
-                                                                                    value={item.name}
-                                                                                    onChange={(e) =>
-                                                                                        handleOverviewSectionChange("briefInsight", "overviewBox", { name: e.target.value }, index)
-                                                                                    }
-                                                                                    placeholder="Enter Name" />
-                                                                            </div>
-                                                                        </div>
-                                                                        <div className="col-lg-6 col-md-6">
-                                                                            <div className="input__inr">
-                                                                                <label htmlFor="workButtonsurl">Value :</label>
+                                                                                <label htmlFor="workButtonsurl">{Statisticsname[index]}</label>
                                                                                 <input required type="text"
                                                                                     id="Value"
                                                                                     name="Value"
@@ -483,12 +498,10 @@ const CasestudyPage = () => {
                                                                                     placeholder="Enter Value" />
                                                                             </div>
                                                                         </div>
-                                                                    </div>
+
+                                                                    ))}
                                                                 </div>
                                                             </div>
-                                                        ))}
-                                                        <div className="add__review">
-                                                            <button className="btn" type="button" onClick={addOverviewBox}><img src="assets/imgs/plus.svg" alt="" />Add More Content</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -556,7 +569,7 @@ const CasestudyPage = () => {
                                                 </div>
                                             </div>
                                             <div className="update__block">
-                                                <button className="btn btn__update" type="button" onClick={handleSubmit}>Update</button>
+                                                <button className="btn btn__update" type="button" onClick={handleSubmit}>Submit</button>
                                             </div>
                                         </div>
                                     </div>
@@ -566,7 +579,7 @@ const CasestudyPage = () => {
                                 <div className="edit__tools">
                                     <div className="card__block">
                                         <div className="row">
-                                            <div className="col-lg-6 col-md-6">
+                                            <div className="col-lg-12">
                                                 <div className="input__inr">
                                                     <label htmlFor="processheading" className="form-label">Headline</label>
                                                     <input required type="text"
@@ -628,7 +641,7 @@ const CasestudyPage = () => {
                                             </div>
                                         </div>
                                         <div className="update__block">
-                                            <button className="btn btn__update" type="button" onClick={handleSubmit}>Update</button>
+                                            <button className="btn btn__update" type="button" onClick={handleSubmit}>Submit</button>
                                         </div>
                                     </div>
                                 </div>
@@ -669,7 +682,7 @@ const CasestudyPage = () => {
                                                         <div className="card__block" key={index} >
                                                             <div className="testimonial__box">
                                                                 <div className="top__heading">
-                                                                    <p>Img {index + 1}</p>
+                                                                    <p>Low-fidelity Image {index + 1}</p>
                                                                     <button className="btn" onClick={() => removeSketchesImg(index)} ><img src="assets/imgs/trash.svg" alt="" />Delete</button>
                                                                 </div>
                                                                 <div className="row">
@@ -685,7 +698,7 @@ const CasestudyPage = () => {
                                             </div>
                                         </div>
                                         <div className="update__block">
-                                            <button className="btn btn__update" type="button" onClick={handleSubmit}>Update</button>
+                                            <button className="btn btn__update" type="button" onClick={handleSubmit}>Submit</button>
                                         </div>
                                     </div>
                                 </div>
@@ -710,7 +723,7 @@ const CasestudyPage = () => {
                                             <div className="col-lg-12">
                                                 <div className="input__inr">
                                                     <label htmlFor="styleGuideSectiondescription" className="form-label">Description</label>
-                                                    <input required type="text"
+                                                    <textarea required rows={4}
                                                         id="styleGuideSectionDescription"
                                                         name="styleGuideSectionDescription"
                                                         className="form-control"
@@ -722,7 +735,7 @@ const CasestudyPage = () => {
                                             </div>
                                             <div className="col-lg-12">
                                                 <div className="input__inr">
-                                                    <label htmlFor="SectionName" className="form-label">SectionName</label>
+                                                    <label htmlFor="SectionName" className="form-label">Colors</label>
                                                     <input required type="text"
                                                         id="SectionName"
                                                         name="SectionName"
@@ -739,33 +752,35 @@ const CasestudyPage = () => {
                                                         <div className="card__block" key={index} >
                                                             <div className="testimonial__box">
                                                                 <div className="top__heading">
-                                                                    <p>Brand Color Section {index + 1}</p>
+                                                                    <p>Brand Color {index + 1}</p>
                                                                     <button className="btn" onClick={() => removeColorSection('BrandcolorSections', index)} ><img src="assets/imgs/trash.svg" alt="" />Delete</button>
                                                                 </div>
-                                                                <div className="col-lg-12">
-                                                                    <div className="input__inr">
-                                                                        <label htmlFor="ColorName" className="form-label">ColorName</label>
-                                                                        <input required type="text"
-                                                                            id="ColorName"
-                                                                            name="ColorName"
-                                                                            className="form-control"
-                                                                            value={color.name}
-                                                                            onChange={(e) => handleColorInputChange(e, 'BrandcolorSections', index, 'name')}
-                                                                            placeholder="Enter Color Name"
-                                                                        />
+                                                                <div className='row'>
+                                                                    <div className="col-lg-12">
+                                                                        <div className="input__inr">
+                                                                            <label htmlFor="ColorName" className="form-label">ColorName</label>
+                                                                            <input required type="text"
+                                                                                id="ColorName"
+                                                                                name="ColorName"
+                                                                                className="form-control"
+                                                                                value={color.name}
+                                                                                onChange={(e) => handleColorInputChange(e, 'BrandcolorSections', index, 'name')}
+                                                                                placeholder="Enter Color Name"
+                                                                            />
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                <div className="col-lg-12">
-                                                                    <div className="input__inr">
-                                                                        <label htmlFor="ColorHexcode" className="form-label">Color Hex Code</label>
-                                                                        <input required type="text"
-                                                                            id="ColorHexcode"
-                                                                            name="ColorHexcode"
-                                                                            className="form-control"
-                                                                            value={color.hex}
-                                                                            onChange={(e) => handleColorInputChange(e, 'BrandcolorSections', index, 'hex')}
-                                                                            placeholder="Enter Color Hexa"
-                                                                        />
+                                                                    <div className="col-lg-12">
+                                                                        <div className="input__inr">
+                                                                            <label htmlFor="ColorHexcode" className="form-label">Color Hex Code</label>
+                                                                            <input required type="text"
+                                                                                id="ColorHexcode"
+                                                                                name="ColorHexcode"
+                                                                                className="form-control"
+                                                                                value={color.hex}
+                                                                                onChange={(e) => handleColorInputChange(e, 'BrandcolorSections', index, 'hex')}
+                                                                                placeholder="Enter Color Hexa"
+                                                                            />
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -782,33 +797,35 @@ const CasestudyPage = () => {
                                                         <div className="card__block" key={index} >
                                                             <div className="testimonial__box">
                                                                 <div className="top__heading">
-                                                                    <p>Secondary Color Section {index + 1}</p>
+                                                                    <p>Secondary Color {index + 1}</p>
                                                                     <button className="btn" onClick={() => removeColorSection('SecondaryColorSections', index)} ><img src="assets/imgs/trash.svg" alt="" />Delete</button>
                                                                 </div>
-                                                                <div className="col-lg-12">
-                                                                    <div className="input__inr">
-                                                                        <label htmlFor="ColorName" className="form-label">ColorName</label>
-                                                                        <input required type="text"
-                                                                            id="ColorName"
-                                                                            name="ColorName"
-                                                                            className="form-control"
-                                                                            value={color.name}
-                                                                            onChange={(e) => handleColorInputChange(e, 'SecondaryColorSections', index, 'name')}
-                                                                            placeholder="Enter Color Name"
-                                                                        />
-                                                                    </div>
-                                                                </div>
-                                                                <div className="col-lg-12">
-                                                                    <div className="input__inr">
-                                                                        <label htmlFor="ColorHexcode" className="form-label">Color Hex Code</label>
-                                                                        <input required type="text"
-                                                                            id="ColorHexcode"
-                                                                            name="ColorHexcode"
-                                                                            className="form-control"
-                                                                            value={color.hex}
-                                                                            onChange={(e) => handleColorInputChange(e, 'SecondaryColorSections', index, 'hex')}
-                                                                            placeholder="Enter Color Hexa"
-                                                                        />
+                                                                <div className='row'>
+                                                                    {/* <div className="col-lg-12">
+                                                                        <div className="input__inr">
+                                                                            <label htmlFor="ColorName" className="form-label">Color Name</label>
+                                                                            <input required type="text"
+                                                                                id="ColorName"
+                                                                                name="ColorName"
+                                                                                className="form-control"
+                                                                                value={color.name}
+                                                                                onChange={(e) => handleColorInputChange(e, 'SecondaryColorSections', index, 'name')}
+                                                                                placeholder="Enter Color Name"
+                                                                            />
+                                                                        </div>
+                                                                    </div> */}
+                                                                    <div className="col-lg-12">
+                                                                        <div className="input__inr">
+                                                                            <label htmlFor="ColorHexcode" className="form-label">Color Hex Code</label>
+                                                                            <input required type="text"
+                                                                                id="ColorHexcode"
+                                                                                name="ColorHexcode"
+                                                                                className="form-control"
+                                                                                value={color.hex}
+                                                                                onChange={(e) => handleColorInputChange(e, 'SecondaryColorSections', index, 'hex')}
+                                                                                placeholder="Enter Color Hexa"
+                                                                            />
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -821,7 +838,7 @@ const CasestudyPage = () => {
                                             </div>
                                         </div>
                                         <div className="update__block">
-                                            <button className="btn btn__update" type="button" onClick={handleSubmit}>Update</button>
+                                            <button className="btn btn__update" type="button" onClick={handleSubmit}>Submit</button>
                                         </div>
                                     </div>
                                 </div>
@@ -845,14 +862,27 @@ const CasestudyPage = () => {
                                             </div>
                                             <div className="col-lg-12">
                                                 <div className="input__inr">
-                                                    <label htmlFor="typographyDatafontFamily" className="form-label">fontFamily</label>
+                                                    <label htmlFor="typographyDatafontFamily" className="form-label">Font Family Name</label>
+                                                    <input required type="text"
+                                                        id="typographyDatafontFamily"
+                                                        name="typographyDatafontFamily"
+                                                        className="form-control"
+                                                        value={typographyData.fontFamilyName}
+                                                        onChange={(e) => setTypographyData({ ...typographyData, fontFamilyName: e.target.value })}
+                                                        placeholder="Enter Font Family Name"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="col-lg-12">
+                                                <div className="input__inr">
+                                                    <label htmlFor="typographyDatafontFamily" className="form-label">Font Family</label>
                                                     <input required type="text"
                                                         id="typographyDatafontFamily"
                                                         name="typographyDatafontFamily"
                                                         className="form-control"
                                                         value={typographyData.fontFamily}
                                                         onChange={(e) => setTypographyData({ ...typographyData, fontFamily: e.target.value })}
-                                                        placeholder="Enter fontFamily"
+                                                        placeholder="Enter Font Family"
                                                     />
                                                 </div>
                                             </div>
@@ -865,49 +895,51 @@ const CasestudyPage = () => {
                                                                     <p>Font Table {index + 1}</p>
                                                                     <button className="btn" onClick={() => removeFontTable(index)} ><img src="assets/imgs/trash.svg" alt="" />Delete</button>
                                                                 </div>
-                                                                <div className="col-lg-12">
-                                                                    <div className="input__inr">
-                                                                        <label htmlFor="name" className="form-label">Name</label>
-                                                                        <input required type="text"
-                                                                            id="name"
-                                                                            name="name"
-                                                                            className="form-control"
-                                                                            value={font.name}
-                                                                            onChange={(e) =>
-                                                                                handleFontTableChange(index, "name", e.target.value)
-                                                                            }
-                                                                            placeholder="Enter Name"
-                                                                        />
+                                                                <div className='row'>
+                                                                    <div className="col-lg-12">
+                                                                        <div className="input__inr">
+                                                                            <label htmlFor="name" className="form-label">Name</label>
+                                                                            <input required type="text"
+                                                                                id="name"
+                                                                                name="name"
+                                                                                className="form-control"
+                                                                                value={font.name}
+                                                                                onChange={(e) =>
+                                                                                    handleFontTableChange(index, "name", e.target.value)
+                                                                                }
+                                                                                placeholder="Enter Name"
+                                                                            />
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                <div className="col-lg-12">
-                                                                    <div className="input__inr">
-                                                                        <label htmlFor="fontSize" className="form-label">fontSize</label>
-                                                                        <input required type="text"
-                                                                            id="fontSize"
-                                                                            name="fontSize"
-                                                                            className="form-control"
-                                                                            value={font.fontSize}
-                                                                            onChange={(e) =>
-                                                                                handleFontTableChange(index, "fontSize", e.target.value)
-                                                                            }
-                                                                            placeholder="Enter FontSize"
-                                                                        />
+                                                                    <div className="col-lg-12">
+                                                                        <div className="input__inr">
+                                                                            <label htmlFor="fontSize" className="form-label">Font Size</label>
+                                                                            <input required type="text"
+                                                                                id="fontSize"
+                                                                                name="fontSize"
+                                                                                className="form-control"
+                                                                                value={font.fontSize}
+                                                                                onChange={(e) =>
+                                                                                    handleFontTableChange(index, "fontSize", e.target.value)
+                                                                                }
+                                                                                placeholder="Enter Font Size"
+                                                                            />
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                <div className="col-lg-12">
-                                                                    <div className="input__inr">
-                                                                        <label htmlFor="lineHeight" className="form-label">LineHeight</label>
-                                                                        <input required type="text"
-                                                                            id="lineHeight"
-                                                                            name="lineHeight"
-                                                                            className="form-control"
-                                                                            value={font.lineHeight}
-                                                                            onChange={(e) =>
-                                                                                handleFontTableChange(index, "lineHeight", e.target.value)
-                                                                            }
-                                                                            placeholder="Enter LineHeight"
-                                                                        />
+                                                                    <div className="col-lg-12">
+                                                                        <div className="input__inr">
+                                                                            <label htmlFor="lineHeight" className="form-label">Line Height</label>
+                                                                            <input required type="text"
+                                                                                id="lineHeight"
+                                                                                name="lineHeight"
+                                                                                className="form-control"
+                                                                                value={font.lineHeight}
+                                                                                onChange={(e) =>
+                                                                                    handleFontTableChange(index, "lineHeight", e.target.value)
+                                                                                }
+                                                                                placeholder="Enter Line Height"
+                                                                            />
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -920,7 +952,7 @@ const CasestudyPage = () => {
                                             </div>
                                         </div>
                                         <div className="update__block">
-                                            <button className="btn btn__update" type="button" onClick={handleSubmit}>Update</button>
+                                            <button className="btn btn__update" type="button" onClick={handleSubmit}>Submit</button>
                                         </div>
                                     </div>
                                 </div>
@@ -933,7 +965,7 @@ const CasestudyPage = () => {
                                             <div className="col-lg-12">
                                                 <div className="input__inr">
                                                     <label htmlFor="updatedLookHeading" className="form-label">Heading</label>
-                                                    <input required type="text"
+                                                    <input type="text"
                                                         id="updatedLookHeading"
                                                         name="updatedLookHeading"
                                                         className="form-control"
@@ -946,7 +978,7 @@ const CasestudyPage = () => {
                                             <div className="col-lg-12">
                                                 <div className="input__inr">
                                                     <label htmlFor="updatedLookdescription" className="form-label">Description</label>
-                                                    <input required type="text"
+                                                    <textarea rows={4}
                                                         id="updatedLookDescription"
                                                         name="updatedLookDescription"
                                                         className="form-control"
@@ -962,7 +994,7 @@ const CasestudyPage = () => {
                                                         <div className="card__block" key={index} >
                                                             <div className="testimonial__box">
                                                                 <div className="top__heading">
-                                                                    <p>Img {index + 1}</p>
+                                                                    <p>Updated Image {index + 1}</p>
                                                                     <button className="btn" onClick={() => removeupdatedLookImg(index)} ><img src="assets/imgs/trash.svg" alt="" />Delete</button>
                                                                 </div>
                                                                 <div className="row">
@@ -978,7 +1010,7 @@ const CasestudyPage = () => {
                                             </div>
                                         </div>
                                         <div className="update__block">
-                                            <button className="btn btn__update" type="button" onClick={handleSubmit}>Update</button>
+                                            <button className="btn btn__update" type="button" onClick={handleSubmit}>Submit</button>
                                         </div>
                                     </div>
                                 </div>
@@ -1027,7 +1059,7 @@ const CasestudyPage = () => {
                                                 </div>
                                             </div>
                                             <div className="update__block">
-                                                <button className="btn btn__update" type="button" onClick={handleSubmit}>Update</button>
+                                                <button className="btn btn__update" type="button" onClick={handleSubmit}>Submit</button>
                                             </div>
                                         </div>
                                     </div>
@@ -1065,12 +1097,96 @@ const CasestudyPage = () => {
                                                 </div>
                                             </div>
                                             <div className="update__block">
-                                                <button className="btn btn__update" type="button" onClick={handleSubmit}>Update</button>
+                                                <button className="btn btn__update" type="button" onClick={handleSubmit}>Submit</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <div className="tab-pane fade" id="pills-seo" role="tabpanel" aria-labelledby="pills-seo-tab">
+                                <div className="edit__tools">
+                                    <div className="card__block">
+                                        <div className="row">
+                                            <div className="col-lg-12">
+                                                <div className="input__inr">
+                                                    <label htmlFor="seotitle">Meta Title</label>
+                                                    <input required
+                                                        type="text"
+                                                        name="seotitle"
+                                                        id="seotitle"
+                                                        value={seoSection.title}
+                                                        onChange={(e) => setSeoSection({ ...seoSection, title: e.target.value })}
+                                                        placeholder="Enter Meta Title"
+                                                        className="form-control"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="col-lg-12">
+                                                <div className="seo__card">
+                                                    <div className="card__block">
+                                                        <div className="row">
+                                                            <div className="col-lg-12">
+                                                                <div className="input__inr">
+                                                                    <label htmlFor="keywords">Keywords</label>
+                                                                    <input type="text" id="keywords" className="form-control"
+                                                                        value={seoSection.keywords}
+                                                                        onChange={(e) => setSeoSection({ ...seoSection, keywords: e.target.value })}
+                                                                        placeholder="Enter Keywords" />
+                                                                </div>
+                                                            </div>
+                                                            <div className="col-lg-12">
+                                                                <div className="input__inr">
+                                                                    <label htmlFor="Description">Meta Description</label>
+                                                                    <textarea rows="4" className="form-control"
+                                                                        value={seoSection.description}
+                                                                        id="Description"
+                                                                        onChange={(e) => setSeoSection({ ...seoSection, description: e.target.value })}
+                                                                        placeholder="Enter Meta Description"></textarea>
+                                                                </div>
+                                                            </div>
+                                                            <SeoImg seoSection={seoSection} setSeoSection={setSeoSection} />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="update__block">
+                                            <button className="btn btn__update" onClick={handleSubmit}>Submit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {/* <div className="tab-pane fade" id="pills-fullWidthImg" role="tabpanel" aria-labelledby="pills-fullWidthImg-tab">
+                                <div className="edit__tools">
+                                    <div className="card__block">
+                                        <div className="row">
+                                            <div className="col-lg-12">
+                                                <div className="seo__card">
+                                                    {fullWidthImg.map((img, index) => (
+                                                        <div className="card__block" key={index} >
+                                                            <div className="testimonial__box">
+                                                                <div className="top__heading">
+                                                                    <p>Img {index + 1}</p>
+                                                                    <button className="btn" onClick={() => removeFullWidthImg(index)} ><img src="assets/imgs/trash.svg" alt="" />Delete</button>
+                                                                </div>
+                                                                <div className="row">
+                                                                    <SketchesImg handleFullWidthImg={handleFullWidthImg} index={index} img={img} />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                    <div className="add__review">
+                                                        <button className="btn" onClick={addFullWidthImg}><img src="assets/imgs/plus.svg" alt="" />Add Img</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="update__block">
+                                            <button className="btn btn__update" type="button" onClick={handleSubmit}>Submit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>

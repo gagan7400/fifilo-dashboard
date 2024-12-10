@@ -10,11 +10,9 @@ import "./dashboard.css";
 import CasestudyImg from './CasestudyImg';
 import SeoImg from './SeoImg';
 const Casestudy = () => {
-    const { pageData } = useSelector((state) => state.page);
     let { name } = useParams();
     let [casestudy, setCasestudy] = useState(null);
     let [loading, setLoading] = useState(true);
-    let Statisticsname = ["Client", "Timeline", "Screens", "Business Type"]
     const [heroSection, setHeroSection] = useState({
         casestudyName: "",
         pageName: "",
@@ -29,7 +27,7 @@ const Casestudy = () => {
     const [overviewSection, setOverviewSection] = useState({
         briefInsight: {
             contentBox: { heading: "", description: "" },
-            overviewBox: [{ value: "" }],
+            overviewBox: [{ name: "Client", value: "" }, { name: "Timeline", value: "" }, { name: "Screens", value: "" }, { name: "Business Type", value: "" }],
         },
         coreIssue: { heading: "", description: "" },
         Strategy: { heading: "", description: "" },
@@ -260,7 +258,7 @@ const Casestudy = () => {
             ...prev,
             briefInsight: {
                 ...prev.briefInsight,
-                overviewBox: [...prev.briefInsight.overviewBox, { value: "" }]
+                overviewBox: [...prev.briefInsight.overviewBox, { name: "", value: "" }]
             }
         }));
     };
@@ -514,17 +512,32 @@ const Casestudy = () => {
                                                     </div>
                                                 </div>
                                                 <div className="col-lg-12">
-                                                    <div className="input__inr">
-                                                        <label htmlFor="tg">Statistics</label>
-                                                    </div>
                                                     <div className="seo__card">
-                                                        <div className="card__block" >
-                                                            <div className="testimonial__box">
-                                                                <div className='row'>
-                                                                    {overviewSection.briefInsight.overviewBox.map((item, index) => (
-                                                                        <div className="col-lg-6 col-md-6" key={index}>
+                                                        {overviewSection.briefInsight.overviewBox.map((item, index) => (
+                                                            <div className="card__block" key={index} >
+                                                                <div className="testimonial__box">
+                                                                    <div className="top__heading">
+                                                                        <p>Statistics {index + 1}</p>
+                                                                        <button type="button" className="btn" onClick={() => removeOverviewBox(index)}><img src="assets/imgs/trash.svg" alt="" />Delete</button>
+                                                                    </div>
+                                                                    <div className='row'>
+                                                                        <div className="col-lg-6 col-md-6">
                                                                             <div className="input__inr">
-                                                                                <label htmlFor="workButtonsurl">{Statisticsname[index]}</label>
+                                                                                <label htmlFor="Name">Name :</label>
+                                                                                <input required type="text"
+                                                                                    id="Name"
+                                                                                    name="Name"
+                                                                                    className="form-control"
+                                                                                    value={item.name}
+                                                                                    onChange={(e) =>
+                                                                                        handleOverviewSectionChange("briefInsight", "overviewBox", { name: e.target.value }, index)
+                                                                                    }
+                                                                                    placeholder="Enter Name" />
+                                                                            </div>
+                                                                        </div>
+                                                                        <div className="col-lg-6 col-md-6">
+                                                                            <div className="input__inr">
+                                                                                <label htmlFor="workButtonsurl">Value :</label>
                                                                                 <input required type="text"
                                                                                     id="Value"
                                                                                     name="Value"
@@ -536,10 +549,12 @@ const Casestudy = () => {
                                                                                     placeholder="Enter Value" />
                                                                             </div>
                                                                         </div>
-
-                                                                    ))}
+                                                                    </div>
                                                                 </div>
                                                             </div>
+                                                        ))}
+                                                        <div className="add__review">
+                                                            <button className="btn" type="button" onClick={addOverviewBox}><img src="assets/imgs/plus.svg" alt="" />Add More Content</button>
                                                         </div>
                                                     </div>
                                                 </div>

@@ -9,6 +9,7 @@ import SketchesImg from './SketchesImg';
 import "./dashboard.css";
 import CasestudyImg from './CasestudyImg';
 import SeoImg from './SeoImg';
+import Loader from '../layout/Loader';
 const Casestudy = () => {
     let { name } = useParams();
     let [casestudy, setCasestudy] = useState(null);
@@ -303,6 +304,7 @@ const Casestudy = () => {
     return (
         <>
             <Sidebar titles="casestudy" />
+            {loading && <Loader />}
             <div className="main__content" >
                 <div className="page__editors">
                     <nav aria-label="breadcrumb">

@@ -10,26 +10,16 @@ import Loader from '../layout/Loader';
 export default function Casestudies() {
     let dispatch = useDispatch();
     const [allData, setAllData] = useState([]);
-    const [loading, setLoading] = useState(true);
 
     let alldata = async () => {
         try {
             let { data } = await axios.get('http://localhost:5000/admin/casestudy/getcasestudy');
             if (data.success) {
                 setAllData(data.data);
-                setTimeout(() => {
-                    setLoading(false)
-                }, 700);
             } else {
-                setTimeout(() => {
-                    setLoading(false)
-                }, 700);
                 alert("error occured");
             }
         } catch (error) {
-            setTimeout(() => {
-                setLoading(false)
-            }, 700);
             alert("error Occured")
         }
     }
@@ -58,7 +48,6 @@ export default function Casestudies() {
     return (
         <>
             <Sidebar />
-            {loading && <Loader />}
             <div className="main__content">
                 <div id="home" className="card__box" style={{ display: "block" }}>
                     <div className="page__editors">

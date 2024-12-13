@@ -8,14 +8,6 @@ import { Routes, Route, NavLink } from "react-router-dom";
 import $ from "jquery"; // import jQuery
 import anime from "animejs";
 import Career from "./pages/Career.jsx";
-import CureHub from "./casestudies/CureHub.jsx";
-import FestiveFolks from "./casestudies/FestiveFolks.jsx";
-import Interact from "./casestudies/Interact.jsx";
-import SPVMortgages from "./casestudies/SPVMortgages.jsx";
-import TribeStays from "./casestudies/TribeStays.jsx";
-import MyChoize from "./casestudies/MyChoize.jsx";
-import TwChallenge from "./casestudies/TwCallenge.jsx";
-import FlipFolder from "./casestudies/FlipFolder.jsx";
 import ThankYou from "./pages/ThankYou.jsx";
 import PrivacyPolicy from "./pages/PrivacyPolicy.jsx";
 import ScrollToTop from "./layout/Scrolltotop.jsx";
@@ -43,7 +35,6 @@ import Layout from "./pages/Layout.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import Newcasestudy from "./Admin/Newcasestudy.js";
 import Casestudypage from "./Admin/Casestudypage.jsx";
-import MediaLibraryModal from "./Admin/MediaLibraryModal.js";
 import MediaSection from "./Admin/MediaSection.js";
 function App() {
   let dispatch = useDispatch();
@@ -88,9 +79,9 @@ function App() {
         <Route path="/pages/" element={<ProtectedRoute Component={<Pages />} />} />
         <Route path="/dashboard/" element={<ProtectedRoute Component={<Dashboard />} />} />
         <Route path="/pages/home/" element={<ProtectedRoute Component={<Homepage />} />} />
-        <Route path="/section/casestudies/" element={<ProtectedRoute Component={<CasestudyPages />} />} />
-        <Route path="/pages/casestudy/" element={<ProtectedRoute Component={<Casestudypage />} />} />
-        <Route path="/pages/casestudy/:name/" element={<ProtectedRoute Component={<Casestudyadmin />} />} />
+        <Route path="/casestudies/" element={<ProtectedRoute Component={<CasestudyPages />} />} />
+        <Route path="/casestudies/" element={<ProtectedRoute Component={<Casestudypage />} />} />
+        <Route path="/casestudies/:name/" element={<ProtectedRoute Component={<Casestudyadmin />} />} />
         <Route path="/pages/casestudy/newcasestudy/" element={<ProtectedRoute Component={<Newcasestudy />} />} />
         <Route path="/pages/career/" element={<ProtectedRoute Component={<Careerpage />} />} />
         <Route path="/section/job/" element={<ProtectedRoute Component={<Jobpage />} />} />

@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Sidebar from './Sidebar';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
 import ProcessIcon from './ProcessIcon';
-import { Editor } from "@tinymce/tinymce-react";
 import SketchesImg from './SketchesImg';
 import CasestudyImg from './CasestudyImg';
 import SeoImg from './SeoImg';
+import JoditEditor from 'jodit-react';
 const CasestudyPage = () => {
+    const editor = useRef(null);
     const [heroSection, setHeroSection] = useState({
         casestudyName: "",
         pageName: "",
@@ -262,7 +263,30 @@ const CasestudyPage = () => {
             alert("Please Fill All The Feilds")
         }
     };
-
+    const config = {
+        readonly: false,
+        height: 400,
+        toolbarSticky: false,
+        placeholder: "Start typing...",
+        buttons: [
+          "bold", "italic", "underline", "strikethrough", 
+          "ul", "ol", "link", "image", "|", 
+          {
+            name: "paragraph",
+            tooltip: "HTML Tags",
+            list: {
+              "p": "Paragraph",
+              "h1": "Heading 1",
+              "h2": "Heading 2",
+              "h3": "Heading 3",
+              "h4": "Heading 4",
+              "h5": "Heading 5",
+              "h6": "Heading 6",
+              "div": "Div",
+            }
+          }
+        ]
+      };
     return (
         <>
             <Sidebar />
@@ -270,7 +294,7 @@ const CasestudyPage = () => {
                 <div className="page__editors">
                     <nav aria-label="breadcrumb">
                         <ol className="breadcrumb">
-                            <li className="breadcrumb-item"><NavLink to="/section/casestudies">casestudies</NavLink></li>
+                            <li className="breadcrumb-item"><NavLink to="/casestudies">Case Studies</NavLink></li>
                             <li className="breadcrumb-item"><img src="assets/imgs/chevron-right.svg" alt="" /></li>
                             <li className="breadcrumb-item active">New Casestudy</li>
                         </ol>
@@ -352,7 +376,7 @@ const CasestudyPage = () => {
                                                             className="form-control"
                                                             value={heroSection.pageName}
                                                             onChange={(e) => setHeroSection({ ...heroSection, pageName: e.target.value })}
-                                                            placeholder="Enter page Name"
+                                                            placeholder="Enter page Url"
                                                         />
                                                     </div>
                                                 </div>
@@ -435,7 +459,7 @@ const CasestudyPage = () => {
                                                 </div>
                                             </div>
                                             <div className="update__block">
-                                                <button className="btn btn__update" type="button" onClick={handleSubmit}>Submit</button>
+                                                <button className="btn btn__update" type="button" onClick={handleSubmit}>Update</button>
                                             </div>
                                         </div>
                                     </div>
@@ -563,29 +587,17 @@ const CasestudyPage = () => {
                                                 <div className="col-lg-12">
                                                     <div className="input__inr">
                                                         <label htmlFor="Strategy Description">Strategy Description</label>
-                                                        <Editor
+                                                        <JoditEditor
+                                                            ref={editor}
+                                                            config={config}
                                                             value={overviewSection.Strategy.description}
-                                                            apiKey="jd3e97w8li70lbzue44vverzarnpb6y52c1aht6swqstquwz"
-                                                            init={{
-                                                                height: 400,
-                                                                menubar: true,
-                                                                plugins: [
-                                                                    "advlist",
-                                                                    "lists",
-                                                                    "link", "image", "charmap", "preview", "anchor", // Optional additional features
-                                                                    "searchreplace", "visualblocks", "code", "fullscreen",
-                                                                    "insertdatetime", "media", "table", "paste", "help", "wordcount"
-                                                                ],
-                                                                toolbar:
-                                                                    "undo redo | formatselect | bold italic backcolor  | \ alignleft aligncenter alignright alignjustify | \ bullist numlist | removeformat | help",
-                                                            }}
-                                                            onEditorChange={(newContent) => handleOverviewSectionChange("Strategy", "description", newContent)}
+                                                            onChange={(newContent) => handleOverviewSectionChange("Strategy", "description", newContent)} // Save content on every keystroke
                                                         />
                                                     </div>
                                                 </div>
                                             </div>
                                             <div className="update__block">
-                                                <button className="btn btn__update" type="button" onClick={handleSubmit}>Submit</button>
+                                                <button className="btn btn__update" type="button" onClick={handleSubmit}>Update</button>
                                             </div>
                                         </div>
                                     </div>
@@ -657,7 +669,7 @@ const CasestudyPage = () => {
                                             </div>
                                         </div>
                                         <div className="update__block">
-                                            <button className="btn btn__update" type="button" onClick={handleSubmit}>Submit</button>
+                                            <button className="btn btn__update" type="button" onClick={handleSubmit}>Update</button>
                                         </div>
                                     </div>
                                 </div>
@@ -714,7 +726,7 @@ const CasestudyPage = () => {
                                             </div>
                                         </div>
                                         <div className="update__block">
-                                            <button className="btn btn__update" type="button" onClick={handleSubmit}>Submit</button>
+                                            <button className="btn btn__update" type="button" onClick={handleSubmit}>Update</button>
                                         </div>
                                     </div>
                                 </div>
@@ -817,19 +829,6 @@ const CasestudyPage = () => {
                                                                     <button className="btn" onClick={() => removeColorSection('SecondaryColorSections', index)} ><img src="assets/imgs/trash.svg" alt="" />Delete</button>
                                                                 </div>
                                                                 <div className='row'>
-                                                                    {/* <div className="col-lg-12">
-                                                                        <div className="input__inr">
-                                                                            <label htmlFor="ColorName" className="form-label">Color Name</label>
-                                                                            <input required type="text"
-                                                                                id="ColorName"
-                                                                                name="ColorName"
-                                                                                className="form-control"
-                                                                                value={color.name}
-                                                                                onChange={(e) => handleColorInputChange(e, 'SecondaryColorSections', index, 'name')}
-                                                                                placeholder="Enter Color Name"
-                                                                            />
-                                                                        </div>
-                                                                    </div> */}
                                                                     <div className="col-lg-12">
                                                                         <div className="input__inr">
                                                                             <label htmlFor="ColorHexcode" className="form-label">Color Hex Code</label>
@@ -854,7 +853,7 @@ const CasestudyPage = () => {
                                             </div>
                                         </div>
                                         <div className="update__block">
-                                            <button className="btn btn__update" type="button" onClick={handleSubmit}>Submit</button>
+                                            <button className="btn btn__update" type="button" onClick={handleSubmit}>Update</button>
                                         </div>
                                     </div>
                                 </div>
@@ -968,7 +967,7 @@ const CasestudyPage = () => {
                                             </div>
                                         </div>
                                         <div className="update__block">
-                                            <button className="btn btn__update" type="button" onClick={handleSubmit}>Submit</button>
+                                            <button className="btn btn__update" type="button" onClick={handleSubmit}>Update</button>
                                         </div>
                                     </div>
                                 </div>
@@ -1026,7 +1025,7 @@ const CasestudyPage = () => {
                                             </div>
                                         </div>
                                         <div className="update__block">
-                                            <button className="btn btn__update" type="button" onClick={handleSubmit}>Submit</button>
+                                            <button className="btn btn__update" type="button" onClick={handleSubmit}>Update</button>
                                         </div>
                                     </div>
                                 </div>
@@ -1053,29 +1052,17 @@ const CasestudyPage = () => {
                                                 <div className="col-lg-12">
                                                     <div className="input__inr">
                                                         <label htmlFor="description">Description</label>
-                                                        <Editor
+                                                        <JoditEditor
+                                                            ref={editor}
+                                                            config={config}
                                                             value={impactAndImprovement.description}
-                                                            apiKey="jd3e97w8li70lbzue44vverzarnpb6y52c1aht6swqstquwz"
-                                                            init={{
-                                                                height: 400,
-                                                                menubar: true,
-                                                                plugins: [
-                                                                    "advlist",
-                                                                    "lists",
-                                                                    "link", "image", "charmap", "preview", "anchor", // Optional additional features
-                                                                    "searchreplace", "visualblocks", "code", "fullscreen",
-                                                                    "insertdatetime", "media", "table", "paste", "help", "wordcount"
-                                                                ],
-                                                                toolbar:
-                                                                    "undo redo | formatselect | bold italic backcolor  | \ alignleft aligncenter alignright alignjustify | \ bullist numlist | removeformat | help",
-                                                            }}
-                                                            onEditorChange={(newContent) => setImpactAndImprovement({ ...impactAndImprovement, description: newContent })}
+                                                            onChange={(newContent) => setImpactAndImprovement({ ...impactAndImprovement, description: newContent })} // Save content on every keystroke
                                                         />
                                                     </div>
                                                 </div>
                                             </div>
                                             <div className="update__block">
-                                                <button className="btn btn__update" type="button" onClick={handleSubmit}>Submit</button>
+                                                <button className="btn btn__update" type="button" onClick={handleSubmit}>Update</button>
                                             </div>
                                         </div>
                                     </div>
@@ -1113,7 +1100,7 @@ const CasestudyPage = () => {
                                                 </div>
                                             </div>
                                             <div className="update__block">
-                                                <button className="btn btn__update" type="button" onClick={handleSubmit}>Submit</button>
+                                                <button className="btn btn__update" type="button" onClick={handleSubmit}>Update</button>
                                             </div>
                                         </div>
                                     </div>
@@ -1167,42 +1154,11 @@ const CasestudyPage = () => {
                                             </div>
                                         </div>
                                         <div className="update__block">
-                                            <button className="btn btn__update" onClick={handleSubmit}>Submit</button>
+                                            <button className="btn btn__update" onClick={handleSubmit}>Update</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            {/* <div className="tab-pane fade" id="pills-fullWidthImg" role="tabpanel" aria-labelledby="pills-fullWidthImg-tab">
-                                <div className="edit__tools">
-                                    <div className="card__block">
-                                        <div className="row">
-                                            <div className="col-lg-12">
-                                                <div className="seo__card">
-                                                    {fullWidthImg.map((img, index) => (
-                                                        <div className="card__block" key={index} >
-                                                            <div className="testimonial__box">
-                                                                <div className="top__heading">
-                                                                    <p>Img {index + 1}</p>
-                                                                    <button className="btn" onClick={() => removeFullWidthImg(index)} ><img src="assets/imgs/trash.svg" alt="" />Delete</button>
-                                                                </div>
-                                                                <div className="row">
-                                                                    <SketchesImg handleFullWidthImg={handleFullWidthImg} index={index} img={img} />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    ))}
-                                                    <div className="add__review">
-                                                        <button className="btn" onClick={addFullWidthImg}><img src="assets/imgs/plus.svg" alt="" />Add Img</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="update__block">
-                                            <button className="btn btn__update" type="button" onClick={handleSubmit}>Submit</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> */}
                         </div>
                     </div>
                 </div>

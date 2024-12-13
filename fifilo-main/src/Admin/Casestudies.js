@@ -53,7 +53,7 @@ export default function Casestudies() {
                     <div className="page__editors">
                         <div className="page__title">
                             <h5>Pages</h5>
-                            <NavLink to="/pages/casestudy/newcasestudy" className="btn btn__update">
+                            <NavLink to="/casestudies/newcasestudy" className="btn btn__update">
                                 <img src="/assets/imgs/plusyellow.svg" alt="" />
                                 Create a New CaseStudy
                             </NavLink>
@@ -89,7 +89,7 @@ export default function Casestudies() {
                                             second: '2-digit',
                                         })
                                         }</td>
-                                        <td> <NavLink to={`/pages/casestudy/${v.heroSection.pageName}`} className="btn"> <img src="/assets/imgs/edit.svg" alt="Edit icon" /></NavLink> </td>
+                                        <td> <NavLink to={`/casestudies/${v.heroSection.pageName}`} className="btn"> <img src="/assets/imgs/edit.svg" alt="Edit icon" /></NavLink> </td>
                                         <td> <button className='btn' onClick={() => { deleteCaseStudy(v._id) }}> <img src="/assets/imgs/trash.svg" alt="Edit icon" /> </button> </td>
                                     </tr>
                                 })}

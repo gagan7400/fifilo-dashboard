@@ -10,30 +10,6 @@ import Loader from '../layout/Loader';
 import JoditEditor from 'jodit-react';
 const ServicesForm = () => {
     const editor = useRef(null);
-    const config = {
-        readonly: false,
-        height: 400,
-        toolbarSticky: false,
-        placeholder: "Start typing...",
-        buttons: [
-            "bold", "italic", "underline", "strikethrough",
-            "ul", "ol", "link", "image", "|",
-            {
-                name: "paragraph",
-                tooltip: "HTML Tags",
-                list: {
-                    "p": "Paragraph",
-                    "h1": "Heading 1",
-                    "h2": "Heading 2",
-                    "h3": "Heading 3",
-                    "h4": "Heading 4",
-                    "h5": "Heading 5",
-                    "h6": "Heading 6",
-                    "div": "Div",
-                }
-            }
-        ]
-    };
     let dispatch = useDispatch();
     const { pageData } = useSelector((state) => state.page);
     useEffect(() => {
@@ -422,7 +398,6 @@ const ServicesForm = () => {
                                                             /> */}
                                                             <JoditEditor
                                                                 ref={editor}
-                                                                config={config}
                                                                 value={card.cardList}
                                                                 onChange={(newContent) => handleCardListChange(index, newContent)} // Save content on every keystroke
                                                             />

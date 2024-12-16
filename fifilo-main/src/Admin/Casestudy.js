@@ -301,30 +301,7 @@ const Casestudy = () => {
 
 
     };
-    const config = {
-        readonly: false,
-        height: 400,
-        toolbarSticky: false,
-        placeholder: "Start typing...",
-        buttons: [
-          "bold", "italic", "underline", "strikethrough", 
-          "ul", "ol", "link", "image", "|", 
-          {
-            name: "paragraph",
-            tooltip: "HTML Tags",
-            list: {
-              "p": "Paragraph",
-              "h1": "Heading 1",
-              "h2": "Heading 2",
-              "h3": "Heading 3",
-              "h4": "Heading 4",
-              "h5": "Heading 5",
-              "h6": "Heading 6",
-              "div": "Div",
-            }
-          }
-        ]
-      };
+    
     return (
         <>
             <Sidebar titles="casestudy" />
@@ -624,8 +601,7 @@ const Casestudy = () => {
                                                         <label htmlFor="Strategy Description">Strategy Description</label>
                                                         <JoditEditor
                                                             ref={editor}
-                                                            config={config}
-                                                            value={overviewSection.Strategy.description}
+                                                             value={overviewSection.Strategy.description}
                                                             onChange={(newContent) => handleOverviewSectionChange("Strategy", "description", newContent)} // Save content on every keystroke
                                                         />
                                                     </div>
@@ -1089,7 +1065,7 @@ const Casestudy = () => {
                                                         <label htmlFor="description">Description</label>
                                                         <JoditEditor
                                                             ref={editor}
-                                                            config={config}
+                                                             
                                                             value={impactAndImprovement.description}
                                                             onChange={(newContent) => setImpactAndImprovement({ ...impactAndImprovement, description: newContent })} // Save content on every keystroke
                                                         />

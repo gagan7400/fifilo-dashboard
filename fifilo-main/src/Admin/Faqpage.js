@@ -111,6 +111,7 @@ const Faqpage = () => {
                                             </div>
                                         </div>
                                         <div className="update__block">
+                                            <NavLink className="btn btn__cancel" to="/dashboard">Cancel</NavLink>
                                             <button className="btn btn__update" onClick={handleSubmit}>Update</button>
                                         </div>
                                     </div>
@@ -157,9 +158,10 @@ const Faqpage = () => {
                                         </div>
                                     ))}
                                     <div className="add__review">
-                                        <button className="btn" onClick={handleAddCard}><img src="/assets/imgs/plus.svg" alt="" />Add New Review</button>
+                                        <button className="btn" onClick={handleAddCard}><img src="/assets/imgs/plus.svg" alt="" />Add New Question</button>
                                     </div>
                                     <div className="update__block">
+                                        <NavLink className="btn btn__cancel" to="/dashboard">Cancel</NavLink>
                                         <button className="btn btn__update" onClick={handleSubmit}>Update</button>
                                     </div>
                                 </div>

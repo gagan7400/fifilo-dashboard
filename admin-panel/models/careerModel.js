@@ -31,8 +31,11 @@ const jobSchema = new mongoose.Schema({
         required: true
     },
     responsibilities: {
-        type: [String],
+        type: String,
         required: true
+    },
+    qualifications: {
+        type: String,
     }
     , jobStatus: {
         type: String,

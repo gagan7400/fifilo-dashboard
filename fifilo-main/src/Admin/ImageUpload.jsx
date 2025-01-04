@@ -7,9 +7,14 @@ const ImageUpload = ({ setImageUplaoded }) => {
 
     const handleFileChange = async (e) => {
         const files = e.target.files;
+
         if (files.length > 0) {
-            await handleUpload(files);
-            e.target.value = ""; // Reset the file input
+            if (files.length > 10) {
+                alert("length exceeded; Only 10 Images at a time")
+            } else {
+                await handleUpload(files);
+                e.target.value = ""; // Reset the file input
+            }
         }
     };
 
@@ -58,7 +63,8 @@ const ImageUpload = ({ setImageUplaoded }) => {
                                 <img src="assets/imgs/upload-cloud.svg" alt="" />
                             </div>
                             <p><span>Click to upload</span></p>
-                            <p>Only SVG, PNG, JPG</p>
+                            <p>Only SVG, PNG, JPG (Max 10 Images)</p>
+                         
                         </div>
                     </div>
                 </div>
@@ -68,6 +74,8 @@ const ImageUpload = ({ setImageUplaoded }) => {
 };
 
 export default ImageUpload;
+
+
 
 // import React, { useState, useRef } from "react";
 // import axios from "axios";

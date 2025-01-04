@@ -335,6 +335,11 @@ export default function Career() {
   let closemodel = () => {
     document.getElementsByClassName("btn-close")[0].click()
   }
+  const [visibleDetails, setVisibleDetails] = useState(null);
+
+  const toggleDetails = (jobId) => {
+    setVisibleDetails((prev) => (prev === jobId ? null : jobId));
+  };
   return (
     <>
       <Helmet>
@@ -408,19 +413,15 @@ export default function Career() {
                 <li className={filter === "Sales&Marketing" ? "is-checked" : ""} onClick={() => setFilter("Sales&Marketing")}>
                   Sales & Marketing
                 </li>
-                {/* <li className={filter === "HR" ? "is-checked" : ""} onClick={() => setFilter("HR")}>
-                  HR
-                </li>
-                <li className={filter === "Other" ? "is-checked" : ""} onClick={() => setFilter("Other")}>
-                  Other
-                </li> */}
               </ul>
             </div>
 
             <div className="rows inner__gapTop grid" data-aos="fade-up" data-aos-duration="800">
-              {jobs && filteredJobs.map((job, index) => (
-                <Job job={job} key={index} />
-              ))}
+              {jobs && filteredJobs.map((job, index) => {
+                if (job.jobStatus == "Active") {
+                  return <Job job={job} key={index} isVisible={visibleDetails === job._id} toggleDetails={toggleDetails} />
+                }
+              })}
             </div>
           </div>
         </div>

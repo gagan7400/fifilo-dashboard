@@ -30,7 +30,7 @@ export default function Casestudies() {
     let deleteCaseStudy = async (id) => {
         if (window.confirm("Are You Want To Delete This")) {
             try {
-                let { data } = await axios.delete('http://localhost:5000/admin/casestudy/deletecasestudy/' + id, {
+                let { data } = await axios.delete('http://localhost:3000/admin/casestudy/deletecasestudy/' + id, {
                     headers: {
                         "x-auth-token": localStorage.getItem("token"),
                     },
@@ -55,7 +55,7 @@ export default function Casestudies() {
                             <h5>Pages</h5>
                             <NavLink to="/casestudies/newcasestudy" className="btn btn__update">
                                 <img src="/assets/imgs/plusyellow.svg" alt="" />
-                                Create a New CaseStudy
+                                Create Case Study
                             </NavLink>
                         </div>
                     </div>
@@ -65,8 +65,8 @@ export default function Casestudies() {
                                 <tr>
                                     <th scope="col" style={{ width: "20%" }}>Page name</th>
                                     <th scope="col">Created on</th>
-                                    <th scope="col">Uploaded on</th>
-                                    <th scope="col" colSpan={2} style={{ width: "200px" }}></th>
+                                    <th scope="col">Updated on</th>
+                                    <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -89,8 +89,8 @@ export default function Casestudies() {
                                             second: '2-digit',
                                         })
                                         }</td>
-                                        <td> <NavLink to={`/casestudies/${v.heroSection.pageName}`} className="btn"> <img src="/assets/imgs/edit.svg" alt="Edit icon" /></NavLink> </td>
-                                        <td> <button className='btn' onClick={() => { deleteCaseStudy(v._id) }}> <img src="/assets/imgs/trash.svg" alt="Edit icon" /> </button> </td>
+                                        <td style={{ display: "flex", gap: "16px" }}> <NavLink to={`/casestudies/${v.heroSection.pageName}`} className="btn"> <img src="/assets/imgs/edit.svg" alt="Edit icon" /></NavLink>
+                                            <button className='btn' onClick={() => { deleteCaseStudy(v._id) }}> <img src="/assets/imgs/trash.svg" alt="Edit icon" /> </button> </td>
                                     </tr>
                                 })}
                             </tbody>

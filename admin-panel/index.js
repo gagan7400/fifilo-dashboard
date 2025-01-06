@@ -15,6 +15,7 @@ const faqRoute = require("./routes/faqRoute");
 const pagesRoute = require("./routes/pagesRoute");
 const mediaRoute = require("./routes/mediaRoute.js");
 const caseStudyRoute = require("./routes/caseStudyRoute.js");
+const footerRoute = require("./routes/footerRoute.js");
 
 const port = process.env.PORT || 4000;
 
@@ -54,6 +55,7 @@ app.use('/admin/faq', faqRoute);
 app.use('/admin/pages', pagesRoute);
 app.use('/api/media', mediaRoute);
 app.use('/admin/casestudy/', caseStudyRoute);
+app.use('/admin/footer/', footerRoute);
 
 
 

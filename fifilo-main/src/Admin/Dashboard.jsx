@@ -7,7 +7,7 @@ export default function Dashboard() {
             <div className="main__content">
                 <div id="dashboard" className="dashboard__card">
                     <h1>Welcome to Admin Dashboard</h1>
-                    <h5>Manage content, monitor performance,<br/>and make updates easily.</h5>
+                    <h5>Manage content, monitor performance,<br />and make updates easily.</h5>
                 </div>
             </div>
         </>

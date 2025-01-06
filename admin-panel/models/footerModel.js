@@ -7,22 +7,24 @@ const footerSchema = new mongoose.Schema({
         icon: { filename: String, path: String },
         url: String,
     },
-    links: [
-        {
-            page: { type: String },
-            url: String,
-        },
-    ],
-    socialMedia: [
-        {
-            iconUrl: { filename: String, path: String },
-            link: { type: String },
-        },
-    ],
+    links: [{
+        pageName: String,
+        pageUrl: String,
+        _id: false
+    },],
+    socialMedia: [{
+        iconUrl: { filename: String, path: String },
+        link: String,
+        _id: false
+    },],
     logoUrl: { filename: String, path: String },
-    copyrightText: { type: String },
-
+    copyrightText: String,
+    published: {
+        type: Boolean,
+        default: false
+    }
 }, { timestamps: true })
 
-let footerModel = mongoose.model("footer", footerSchema);
-module.exports = footerModel 
+let footerModel = mongoose.model("footers", footerSchema);
+module.exports = footerModel;
+

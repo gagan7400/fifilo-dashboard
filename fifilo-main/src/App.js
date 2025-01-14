@@ -36,6 +36,8 @@ import NotFound from "./pages/NotFound.jsx";
 import Newcasestudy from "./Admin/Newcasestudy.js";
 import Casestudypage from "./Admin/Casestudypage.jsx";
 import MediaSection from "./Admin/MediaSection.js";
+import Blog from "./pages/Blog.jsx";
+import Singleblog from "./pages/Singleblog.jsx";
 function App() {
   let dispatch = useDispatch();
 
@@ -95,6 +97,8 @@ function App() {
         <Route path="/about/" element={<About />} />
         <Route path="/services/" element={<Services />} />
         <Route path="/career/" element={<Career />} />
+        <Route path="/blogs/" element={<Blog />} />
+        <Route path="/blogs/:name" element={<Singleblog />} />
         <Route path="/careerform/:jobtype/" element={<Careerform />} />
         <Route path="/contact-us/" element={<ContactUs />} />
         <Route path="/case-studies/" element={<CaseStudies />} />

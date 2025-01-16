@@ -2,17 +2,24 @@
 const mongoose = require("mongoose");
 
 const blogsSchema = new mongoose.Schema({
-    heading: String,
+    blogTitle: String,
+    blogUrl: String,
     uploadedBy: String,
     approxTime: String,
-    blogcategory: String,
+    blogCategory: String,
     bannerImg: { filename: String, path: String },
     blogContent: String,
     tableOfContent: [
         { heading: String, id: String, _id: false },
-    ]
+    ],
+    seoSection: {
+        title: String,
+        keywords: String,
+        description: String,
+        seoImg: { filename: String, path: String }
+    },
 }, { timestamps: true })
 
 let blogsModel = mongoose.model("blogs", blogsSchema);
-module.exports = {blogsModel};
+module.exports = { blogsModel };
 

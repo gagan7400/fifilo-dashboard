@@ -19,6 +19,7 @@ import "aos/dist/aos.css";
 import Login from './Admin/Login.jsx';
 import ProtectedRoute from './Protectedroute/ProtectedRoute.jsx';
 import Dashboard from './Admin/Dashboard.jsx';
+import BlogAdmin from './Admin/BlogAdmin.js';
 import Careerpage from './Admin/Careerpage.js';
 import Aboutpage from './Admin/Aboutpage.js';
 import Contactpage from './Admin/Contactpage.js';
@@ -38,6 +39,8 @@ import Casestudypage from "./Admin/Casestudypage.jsx";
 import MediaSection from "./Admin/MediaSection.js";
 import Blog from "./pages/Blog.jsx";
 import Singleblog from "./pages/Singleblog.jsx";
+import NewBlog from "./Admin/NewBlog.js";
+import BlogUpdate from "./Admin/BlogUpdate.js";
 function App() {
   let dispatch = useDispatch();
 
@@ -81,6 +84,9 @@ function App() {
         <Route path="/pages/" element={<ProtectedRoute Component={<Pages />} />} />
         <Route path="/dashboard/" element={<ProtectedRoute Component={<Dashboard />} />} />
         <Route path="/pages/home/" element={<ProtectedRoute Component={<Homepage />} />} />
+        <Route path="/blogadmin/" element={<ProtectedRoute Component={<BlogAdmin />} />} />
+        <Route path="/blogadmin/newblog" element={<ProtectedRoute Component={<NewBlog />} />} />
+        <Route path="/blogadmin/:name" element={<ProtectedRoute Component={<BlogUpdate />} />} />
         <Route path="/casestudies/" element={<ProtectedRoute Component={<CasestudyPages />} />} />
         <Route path="/pages/casestudy/" element={<ProtectedRoute Component={<Casestudypage />} />} />
         <Route path="/casestudies/:name/" element={<ProtectedRoute Component={<Casestudyadmin />} />} />

@@ -23,7 +23,7 @@ const getBlog = async (req, res) => {
 const getBlogByName = async (req, res) => {
     try {
         let { name } = req.params;
-        const result = await blogsModel.findOne({ "blogUrl": name });
+        const result = await blogsModel.findOne({ blogUrl: name });
         console.log(name, result)
         if (!result) { return res.status(404).json({ success: false, message: `Blog with Name '${name}' not found.` }); }
         res.send({ success: true, data: result });

@@ -82,7 +82,7 @@ export default function Blog() {
                       second: '2-digit',
                     })
                     }</td>
-                    <td style={{ display: "flex", gap: "16px" }}> <NavLink to={`/blogadmin/${v.blogTitle.split(" ").join("-")}`} className="btn"> <img src="/assets/imgs/edit.svg" alt="Edit icon" /></NavLink>
+                    <td style={{ display: "flex", gap: "16px" }}> <NavLink to={`/blogadmin/${v.blogUrl}`} className="btn"> <img src="/assets/imgs/edit.svg" alt="Edit icon" /></NavLink>
                       <button className='btn' onClick={() => { deleteCaseStudy(v._id) }}> <img src="/assets/imgs/trash.svg" alt="Edit icon" /> </button> </td>
                   </tr>
                 })}

@@ -27,36 +27,6 @@ const BlogUpdate = () => {
         description: "",
         seoImg: { filename: "", path: "" },
     });
-
-
-    useEffect(() => {
-        const getCasestudy = async () => {
-            try {
-                let { data } = await axios.get(`http://localhost:5000/admin/blogs/getblog/${name.toLowerCase()}/`);
-                console.log(data)
-                if (data.success) {
-                    setBannerImg(data.bannerImg);
-                    setBlogTitle(data.blogTitle);
-                    setBlogUrl(data.blogUrl);
-                    setUploadedBy(data.uploadedBy);
-                    setApproxTime(data.approxTime);
-                    setBlogCategory(data.blogCategory);
-                    setBlogContent(data.blogContent);
-                    setTableOfContent(data.tableOfContent);
-                    setSeoSection({ ...data.data.seoSection });
-                    console.log(data)
-                } else {
-                    alert("Error occurred p");
-                }
-            } catch (error) {
-
-
-            }
-        };
-
-        getCasestudy();
-    }, [name]);
-
     const addTableContent = () => {
         setTableOfContent([...tableOfContent, { heading: "", id: "" }])
     }
@@ -70,6 +40,36 @@ const BlogUpdate = () => {
         setTableOfContent([...newvalue]);
 
     }
+
+    useEffect(() => {
+        const getCasestudy = async () => {
+            try {
+                let { data } = await axios.get(`http://localhost:5000/admin/blogs/getblog/${name.toLowerCase()}/`);
+                console.log(data.data)
+                if (data.success) {
+                    setBannerImg(data.data.bannerImg);
+                    setBlogTitle(data.data.blogTitle);
+                    setBlogUrl(data.data.blogUrl);
+                    setUploadedBy(data.data.uploadedBy);
+                    setApproxTime(data.data.approxTime);
+                    setBlogCategory(data.data.blogCategory);
+                    setBlogContent(data.data.blogContent);
+                    setTableOfContent(data.data.tableOfContent);
+                    setSeoSection({ ...data.data.seoSection });
+
+                } else {
+                    alert("Error occurred p");
+                }
+            } catch (error) {
+
+
+            }
+        };
+
+        getCasestudy();
+    }, [name]);
+
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -207,39 +207,70 @@ const BlogUpdate = () => {
                             <div className="tab-pane fade" id="pills-content" role="tabpanel" aria-labelledby="pills-content-tab">
                                 <div className="edit__tools">
                                     <div className="card__block">
-                                        <div className="row">
-                                            {tableOfContent.map((v, i) => {
-                                                return <div className="col-lg-6 ">
-
-                                                    <div className="input__inr">
-                                                        <label htmlFor="heading">Table content heading {i + 1}</label>
-                                                        <input required type="text"
-                                                            name="heading"
-                                                            id="heading"
-                                                            className="form-control"
-                                                            value={v.heading}
-                                                            onChange={(e) => handleTableContent(i, e)}
-                                                            placeholder="Enter Approx Time"
-                                                        /> <button onClick={() => { removeTablecontent(i) }} className='btn'> remove table content</button>
+                                        <div className="testimonial__box">
+                                            <div className="row">
+                                                <div className="col-lg-12">
+                                                    <div className="seo__card">
+                                                        {tableOfContent?.length && tableOfContent.map((v, index) => (
+                                                            <div className="card__block" key={index} >
+                                                                <div className="testimonial__box">
+                                                                    <div className="top__heading">
+                                                                        <p>Heading {index + 1}</p>
+                                                                        <button type="button" className="btn" onClick={() => removeTablecontent(index)}><img src="assets/imgs/trash.svg" alt="" />Delete</button>
+                                                                    </div>
+                                                                    <div className='row'>
+                                                                        <div className="col-lg-6 col-md-6">
+                                                                            <div className="input__inr">
+                                                                                <label htmlFor="heading">Table Content heading  </label>
+                                                                                <input required type="text"
+                                                                                    name="heading"
+                                                                                    id="heading"
+                                                                                    className="form-control"
+                                                                                    value={v.heading}
+                                                                                    onChange={(e) => handleTableContent(index, e)}
+                                                                                    placeholder="Enter Heading"
+                                                                                />
+                                                                            </div>
+                                                                        </div>
+                                                                        <div className="col-lg-6 col-md-6">
+                                                                            <div className="input__inr">
+                                                                                <label htmlFor="id">Table Content Id  </label>
+                                                                                <input required type="text"
+                                                                                    name="id"
+                                                                                    id="id"
+                                                                                    className="form-control"
+                                                                                    value={v.id}
+                                                                                    onChange={(e) => handleTableContent(index, e)}
+                                                                                    placeholder="Enter id"
+                                                                                />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        ))}
+                                                        <div className="add__review">
+                                                            <button className="btn" type="button" onClick={addTableContent}><img src="assets/imgs/plus.svg" alt="" />Add More Content</button>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            })}
-                                            <button onClick={addTableContent} className='btn'> add heading </button>
 
-                                            <div className="col-lg-12">
-                                                <div className="input__inr">
-                                                    <label htmlFor="BlogContent">Blog Content</label>
-                                                    <JoditEditor
-                                                        ref={editor}
-                                                        value={blogContent}
-                                                        onChange={(newContent) => setBlogContent(newContent)} // Save content on every keystroke
-                                                    />
+
+                                                <div className="col-lg-12">
+                                                    <div className="input__inr">
+                                                        <label htmlFor="BlogContent">Blog Content</label>
+                                                        <JoditEditor
+                                                            ref={editor}
+                                                            value={blogContent}
+                                                            onChange={(newContent) => setBlogContent(newContent)} // Save content on every keystroke
+                                                        />
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div className="update__block">
-                                            <NavLink className="btn btn__cancel" to="/blogadmin">Cancel</NavLink>
-                                            <button className="btn btn__update" onClick={handleSubmit}>Update</button>
+                                            <div className="update__block">
+                                                <NavLink className="btn btn__cancel" to="/blogadmin">Cancel</NavLink>
+                                                <button className="btn btn__update" type="button" onClick={handleSubmit}>Update</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

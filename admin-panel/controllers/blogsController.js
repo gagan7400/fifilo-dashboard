@@ -8,7 +8,6 @@ const createBlog = async (req, res) => {
         await blog.save();
         res.status(201).json({ success: true, data: blog });
     } catch (err) {
-        console.log(err)
         res.status(500).json({ success: false, message: err.message });
     }
 };
@@ -24,7 +23,6 @@ const getBlogByName = async (req, res) => {
     try {
         let { name } = req.params;
         const result = await blogsModel.findOne({ blogUrl: name });
-        console.log(name, result)
         if (!result) { return res.status(404).json({ success: false, message: `Blog with Name '${name}' not found.` }); }
         res.send({ success: true, data: result });
     } catch (err) {

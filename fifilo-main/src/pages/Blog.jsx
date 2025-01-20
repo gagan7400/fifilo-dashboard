@@ -2,7 +2,11 @@ import React, { useEffect } from 'react'
 import $ from 'jquery';
 import AOS from "aos";
 import { NavLink } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getBlogs } from '../redux/actions/blogAction';
 export default function Blog() {
+    let dispatch = useDispatch();
+    let { blogdata, blogloading, error } = useSelector(state => state.blog)
     useEffect(() => {
         $(function () {
             $(".blogs__list .col-12").slice(0, 3).show();
@@ -17,7 +21,11 @@ export default function Blog() {
     }, []);
     useEffect(() => {
         AOS.init();
-    }, []);
+    }, [blogdata]);
+    useEffect(() => {
+        dispatch(getBlogs())
+    }, [])
+    console.log(blogdata)
     return (
         <>
             <div className="blogs__bnr">
@@ -29,161 +37,120 @@ export default function Blog() {
             <div className="blogs__list rn__section__gapTop">
                 <div className="container">
                     <div className="row justify-content-center">
-                        <div className="col-xxl-10 col-md-12">
-                            <div className="card__blog comn__blog" data-aos="fade-up" data-aos-duration="800">
-                                <div className="thumb__img">
-                                    <NavLink to="/blogs/first-blog">
-                                        <img src="assets/img/case-studies-01.png" alt="" />
-                                    </NavLink>
-                                </div>
-                                <div className="cntnt__bx">
-                                    <span className="category">Website Development</span>
-                                    <NavLink to="/blogs/first-blog">
-                                        <div className="title">
-                                            <h5>Lorem ipsum dolor sit amet consectetur.</h5>
-                                            <span><img src="assets/img/arrow-up-right.svg" alt="" /></span>
+                        {!blogloading && !error && blogdata && blogdata.map((value, index) => {
+                            if (index == 0) {
+                                return (
+                                    <div className="col-xxl-10 col-md-12" key={index}>
+                                        <div className="card__blog comn__blog" data-aos="fade-up" data-aos-duration="800">
+                                            <div className="thumb__img">
+                                                <NavLink to={`/blogs/${value.blogUrl}/`}>
+                                                    <img src={`http://localhost:5000/images/${value.bannerImg.filename}`} alt="" />
+                                                </NavLink>
+                                            </div>
+                                            <div className="cntnt__bx">
+                                                <span className="category">{value.blogCategory}</span>
+                                                <NavLink to={`/blogs/${value.blogUrl}/`}>
+                                                    <div className="title">
+                                                        <h5>{value.blogTitle}.</h5>
+                                                        <span><img src="assets/img/arrow-up-right.svg" alt="" /></span>
+                                                    </div>
+                                                </NavLink>
+                                                <h6>{value.heading}</h6>
+
+                                                <div className="card__ftr">
+                                                    <span>By {value.uploadedBy}</span>
+                                                    <span>•</span>
+                                                    <span>{new Date(value.updatedAt).toLocaleDateString('en-US', {
+                                                        year: 'numeric',
+                                                        month: 'short',
+                                                        day: 'numeric',
+                                                    })}</span>
+                                                    <span>•</span>
+                                                    <span>{value.approxTime} Read</span>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </NavLink>
-                                    <h6>Vitae congue eu consequat ac felis placerat vestibulum lectus mauris ultrices.</h6>
-
-                                    <div className="card__ftr">
-                                        <span>By Fifilo Designs</span>
-                                        <span>•</span>
-                                        <span>November 11, 2024</span>
-                                        <span>•</span>
-                                        <span>5 min Read</span>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-
+                                )
+                            }
+                        })}
                         <div className="col-xxl-10 col-md-12">
                             <div className="main__heading" data-aos="fade-up" data-aos-duration="800">
                                 <h2>Must Read Articles</h2>
                             </div>
-
                             <div className="row inner__gapTop">
-                                <div className="col-12">
-                                    <div className="arti__card comn__blog" data-aos="fade-up" data-aos-duration="800">
-                                        <div className="img__box">
-                                            <a href="">
-                                                <img src="assets/img/case-studies-01.png" alt="" />
-                                            </a>
-                                        </div>
-                                        <div className="cntnt__bx">
-                                            <span className="category">Website Development</span>
-                                            <a href="">
-                                                <div className="title">
-                                                    <h5>Lorem ipsum dolor sit amet consectetur. Mus purus morbi ullamcorper nulla ac massa.</h5>
-                                                    <img src="assets/img/arrow-up-right.svg" alt="" />
+                                {!blogloading && !error && blogdata && blogdata.map((value, index) => {
+                                    if (index !== 0) {
+                                        return (blogdata.length > 4 && index > 3 ?
+                                            <div key={index} className="col-12" style={{ display: "none" }} data-aos="fade-up" data-aos-duration="800">
+                                                <div className="arti__card comn__blog" data-aos="fade-up" data-aos-duration="800">
+                                                    <div className="img__box">
+                                                        <NavLink to={`/blogs/${value.blogUrl}/`}>
+                                                            <img src={`http://localhost:5000/images/${value.bannerImg.filename}`} alt="" />
+                                                        </NavLink>
+                                                    </div>
+                                                    <div className="cntnt__bx">
+                                                        <span className="category">{value.blogCategory}</span>
+                                                        <NavLink to={`/blogs/${value.blogUrl}/`}>
+                                                            <div className="title">
+                                                                <h5>{value.blogTitle}.</h5>
+                                                                <span><img src="assets/img/arrow-up-right.svg" alt="" /></span>
+                                                            </div>
+                                                        </NavLink>
+                                                        <h6>{value.heading}</h6>
+
+                                                        <div className="card__ftr">
+                                                            <span>By {value.uploadedBy}</span>
+                                                            <span>•</span>
+                                                            <span>{new Date(value.updatedAt).toLocaleDateString('en-US', {
+                                                                year: 'numeric',
+                                                                month: 'short',
+                                                                day: 'numeric',
+                                                            })}</span>
+                                                            <span>•</span>
+                                                            <span>{value.approxTime} Read</span>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </a>
-                                            <h6>Lorem ipsum dolor sit amet consectetur. Turpis ut tempor at placerat. Magnis in mattis in
-                                                suspendisse viverra sed nisl pharetra morbi. Et amet rhoncus at tincidunt a dolor in turpis leo.
-                                            </h6>
+                                            </div> :
+                                            <div key={index} className="col-12"  >
+                                                <div className="arti__card comn__blog" data-aos="fade-up" data-aos-duration="800">
+                                                    <div className="img__box">
+                                                        <NavLink to={`/blogs/${value.blogUrl}/`}>
+                                                            <img src={`http://localhost:5000/images/${value.bannerImg.filename}`} alt="" />
+                                                        </NavLink>
+                                                    </div>
+                                                    <div className="cntnt__bx">
+                                                        <span className="category">{value.blogCategory}</span>
+                                                        <NavLink to={`/blogs/${value.blogUrl}/`}>
+                                                            <div className="title">
+                                                                <h5>{value.blogTitle}.</h5>
+                                                                <span><img src="assets/img/arrow-up-right.svg" alt="" /></span>
+                                                            </div>
+                                                        </NavLink>
+                                                        <h6>{value.heading}</h6>
 
-                                            <div className="card__ftr">
-                                                <span>By Fifilo Designs</span>
-                                                <span>•</span>
-                                                <span>November 11, 2024</span>
-                                                <span>•</span>
-                                                <span>5 min Read</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="col-12">
-                                    <div className="arti__card comn__blog" data-aos="fade-up" data-aos-duration="800">
-                                        <div className="img__box">
-                                            <a href="">
-                                                <img src="assets/img/case-studies-01.png" alt="" />
-                                            </a>
-                                        </div>
-                                        <div className="cntnt__bx">
-                                            <span className="category">Website Development</span>
-                                            <a href="">
-                                                <div className="title">
-                                                    <h5>Lorem ipsum dolor sit amet consectetur. Mus purus morbi ullamcorper nulla ac massa.</h5>
-                                                    <img src="assets/img/arrow-up-right.svg" alt="" />
+                                                        <div className="card__ftr">
+                                                            <span>By {value.uploadedBy}</span>
+                                                            <span>•</span>
+                                                            <span>{new Date(value.updatedAt).toLocaleDateString('en-US', {
+                                                                year: 'numeric',
+                                                                month: 'short',
+                                                                day: 'numeric',
+                                                            })}</span>
+                                                            <span>•</span>
+                                                            <span>{value.approxTime} Read</span>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </a>
-                                            <h6>Lorem ipsum dolor sit amet consectetur. Turpis ut tempor at placerat. Magnis in mattis in
-                                                suspendisse viverra sed nisl pharetra morbi. Et amet rhoncus at tincidunt a dolor in turpis leo.
-                                            </h6>
-
-                                            <div className="card__ftr">
-                                                <span>By Fifilo Designs</span>
-                                                <span>•</span>
-                                                <span>November 11, 2024</span>
-                                                <span>•</span>
-                                                <span>5 min Read</span>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="col-12">
-                                    <div className="arti__card comn__blog" data-aos="fade-up" data-aos-duration="800">
-                                        <div className="img__box">
-                                            <a href="">
-                                                <img src="assets/img/case-studies-01.png" alt="" />
-                                            </a>
-                                        </div>
-                                        <div className="cntnt__bx">
-                                            <span className="category">Website Development</span>
-                                            <a href="">
-                                                <div className="title">
-                                                    <h5>Lorem ipsum dolor sit amet consectetur. Mus purus morbi ullamcorper nulla ac massa.</h5>
-                                                    <img src="assets/img/arrow-up-right.svg" alt="" />
-                                                </div>
-                                            </a>
-                                            <h6>Lorem ipsum dolor sit amet consectetur. Turpis ut tempor at placerat. Magnis in mattis in
-                                                suspendisse viverra sed nisl pharetra morbi. Et amet rhoncus at tincidunt a dolor in turpis leo.
-                                            </h6>
-
-                                            <div className="card__ftr">
-                                                <span>By Fifilo Designs</span>
-                                                <span>•</span>
-                                                <span>November 11, 2024</span>
-                                                <span>•</span>
-                                                <span>5 min Read</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="col-12" style={{ display: "none" }} data-aos="fade-up" data-aos-duration="800">
-                                    <div className="arti__card comn__blog">
-                                        <div className="img__box">
-                                            <a href="">
-                                                <img src="assets/img/case-studies-01.png" alt="" />
-                                            </a>
-                                        </div>
-                                        <div className="cntnt__bx">
-                                            <span className="category">Website Development</span>
-                                            <a href="">
-                                                <div className="title">
-                                                    <h5>Lorem ipsum dolor sit amet consectetur. Mus purus morbi ullamcorper nulla ac massa.</h5>
-                                                    <img src="assets/img/arrow-up-right.svg" alt="" />
-                                                </div>
-                                            </a>
-                                            <h6>Lorem ipsum dolor sit amet consectetur. Turpis ut tempor at placerat. Magnis in mattis in
-                                                suspendisse viverra sed nisl pharetra morbi. Et amet rhoncus at tincidunt a dolor in turpis leo.
-                                            </h6>
-
-                                            <div className="card__ftr">
-                                                <span>By Fifilo Designs</span>
-                                                <span>•</span>
-                                                <span>November 11, 2024</span>
-                                                <span>•</span>
-                                                <span>5 min Read</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                        )
+                                    }
+                                })}
                             </div>
+
                         </div>
+
 
                         <div className="col-lg-10 col-md-12" data-aos="fade-up" data-aos-duration="800">
                             <button className="btn btn__primary m-auto load-more">View more blogs <img src="assets/img/arrow-up-right.svg"
@@ -191,7 +158,7 @@ export default function Blog() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div >
         </>
     )
 }

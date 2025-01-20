@@ -6,6 +6,7 @@ const blogsSchema = new mongoose.Schema({
     blogUrl: String,
     uploadedBy: String,
     approxTime: String,
+    heading: String,
     blogCategory: String,
     bannerImg: { filename: String, path: String },
     blogContent: String,

@@ -49,7 +49,7 @@ const deleteBlog = async (req, res) => {
 const updateBlog = async (req, res) => {
     try {
         const { id } = req.params; // We're updating the about  by ID
-        const { blogTitle, blogUrl, heading, uploadedBy, approxTime, blogcategory, seoSection, bannerImg, blogContent, tableOfContent, } = req.body;
+        const { blogTitle, blogUrl, uploadedBy, approxTime, heading, blogCategory, seoSection, bannerImg, blogContent, tableOfContent, } = req.body;
 
         const blog = await blogsModel.findById(id);
 
@@ -59,6 +59,7 @@ const updateBlog = async (req, res) => {
         if (blogTitle) {
             blog.blogTitle = blogTitle
         }
+
         if (blogUrl) {
             blog.blogUrl = blogUrl
         }
@@ -71,8 +72,8 @@ const updateBlog = async (req, res) => {
         if (approxTime) {
             blog.approxTime = approxTime
         }
-        if (blogcategory) {
-            blog.blogcategory = blogcategory
+        if (blogCategory) {
+            blog.blogCategory = blogCategory
         }
         if (blogContent) {
             blog.blogContent = blogContent
@@ -84,10 +85,9 @@ const updateBlog = async (req, res) => {
             };
         }
         if (tableOfContent) {
-            blog.tableOfContent = {
-                ...blog.tableOfContent,
+            blog.tableOfContent = [
                 ...tableOfContent
-            };
+            ];
         }
         if (seoSection) {
             blog.seoSection = {

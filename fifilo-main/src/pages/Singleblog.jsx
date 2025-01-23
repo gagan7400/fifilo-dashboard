@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { act, useEffect, useState } from 'react'
 import AOS from "aos";
 import DOMPurify from 'dompurify';
 import axios from 'axios';
@@ -64,7 +64,24 @@ export default function Singleblog() {
     useEffect(() => {
         AOS.init();
     }, [blog]);
-    console.log(blog, blogs)
+
+
+    let select = () => {
+        const links = document.querySelectorAll(".tableOfContent li a");
+        window.addEventListener("hashchange", () => {
+            links.forEach((link) => {
+                link.parentNode.className = ""
+            });
+            const activeLink = document.querySelector(`a[href="${location.pathname + location.hash}"]`);
+            if (activeLink) {
+                let p = activeLink.parentNode;
+                p.classList.add("active");
+            }   
+        });
+    }
+    select();
+    window.addEventListener("hashchange", select);
+
     return (
         <>
             <div className="blogs__bnr blog__single">
@@ -91,21 +108,19 @@ export default function Singleblog() {
                     </div>
                 </div>
             </div>
-
-
             <div className="single__content rn__section__gapTop">
                 <div className="container">
                     <div className="row">
-                        <div class="col-lg-9" dangerouslySetInnerHTML={{
+                        <div className="col-lg-9" dangerouslySetInnerHTML={{
                             __html: DOMPurify.sanitize(!loading && blog && blog.blogContent)
                         }} />
                         <div className="col-lg-3">
                             <div className="right__block">
                                 <div className="table__card" data-aos="fade-up" data-aos-duration="800">
                                     <h5>Table of Contents</h5>
-                                    <ul>
+                                    <ul className='tableOfContent'>
                                         {!loading && blog && blog.tableOfContent.map((v, i) => {
-                                            return <li className={i == 0 && "active"} key={i}><a href={`/blogs/${blog.blogUrl}/#${v.id}`}>{i + 1}. {v.heading}</a></li>
+                                            return <li className={i == 0 ? "active" : ""} key={i}><a href={`/blogs/${blog.blogUrl}/#${v.id}`}>{i + 1}. {v.heading}</a></li>
                                         })}
                                     </ul>
                                 </div>
@@ -116,7 +131,7 @@ export default function Singleblog() {
                                     <div className="blogs__cards">
                                         {!blogsLoading && blogs && blogs.map((value, index) => {
                                             if (value._id != blog._id) {
-                                                return (<div className="card__blog">
+                                                return (<div className="card__blog" key={index}>
                                                     <NavLink to={`/blogs/${value.blogUrl}/`}>
                                                         <div className="title">
                                                             <h6>{value.blogTitle}</h6>

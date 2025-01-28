@@ -6,7 +6,6 @@ import "aos/dist/aos.css";
 import $ from "jquery";
 import DOMPurify from 'dompurify';
 import { NavLink, useNavigate } from "react-router-dom";
-import Loader from "../layout/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { getjobs, getpublishCareerPage } from '../redux/actions/careeraction';
 import Job from "./Job";

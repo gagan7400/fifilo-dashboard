@@ -40,6 +40,9 @@ const jobSchema = new mongoose.Schema({
     , jobStatus: {
         type: String,
         default: "Active"
+    },
+    resume: {
+        type: String
     }
 }, { timestamps: true });
 

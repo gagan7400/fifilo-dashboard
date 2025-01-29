@@ -12,12 +12,12 @@ import Job from "./Job";
 import Careerform from "./CareerForm";
 
 export default function Career() {
-  useEffect(() => {
-    AOS.init();
-  }, []);
   let dispatch = useDispatch();
   let { jobs, jobloading } = useSelector((state) => state.jobs);
   let { publishedcareerdata, publishedcareerloading } = useSelector((state) => state.careerpage);
+  useEffect(() => {
+    AOS.init();
+  }, [publishedcareerdata]);
   useEffect(() => {
     dispatch(getjobs());
     dispatch(getpublishCareerPage());

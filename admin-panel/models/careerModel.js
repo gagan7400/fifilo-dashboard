@@ -15,7 +15,6 @@ const jobSchema = new mongoose.Schema({
         type: String,
         required: true,
         default: 1
-
     },
     location: {
         type: String,

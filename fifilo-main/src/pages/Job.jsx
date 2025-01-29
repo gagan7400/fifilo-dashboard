@@ -14,8 +14,15 @@ export default function Job({ job, isVisible, toggleDetails }) {
     return (
         <div className={`col-12 grid-item ${job.category}`}>
             <div className="card__bx">
-                <div className="left__bx">
-                    <h5>{job.jobTitle}</h5>
+                <div className="left__bx w-100">
+                    <div className='d-flex justify-content-between align-items-start '>
+                        <h5>{job.jobTitle}</h5>
+                        <NavLink to={`/careerform/${job.jobTitle}`} className="btn btn__primary" data-bs-toggle="modal" data-bs-target="#careerModal" >
+                            Apply
+                            <img src="assets/img/arrow-up-right.svg" alt="apply" />
+                        </NavLink>
+                    </div>
+
                     <div className="btm__box">
                         <p>
                             <img src="assets/img/marker-pin-01.svg" alt="location" />
@@ -35,6 +42,7 @@ export default function Job({ job, isVisible, toggleDetails }) {
 
                     </div>
                     <div ref={detailsRef} className={`job__details`}   >
+                        <div className="inr__job">
                         <p>{job.description}</p>
                         <h5>Responsibilities:</h5>
 
@@ -45,13 +53,11 @@ export default function Job({ job, isVisible, toggleDetails }) {
                         <h5>Qualifications:</h5>
                         <p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(job ? `${job.qualifications} ` : "") }} />
 
+                        </div>
                     </div>
                 </div>
 
-                <NavLink to={`/careerform/${job.jobTitle}`} className="btn btn__primary" data-bs-toggle="modal" data-bs-target="#careerModal" >
-                    Apply
-                    <img src="assets/img/arrow-up-right.svg" alt="apply" />
-                </NavLink>
+
 
             </div>
         </div>

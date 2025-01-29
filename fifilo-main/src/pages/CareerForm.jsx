@@ -118,6 +118,39 @@ export default function Careerform({ closemodel }) {
         $(this).parents(".upload__file").find(".filename").text(fileName).css({ color: "#0e0e0e", });
     });
 
+    const jobs = [
+        {
+            id: 1,
+            category: "marketing",
+            title: "Digital Marketing Intern",
+            location: "Indore",
+            experience: "Fresher",
+            type: "Full time , Onsite",
+            aboutus: "Fifilo is a leading and highly innovative IT company that caters to offshore Web and Mobile App Development. Our committed teams have a unique blend of functional and operational knowledge, technical expertise and result oriented management experience.",
+            aboutRole: "We are looking for a versatile Digital Marketing Intern to join our team. This role offers a comprehensive learning experience across various aspects of digital marketing, including SEO, social media marketing (SMM), pay-per-click (PPC) advertising, content creation, email marketing, and analytics.",
+            responsibilities: ["1. Conduct keyword research and assist in optimizing website content for SEO.", "2. Manage and grow our social media presence across platforms such as Facebook, Twitter, Instagram, LinkedIn, etc.",
+                "3. Create engaging content for social media posts, blogs, and email campaigns.", "4. Assist in planning, executing, and optimizing PPC advertising campaigns on platforms like Google Ads and/or social media ads.", "5. Monitor and analyze digital marketing metrics to track campaign performance and identify areas for improvement.",
+                "6. Collaborate with the marketing team to develop and execute integrated marketing campaigns.", "7. Stay up-to-date with industry trends and best practices in digital marketing."],
+            requirements: ["1. Currently pursuing a degree in any field.", "2. Strong written and verbal communication skills.", "3. Basic understanding of digital marketing principles and techniques.", "4. Familiarity with social media platforms and their advertising capabilities.", "5. Analytical mindset with the ability to interpret data and draw actionable insights.",
+                "6. Proficiency in Microsoft Office suite (Word, Excel, PowerPoint).", "7. Positive attitude, eagerness to learn, and willingness to take on new challenges."]
+        },
+        {
+            id: 2,
+            category: "design",
+            title: "Sr. UI/UX Designer",
+            location: "Indore",
+            experience: "3+ Years",
+            type: "Full time , Onsite",
+            aboutus: "  !",
+            aboutRole: "W r  for improved usability, usefulness, and exceptional visual design.",
+            responsibilities: ["1. Collaborate with product managers, developers, and stakeholders to define and implement innovative design solutions.", "2. Conduct user research and analysis to understand user needs, behaviors, and pain points.",
+                "3. Create wireframes, prototypes, and mockups to visualize and test design ideas.", "4. Design intuitive and visually appealing user interfaces for web and mobile platforms, ensuring responsiveness and accessibility.", "5. Conduct usability testing and gather user feedback to improve designs.",
+                "6. Maintain design consistency by following brand guidelines and creating design systems.", "7. Stay up-to-date with industry trends, tools, and best practices to bring fresh ideas to the team.", "8. Collaborate with developers to ensure seamless implementation of designs and troubleshoot any design-related challenges."],
+            requirements: ["1. A bachelor's degree and a minimum of 3 year UI/UX design experience for digital products or services.", "2. A portfolio of professional UI/UX design work for both web and mobile platforms.", "3. Working knowledge of the following software: Figma, Illustrator, and Adobe Creative Suite.",
+                "4. A team player but can work independently too.", "5. Excellent written and verbal communication skills.", "6. Multi-tasking and time-management skills, with the ability to prioritize tasks."]
+        },
+    ];
+
     return (
         <>
             <form onSubmit={submithandler}>
@@ -174,11 +207,18 @@ export default function Careerform({ closemodel }) {
                             />
                             {errors.message && <div className="error text-danger position-absolute" style={{ color: "#f0f1f1" }} >{errors.message}</div>}
                         </div>
-                        <div class="upload__file">
-                            <span class="icon"><img src="https://www.fifilo.com/contact/wp-content/uploads/2025/01/upload-01.svg" alt="" /></span>
-                            <span class="filename">Add file</span>
-                            <input size="40" class="wpcf7-form-control wpcf7-file form-control"
-                                aria-invalid="false" accept="application/pdf" onChange={addResume} type="file" name="file-upload" />
+                        <div className="inr__input"  >
+                            <p> <label>Please attach your update CV* (PDF, Upto 10MB)</label></p>
+                            <div class="upload__file">
+                                <p className='upload__inr'>
+                                    <span class="icon"><img src="https://www.fifilo.com/contact/wp-content/uploads/2025/01/upload-01.svg" alt="" /></span>
+                                    <span class="filename">Add file</span>
+                                    <span className='input__span'><input size="40" className=" form-control"
+                                        accept="application/pdf" onChange={addResume} type="file" name="file-upload" />
+                                    </span>
+                                </p>
+
+                            </div>
                         </div>
                         {/* <div className="inr__input"  >
                             <span className='icon'><img src="assets/img/message.svg" alt="contact__form" /></span>

@@ -21,12 +21,12 @@ export default function Blogimg({ bannerImg, setBannerImg, }) {
         setBannerImg({ filename: "", path: '' })
     }
     return (
-        <div class="col-lg-12">
-            <div class="seo__card">
-                <div class="card__block">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="input__inr">
+        <div className="col-lg-12">
+            <div className="seo__card">
+                <div className="card__block">
+                    <div className="row">
+                        <div className="col-lg-6">
+                            <div className="input__inr">
                                 <label for="buttonsContent">Featured Image</label>
                             </div>
                             <div className="uploaded__images">

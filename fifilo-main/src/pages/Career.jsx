@@ -412,6 +412,9 @@ export default function Career() {
                 <li className={filter === "Sales&Marketing" ? "is-checked" : ""} onClick={() => setFilter("Sales&Marketing")}>
                   Sales & Marketing
                 </li>
+                <li className={filter === "Hr" ? "is-checked" : ""} onClick={() => setFilter("Hr")}>
+                  Hr
+                </li>
               </ul>
             </div>
 

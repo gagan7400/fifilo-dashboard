@@ -138,9 +138,9 @@ export default function Singleblog() {
                             <div dangerouslySetInnerHTML={{
                                 __html: DOMPurify.sanitize(!loading && blog && blog.blogContent)
                             }} />
-                            <div class="social__share" >
+                            <div className="social__share" >
                                 <h6>Social Share</h6>
-                                <div class="social__icons">
+                                <div className="social__icons">
                                     <div className="social__icons">
                                         <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(blogUrl)}`} target="_blank" rel="noopener noreferrer" className="btn" >
                                             <img src="assets/img/facebook-s.svg" alt="Facebook" />

@@ -53,7 +53,7 @@ export default function Navbar() {
               letter = "&nbsp;";
             }
 
-            el.innerHTML += '<span class="letter">' + letter + "</span>";
+            el.innerHTML += '<span className="letter">' + letter + "</span>";
           });
 
           var letterElements = el.querySelectorAll(".letter");

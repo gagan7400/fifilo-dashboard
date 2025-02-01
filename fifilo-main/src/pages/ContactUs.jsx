@@ -128,6 +128,7 @@ export default function ContactUs() {
         <meta property="og:image:alt" content="Description of the feature image" />
       </Helmet>
       <div className="contact__bnr bg__dark">
+        
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-lg-10">

@@ -27,7 +27,7 @@ export default function Blogimg({ bannerImg, setBannerImg, }) {
                     <div className="row">
                         <div className="col-lg-6">
                             <div className="input__inr">
-                                <label for="buttonsContent">Featured Image</label>
+                                <label htmlFor="buttonsContent">Featured Image</label>
                             </div>
                             <div className="uploaded__images">
                                 <div className="image__block">

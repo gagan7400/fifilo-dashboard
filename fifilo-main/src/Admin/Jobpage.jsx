@@ -6,7 +6,7 @@ import JoditEditor from 'jodit-react';
 
 export default function Jobpage() {
     const [jobTitle, setJobtitle] = useState("")
-    const [category, setCategory] = useState("UI UX")
+    const [category, setCategory] = useState("UI-UX")
     const [experience, setExperience] = useState("")
     const [location, setLocation] = useState("")
     const [jobType, setJobType] = useState("Full-time")
@@ -38,22 +38,22 @@ export default function Jobpage() {
                 alert("job updated successfully")
                 setSection(false);
             } else {
-                dispatch(createjob({ jobTitle, aboutRole, aboutUs, qualifications, category, experience, location, description, responsibilities, qualifications, jobType, jobStatus }));
+                dispatch(createjob({ Jobdata: { jobTitle, aboutRole, aboutUs, qualifications, category, experience, location, description, responsibilities, qualifications, jobType, jobStatus } }));
                 alert("job created successfully")
                 setSection(false);
             }
             setJobtitle("");
-            setCategory("");
+            setCategory("UI-UX");
             setExperience("");
             setLocation("")
-            setJobType("")
+            setJobType("Full-time")
             setAboutUs("")
             setAboutRole("")
             setQualifications("")
             setDescription("")
             setResponsibilities("")
             setQualifications("")
-            setJobStatus("")
+            setJobStatus("Active")
         }
     }
     let deleted = (id) => {
@@ -85,34 +85,34 @@ export default function Jobpage() {
     let createJobBtn = () => {
         setIsUpdateJob({ isupdate: false, data: null, id: null })
         setJobtitle("");
-        setCategory("");
+        setCategory("UI-UX");
         setExperience("");
         setLocation("")
-        setJobType("")
+        setJobType("Full-time")
         setAboutUs("")
         setAboutRole("")
         setQualifications("")
         setDescription("")
         setResponsibilities("")
         setQualifications("")
-        setJobStatus("")
+        setJobStatus("Active")
         setSection(true)
     }
     let cancelForm = () => {
         setSection(!section);
         setIsUpdateJob({ isupdate: false, data: null, id: null });
         setJobtitle("");
-        setCategory("");
+        setCategory("UI-UX");
         setExperience("");
         setLocation("")
-        setJobType("")
+        setJobType("Full-time")
         setAboutUs("")
         setAboutRole("")
         setQualifications("")
         setDescription("")
         setResponsibilities("")
         setQualifications("")
-        setJobStatus("")
+        setJobStatus("Active")
     }
 
     return (
@@ -153,7 +153,7 @@ export default function Jobpage() {
                                             <div className="input__inr">
                                                 <label htmlFor="Category">Category</label>
                                                 <select className="form-select form-select-sm mb-3" value={category} onChange={(e) => { setCategory(e.target.value) }} aria-label="Small select example" id="Category">
-                                                    <option defaultValue="UI-UX">UI UX</option>
+                                                    <option defaultValue="UI-UX">UI-UX</option>
                                                     <option value="Development">Development</option>
                                                     <option value="Sales&Marketing">Sales & Marketing</option>
                                                     <option value="Hr">Hr</option>

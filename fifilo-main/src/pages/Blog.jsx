@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import $ from 'jquery';
 import AOS from "aos";
 import { NavLink } from 'react-router-dom';
@@ -25,7 +25,7 @@ export default function Blog() {
     useEffect(() => {
         dispatch(getBlogs())
     }, [])
-    console.log(blogdata)
+ 
     return (
         <>
             <div className="blogs__bnr">

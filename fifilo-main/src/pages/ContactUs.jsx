@@ -4,8 +4,6 @@ import { Helmet } from "react-helmet";
 import Spinner from 'react-bootstrap/Spinner';
 import 'aos/dist/aos.css';
 import DOMPurify from 'dompurify';
-import Navbar from '../layout/Navbar';
-import Footer from '../layout/Footer';
 import { useSelector, useDispatch } from 'react-redux'
 import { contactus, getPublishContactPage } from '../redux/actions/contactAction';
 import { useNavigate } from 'react-router-dom';
@@ -17,10 +15,8 @@ export default function ContactUs() {
   const [Email, setEmail] = useState("")
   const [Number, setNumber] = useState("")
   const [Message, setMessage] = useState("")
-  // const [servicerequired, setservicerequired] = useState("")
   const [errors, setErrors] = useState({});
   const [showErrors, setShowErrors] = useState(false);
-
   let { publishedcontactdata, publishedcontactloading } = useSelector((state) => state.contactpage);
   const handleWindowLaod = useCallback(() => {
   }, []);
@@ -128,7 +124,6 @@ export default function ContactUs() {
         <meta property="og:image:alt" content="Description of the feature image" />
       </Helmet>
       <div className="contact__bnr bg__dark">
-        
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-lg-10">

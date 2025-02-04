@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import $ from "jquery"; // import jQuery
 import AOS from "aos";
@@ -28,7 +28,6 @@ export default function About() {
   useCursorPosition('dark__bnr');
   let dispatch = useDispatch();
   let { publishedData, publishedLoading } = useSelector((state) => state.about);
-
   useEffect(() => {
     dispatch(getPublishAboutPage());
   }, [dispatch])
@@ -301,6 +300,7 @@ export default function About() {
       };
     }
   }, []);
+
   return (
     <>
       <Helmet>

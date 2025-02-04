@@ -24,7 +24,6 @@ export default function Home() {
       let { data } = await axios.get('http://localhost:5000/admin/casestudy/getcasestudy');
       if (data.success) {
         setCasestudies(data.data);
-        setLoading(false)
       } else {
         setCasestudies(null);
         alert("error occured");
@@ -157,14 +156,7 @@ export default function Home() {
     };
   }, [publishedhomepage]);
 
-  useEffect(() => {
-    const loadData = async () => {
-      setLoading(false);
-    };
-    loadData();
-    return () => {
-    };
-  }, []);
+ 
   return (
     <>
       <Helmet>
@@ -175,7 +167,6 @@ export default function Home() {
         <meta property="og:image:alt" content="Description of the feature image" />
       </Helmet>
       <div className="hero__bnr dark__bnr">
-        {homeloading && <Loader />}
         <div className="container">
           <div className="bnr__content">
             <h1 data-aos="fade-up" data-aos-duration="800" dangerouslySetInnerHTML={{

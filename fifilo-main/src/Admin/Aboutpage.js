@@ -393,7 +393,7 @@ const Aboutpage = () => {
                                                         </div>
                                                     ))}
                                                     <div className="add__review">
-                                                        <button className="btn" onClick={handleAddContentCard}><img src="assets/imgs/plus.svg" alt="" />Add New Review</button>
+                                                        <button className="btn" onClick={handleAddContentCard}><img src="assets/imgs/plus.svg" alt="" />Add New Step</button>
                                                     </div>
                                                 </div>
                                             </div>

@@ -109,7 +109,6 @@ export default function Singleblog() {
     return (
         <>
             <div className="blogs__bnr blog__single">
-                {loading && <Loader/>}
                 <div className="container">
                     <div className="bnr__inr">
                         <div className="category" data-aos="fade-up" data-aos-duration="800">
@@ -137,7 +136,7 @@ export default function Singleblog() {
                 <div className="container">
                     <div className="row">
                         <div className='col-lg-9'>
-                            <div dangerouslySetInnerHTML={{
+                            <div className="left__block" dangerouslySetInnerHTML={{
                                 __html: DOMPurify.sanitize(!loading && blog && blog.blogContent)
                             }} />
                             <div className="social__share" >
@@ -160,7 +159,7 @@ export default function Singleblog() {
                                             <img src="assets/img/share.svg" alt="Share" />
                                         </button>
                                         <button onClick={handleCopy} className="btn">
-                                            <Copy size={32} />
+                                            <img src="assets/img/copy.svg" alt="Share" />
                                         </button>
                                     </div>
                                     {copied && <span className="text-green-600 text-sm messageofcopy">URL copied to clipboard!</span>}

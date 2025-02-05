@@ -68,9 +68,6 @@ export default function Job({ job, isVisible, toggleDetails }) {
                         </div>
                     </div>
                 </div>
-
-
-
             </div>
         </div>
     )

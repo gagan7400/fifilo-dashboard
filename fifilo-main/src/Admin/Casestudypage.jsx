@@ -54,11 +54,11 @@ const Casestudypage = () => {
                         <ol className="breadcrumb">
                             <li className="breadcrumb-item"><NavLink to="/pages">Pages</NavLink></li>
                             <li className="breadcrumb-item"><img src="/assets/imgs/chevron-right.svg" alt="" /></li>
-                            <li className="breadcrumb-item active">Casestudy Page</li>
+                            <li className="breadcrumb-item active">Case Studies</li>
                         </ol>
                     </nav>
                     <div className="page__title">
-                        <h5>Casestudy Page</h5>
+                        <h5>Case Studies</h5>
                     </div>
                     <div className="page__editContent">
                         <ul className="nav nav-pills" id="pills-tab" role="tablist">

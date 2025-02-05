@@ -413,7 +413,7 @@ export default function Career() {
                   Sales & Marketing
                 </li>
                 <li className={filter === "Hr" ? "is-checked" : ""} onClick={() => setFilter("Hr")}>
-                  Hr
+                  HR
                 </li>
               </ul>
             </div>

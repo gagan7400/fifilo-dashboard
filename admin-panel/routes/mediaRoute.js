@@ -43,7 +43,7 @@ const storage = multer.diskStorage({
 
 
 const upload = multer({ storage: storage });
-router.post("/upload", upload.array("images", 10), async (req, res) => {
+router.post("/upload", authenticate, isAdmin, upload.array("images", 10), async (req, res) => {
     try {
         if (!req.files || req.files.length === 0) {
             return res.status(400).json({ success: false, error: "No files uploaded" });
@@ -86,7 +86,6 @@ router.delete("/:id", async (req, res) => {
         if (fs.existsSync(filePath)) {
             fs.unlinkSync(filePath);
         }
-
         await Image.findByIdAndDelete(req.params.id);
         res.json({ success: true, message: "Image deleted successfully" });
     } catch (error) {
@@ -95,7 +94,7 @@ router.delete("/:id", async (req, res) => {
     }
 });
 
-
+ 
 
 
 

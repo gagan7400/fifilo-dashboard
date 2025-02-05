@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const MediaLibrary = ({ onSelectImage, imageUploaded, showModal, setShowModal, selectedImage, setSelectedImage }) => {
+const MediaLibrary = ({    onSelectImage, imageUploaded, showModal, setShowModal, selectedImage, setSelectedImage }) => {
   const [images, setImages] = useState([]);
+const [filteredImages, setFilteredImages] = useState([])
   useEffect(() => {
     const fetchImages = async () => {
       try {
         const response = await axios.get("http://localhost:5000/api/media");
         setImages(response.data);
+        setFilteredImages(response.data);
       } catch (error) {
         console.error("Error fetching images", error);
       }
@@ -19,8 +21,6 @@ const MediaLibrary = ({ onSelectImage, imageUploaded, showModal, setShowModal, s
     setSelectedImage(image);
     setShowModal(true);
   };
-
-
 
   return (
     <>

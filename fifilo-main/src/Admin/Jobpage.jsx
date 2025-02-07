@@ -118,7 +118,7 @@ export default function Jobpage() {
                         <div className="page__title">
                             <h5>Jobs</h5>
                             {(!isUpdateJob.isupdate && !isUpdateJob.id && !section) ? <button className="btn btn__update" onClick={() => { createJobBtn() }}>
-                                <img src="/assets/imgs/plusyellow.svg" alt="" /> Create a New Job</button>
+                                <img src="/assets/imgs/plusyellow.svg" alt="" /> Create New Job</button>
                                 :
                                 <button className="btn btn__update" onClick={() => { backBtn() }}>
                                     <img src="assets/imgs/arrow-back.svg" /> Back</button>
@@ -139,17 +139,17 @@ export default function Jobpage() {
                                                     className="form-control"
                                                     value={jobTitle}
                                                     onChange={(e) => { setJobtitle(e.target.value) }}
-                                                    placeholder="Enter Jobtitle"
+                                                    placeholder="Enter Job Title"
                                                 />
                                             </div>
                                         </div>
                                         <div className="col-lg-6 col-md-6">
                                             <div className="input__inr">
-                                                <label htmlFor="Category">Category</label>
+                                                <label htmlFor="Category">Job Category</label>
                                                 <select className="form-select form-select-sm mb-3" value={category} onChange={(e) => { setCategory(e.target.value) }} aria-label="Small select example" id="Category">
                                                     <option defaultValue="UI-UX">UI-UX</option>
                                                     <option value="Development">Development</option>
-                                                    <option value="Sales&Marketing">Sales & Marketing</option>
+                                                    <option value="Sales&Marketing">Sales&Marketing</option>
                                                     <option value="Hr">Hr</option>
                                                 </select>
                                             </div>
@@ -157,47 +157,47 @@ export default function Jobpage() {
 
                                         <div className="col-lg-6 col-md-6">
                                             <div className="input__inr">
-                                                <label htmlFor="experience">Experience</label>
+                                                <label htmlFor="experience">Job Experience</label>
                                                 <input required type="text"
                                                     name="experience"
                                                     id="experience"
                                                     className="form-control"
                                                     value={experience}
                                                     onChange={(e) => { setExperience(e.target.value) }}
-                                                    placeholder="Enter Experience"
+                                                    placeholder="Enter Job Experience"
                                                 />
                                             </div>
                                         </div>
                                         <div className="col-lg-6 col-md-6">
                                             <div className="input__inr">
-                                                <label htmlFor="location">Location</label>
+                                                <label htmlFor="location">Job Location</label>
                                                 <input required type="text"
                                                     name="location"
                                                     id="location"
                                                     className="form-control"
                                                     value={location}
                                                     onChange={(e) => { setLocation(e.target.value) }}
-                                                    placeholder="Enter Location"
+                                                    placeholder="Enter Job Location"
                                                 />
                                             </div>
                                         </div>
 
                                         <div className="col-lg-12">
                                             <div className="input__inr">
-                                                <label htmlFor="aboutUs">AboutUs</label>
+                                                <label htmlFor="aboutUs">About Us</label>
                                                 <textarea required type="text"
                                                     name="aboutUs"
                                                     id="aboutUs"
                                                     className="form-control"
                                                     value={aboutUs}
                                                     onChange={(e) => { setAboutUs(e.target.value) }}
-                                                    placeholder="Enter AboutUs"
+                                                    placeholder="Enter About Us"
                                                 />
                                             </div>
                                         </div>
                                         <div className="col-lg-12">
                                             <div className="input__inr">
-                                                <label htmlFor="aboutRole">AboutRole</label>
+                                                <label htmlFor="aboutRole">About Role</label>
                                                 <textarea required type="text"
                                                     name="aboutRole"
                                                     id="aboutRole"
@@ -230,7 +230,7 @@ export default function Jobpage() {
                                         </div>
                                         <div className="col-lg-12">
                                             <div className="input__inr">
-                                                <label htmlFor="qualifications">Qualifications</label>
+                                                <label htmlFor="qualifications">Qualifications & Skills</label>
                                                 <JoditEditor
                                                     ref={editor}
                                                     value={qualifications}

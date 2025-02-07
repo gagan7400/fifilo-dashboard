@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const MediaLibrary = ({    onSelectImage, imageUploaded, showModal, setShowModal, selectedImage, setSelectedImage }) => {
+const MediaLibrary = ({ setSearchImage, searchImage, onSelectImage, imageUploaded, showModal, setShowModal, selectedImage, setSelectedImage }) => {
   const [images, setImages] = useState([]);
-const [filteredImages, setFilteredImages] = useState([])
+  const [filteredImages, setFilteredImages] = useState([])
   useEffect(() => {
     const fetchImages = async () => {
       try {
@@ -17,6 +17,11 @@ const [filteredImages, setFilteredImages] = useState([])
     fetchImages();
   }, [imageUploaded]);
 
+  useEffect(() => {
+    setFilteredImages([...images?.filter((a) => { return a.filename.includes(searchImage) })]);
+    console.log([...images?.filter((a) => { return a.filename.includes(searchImage) })])
+  }, [searchImage])
+
   const handleImageClick = (image) => {
     setSelectedImage(image);
     setShowModal(true);
@@ -24,8 +29,8 @@ const [filteredImages, setFilteredImages] = useState([])
 
   return (
     <>
-      <ul>
-        {images.map((image, index) => (
+      {filteredImages.length != 0 ? <ul>
+        {filteredImages.map((image, index) => (
           <li key={index} className={` ${selectedImage && selectedImage._id === image._id ? 'selected' : ''}`}>
             <div className="thumbnail"
               onClick={() => handleImageClick(image)} >
@@ -33,7 +38,15 @@ const [filteredImages, setFilteredImages] = useState([])
             </div>
           </li>
         )).reverse()}
-      </ul>
+        {/* {images.map((image, index) => (
+          <li key={index} className={` ${selectedImage && selectedImage._id === image._id ? 'selected' : ''}`}>
+            <div className="thumbnail"
+              onClick={() => handleImageClick(image)} >
+              <img src={`http://localhost:5000/images/${image.filename}`} alt={image.filename} />
+            </div>
+          </li>
+        )).reverse()} */}
+      </ul> : <h5>No Image Found</h5>}
     </>
   );
 };

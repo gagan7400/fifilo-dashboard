@@ -5,8 +5,7 @@ import { NavLink } from 'react-router-dom';
 import SeoImg from './SeoImg';
 import { getPublishCasestudyPage, updateCasestudyPageAction } from '../redux/actions/casestudyAction';
 
-const Casestudypage = () => {
-    const { pageData } = useSelector((state) => state.page);
+const BlogPage = () => {
     let dispatch = useDispatch();
     useEffect(() => {
         dispatch(getPublishCasestudyPage())
@@ -15,8 +14,6 @@ const Casestudypage = () => {
 
     const [heroSection, setHeroSection] = useState({
         heading: "",
-        subHeading: "",
-        heroButtons: { CTA1: { url: "", name: "" } },
     });
 
     const [seoSection, setSeoSection] = useState({
@@ -53,11 +50,11 @@ const Casestudypage = () => {
                         <ol className="breadcrumb">
                             <li className="breadcrumb-item"><NavLink to="/pages">Pages</NavLink></li>
                             <li className="breadcrumb-item"><img src="/assets/imgs/chevron-right.svg" alt="" /></li>
-                            <li className="breadcrumb-item active">Case Studies</li>
+                            <li className="breadcrumb-item active">Blog Page</li>
                         </ol>
                     </nav>
                     <div className="page__title">
-                        <h5>Case Studies</h5>
+                        <h5>Blog Page</h5>
                     </div>
                     <div className="page__editContent">
                         <ul className="nav nav-pills" id="pills-tab" role="tablist">
@@ -85,45 +82,6 @@ const Casestudypage = () => {
                                                         value={heroSection.heading}
                                                         onChange={(e) => setHeroSection({ ...heroSection, heading: e.target.value })}
                                                         placeholder="Enter Main Heading"
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div className="col-lg-12">
-                                                <div className="input__inr">
-                                                    <label htmlFor="herosubHeading">Sub Text</label>
-                                                    <input required type="text"
-                                                        id="herosubHeading"
-                                                        rows="4"
-                                                        name="heroSection.subHeading"
-                                                        className="form-control"
-                                                        value={heroSection.subHeading}
-                                                        onChange={(e) => setHeroSection({ ...heroSection, subHeading: e.target.value })}
-                                                        placeholder="Enter Sub Heading"
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div className="col-lg-6 col-md-6">
-                                                <div className="input__inr">
-                                                    <label htmlFor="CTA1name">CTA Button 01</label>
-                                                    <input required type="text"
-                                                        id="CTA1name"
-                                                        name="CTA1name"
-                                                        className="form-control"
-                                                        value={heroSection.heroButtons.CTA1.name}
-                                                        onChange={(e) => setHeroSection({ ...heroSection, heroButtons: { ...heroSection.heroButtons, CTA1: { ...heroSection.heroButtons.CTA1, name: e.target.value } } })}
-                                                        placeholder="Enter Button Text" />
-                                                </div>
-                                            </div>
-                                            <div className="col-lg-6 col-md-6">
-                                                <div className="input__inr">
-                                                    <label htmlFor="CTA1url">CTA Button Url</label>
-                                                    <input required type="text"
-                                                        id="CTA1url"
-                                                        name="CTA1url"
-                                                        className="form-control"
-                                                        value={heroSection.heroButtons.CTA1.url}
-                                                        onChange={(e) => setHeroSection({ ...heroSection, heroButtons: { ...heroSection.heroButtons, CTA1: { ...heroSection.heroButtons.CTA1, url: e.target.value } } })}
-                                                        placeholder="Enter Button Url"
                                                     />
                                                 </div>
                                             </div>
@@ -198,4 +156,4 @@ const Casestudypage = () => {
     );
 };
 
-export default Casestudypage;
+export default BlogPage;

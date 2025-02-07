@@ -25,7 +25,7 @@ export default function Blog() {
     useEffect(() => {
         dispatch(getBlogs())
     }, [])
- 
+
     return (
         <>
             <div className="blogs__bnr">

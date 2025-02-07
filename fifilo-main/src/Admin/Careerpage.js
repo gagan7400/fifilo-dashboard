@@ -7,7 +7,6 @@ import { NavLink } from 'react-router-dom';
 import SeoImg from './SeoImg';
 import Loader from '../layout/Loader';
 const Careerpage = () => {
-    const { pageData } = useSelector((state) => state.page);
     const { publishedcareerdata, loading } = useSelector((state) => state.careerpage);
     let dispatch = useDispatch();
     useEffect(() => {

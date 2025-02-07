@@ -48,7 +48,7 @@ const Casestudy = () => {
     const [styleGuideSection, setStyleGuideSection] = useState({
         heading: "",
         description: "",
-        sectionName: "",
+        sectionName: "Colors",
         BrandcolorSections: [{ name: "", hex: "" }],
         SecondaryColorSections: [{ hex: "" }],
     });
@@ -420,7 +420,7 @@ const Casestudy = () => {
                                                             className="form-control"
                                                             value={heroSection.buttonsContent}
                                                             onChange={(e) => setHeroSection({ ...heroSection, buttonsContent: e.target.value })}
-                                                            placeholder="Enter buttonsContent"></input>
+                                                            placeholder="Enter Solution Text"></input>
                                                     </div>
                                                 </div>
                                                 <div className="col-lg-12">
@@ -489,7 +489,7 @@ const Casestudy = () => {
                                                             className="form-control"
                                                             value={overviewSection.briefInsight.contentBox.heading}
                                                             onChange={(e) => handleOverviewSectionChange("briefInsight", "contentBox", { heading: e.target.value })}
-                                                            placeholder="Enter BriefInsight Heading"
+                                                            placeholder="Enter Brief Insight Heading"
                                                             autoComplete="false"
                                                         />
                                                     </div>
@@ -503,7 +503,7 @@ const Casestudy = () => {
                                                             className="form-control"
                                                             value={overviewSection.briefInsight.contentBox.description}
                                                             onChange={(e) => handleOverviewSectionChange("briefInsight", "contentBox", { description: e.target.value })}
-                                                            placeholder="Enter BriefInsight Description"
+                                                            placeholder="Enter Brief Insight Description"
                                                         />
                                                     </div>
                                                 </div>
@@ -605,7 +605,7 @@ const Casestudy = () => {
                                                 </div>
                                             </div>
                                             <div className="update__block">
-                                                 <NavLink className="btn btn__cancel" to="/casestudies">Cancel</NavLink>
+                                                <NavLink className="btn btn__cancel" to="/casestudies">Cancel</NavLink>
                                                 <button className="btn btn__update" type="button" onClick={handleSubmit}>Update</button>
                                             </div>
                                         </div>
@@ -781,7 +781,7 @@ const Casestudy = () => {
                                                         className="form-control"
                                                         value={styleGuideSection.sectionName}
                                                         onChange={(e) => setStyleGuideSection({ ...styleGuideSection, sectionName: e.target.value })}
-                                                        placeholder="Enter SectionName"
+                                                        placeholder="Enter Title (e.g. Colors)"
                                                     />
                                                 </div>
                                             </div>
@@ -883,7 +883,7 @@ const Casestudy = () => {
                                                         className="form-control"
                                                         value={typographyData.heading}
                                                         onChange={(e) => setTypographyData({ ...typographyData, heading: e.target.value })}
-                                                        placeholder="Enter Heading"
+                                                        placeholder="Enter Heading (e.g. Typography)"
                                                     />
                                                 </div>
                                             </div>

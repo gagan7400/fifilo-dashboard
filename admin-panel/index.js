@@ -60,8 +60,6 @@ app.use('/admin/footer/', footerRoute);
 app.use('/admin/blogs/', blogsRoute);
 
 
-
-
 let server = app.listen(port, (err) => {
   console.log(err || "server run on port " + port)
 })

@@ -404,7 +404,7 @@ const CasestudyPage = () => {
                                                                     <div className='row'>
                                                                         <div className="col-lg-12">
                                                                             <div className="input__inr">
-                                                                                <label htmlFor="workButtonsName">WorkButton Name</label>
+                                                                                <label htmlFor="workButtonsName">Work Button Name</label>
                                                                                 <input required type="text"
                                                                                     id="workButtons"
                                                                                     name="name"
@@ -437,7 +437,7 @@ const CasestudyPage = () => {
                                             </div>
                                             <div className="update__block">
                                                 <NavLink className="btn btn__cancel" to="/casestudies">Cancel</NavLink>
-                                                <button className="btn btn__update" type="button" onClick={handleSubmit}>Update</button>
+                                                <button className="btn btn__update" type="button" onClick={handleSubmit}>Submit</button>
                                             </div>
                                         </div>
                                     </div>
@@ -575,7 +575,7 @@ const CasestudyPage = () => {
                                             </div>
                                             <div className="update__block">
                                                 <NavLink className="btn btn__cancel" to="/casestudies">Cancel</NavLink>
-                                                <button className="btn btn__update" type="button" onClick={handleSubmit}>Update</button>
+                                                <button className="btn btn__update" type="button" onClick={handleSubmit}>Submit</button>
                                             </div>
                                         </div>
                                     </div>
@@ -648,7 +648,7 @@ const CasestudyPage = () => {
                                         </div>
                                         <div className="update__block">
                                             <NavLink className="btn btn__cancel" to="/casestudies">Cancel</NavLink>
-                                            <button className="btn btn__update" type="button" onClick={handleSubmit}>Update</button>
+                                            <button className="btn btn__update" type="button" onClick={handleSubmit}>Submit</button>
                                         </div>
                                     </div>
                                 </div>
@@ -706,7 +706,7 @@ const CasestudyPage = () => {
                                         </div>
                                         <div className="update__block">
                                             <NavLink className="btn btn__cancel" to="/casestudies">Cancel</NavLink>
-                                            <button className="btn btn__update" type="button" onClick={handleSubmit}>Update</button>
+                                            <button className="btn btn__update" type="button" onClick={handleSubmit}>Submit</button>
                                         </div>
                                     </div>
                                 </div>
@@ -834,7 +834,7 @@ const CasestudyPage = () => {
                                         </div>
                                         <div className="update__block">
                                             <NavLink className="btn btn__cancel" to="/casestudies">Cancel</NavLink>
-                                            <button className="btn btn__update" type="button" onClick={handleSubmit}>Update</button>
+                                            <button className="btn btn__update" type="button" onClick={handleSubmit}>Submit</button>
                                         </div>
                                     </div>
                                 </div>
@@ -949,7 +949,7 @@ const CasestudyPage = () => {
                                         </div>
                                         <div className="update__block">
                                             <NavLink className="btn btn__cancel" to="/casestudies">Cancel</NavLink>
-                                            <button className="btn btn__update" type="button" onClick={handleSubmit}>Update</button>
+                                            <button className="btn btn__update" type="button" onClick={handleSubmit}>Submit</button>
                                         </div>
                                     </div>
                                 </div>
@@ -1008,7 +1008,7 @@ const CasestudyPage = () => {
                                         </div>
                                         <div className="update__block">
                                             <NavLink className="btn btn__cancel" to="/casestudies">Cancel</NavLink>
-                                            <button className="btn btn__update" type="button" onClick={handleSubmit}>Update</button>
+                                            <button className="btn btn__update" type="button" onClick={handleSubmit}>Submit</button>
                                         </div>
                                     </div>
                                 </div>
@@ -1045,7 +1045,7 @@ const CasestudyPage = () => {
                                             </div>
                                             <div className="update__block">
                                                 <NavLink className="btn btn__cancel" to="/casestudies">Cancel</NavLink>
-                                                <button className="btn btn__update" type="button" onClick={handleSubmit}>Update</button>
+                                                <button className="btn btn__update" type="button" onClick={handleSubmit}>Submit</button>
                                             </div>
                                         </div>
                                     </div>
@@ -1084,7 +1084,7 @@ const CasestudyPage = () => {
                                             </div>
                                             <div className="update__block">
                                                 <NavLink className="btn btn__cancel" to="/casestudies">Cancel</NavLink>
-                                                <button className="btn btn__update" type="button" onClick={handleSubmit}>Update</button>
+                                                <button className="btn btn__update" type="button" onClick={handleSubmit}>Submit</button>
                                             </div>
                                         </div>
                                     </div>
@@ -1139,7 +1139,7 @@ const CasestudyPage = () => {
                                         </div>
                                         <div className="update__block">
                                             <NavLink className="btn btn__cancel" to="/casestudies">Cancel</NavLink>
-                                            <button className="btn btn__update" onClick={handleSubmit}>Update</button>
+                                            <button className="btn btn__update" onClick={handleSubmit}>Submit</button>
                                         </div>
                                     </div>
                                 </div>

@@ -44,6 +44,7 @@ const caseStudySchema = new mongoose.Schema({
     updatedLook: {
         heading: String,
         description: String,
+        updatedLookImages: String,
         imgs: [{ filename: String, path: String, _id: false }]
     },
 

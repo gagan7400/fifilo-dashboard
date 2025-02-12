@@ -70,7 +70,7 @@ export default function Footer() {
             </div>
           </div>
           <div className="bottom__bx">
-            <p>2024 FIFILO Designs. All rights reserved.</p>
+            <p>2025 FIFILO Designs. All rights reserved.</p>
           </div>
         </div>
       </div>

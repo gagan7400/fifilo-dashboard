@@ -4,8 +4,7 @@ import Sidebar from './Sidebar';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPublishFaqPage, updateFaqAction } from '../redux/actions/faqAction';
 
-import { NavLink, useNavigate } from 'react-router-dom';
-import Loader from '../layout/Loader';
+import { NavLink } from 'react-router-dom';
 
 const Faqpage = () => {
     const dispatch = useDispatch();

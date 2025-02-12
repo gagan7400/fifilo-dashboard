@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import Sidebar from './Sidebar';
-import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import SeoImg from './SeoImg';
-import { getPublishCasestudyPage, updateCasestudyPageAction } from '../redux/actions/casestudyAction';
 
 const BlogPage = () => {
-    let dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(getPublishCasestudyPage())
-    }, [])
-    const { publishedcasestudydata, casestudyloading } = useSelector((state) => state.casestudy);
-
+    let getdata = async () => {
+        const { data } = await axios.get('http://localhost:5000/admin/casestudy/getcasestudypage');
+        setBlogPageData(data)
+    }
+    const [blogPageData, setBlogPageData] = useState({})
     const [heroSection, setHeroSection] = useState({
         heading: "",
     });
@@ -22,6 +19,9 @@ const BlogPage = () => {
         description: "",
         seoImg: { filename: "", path: "" },
     });
+    useEffect(() => {
+        getdata();
+    }, [])
 
     useEffect(() => {
         if (publishedcasestudydata) {

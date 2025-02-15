@@ -136,8 +136,8 @@ const updateCaseStudy = async (req, res) => {
     }
 };
 
-const getCaseStudyPage = async (req, res) => {
 
+const getCaseStudyPage = async (req, res) => {
     try {
         const service = await caseStudyPageModel.find();
         res.send({ data: service });
@@ -173,17 +173,6 @@ const deleteCaseStudyPage = async (req, res) => {
         if (!CaseStudyPage) {
             return res.status(404).json({ success: false, message: 'CaseStudy page not found' });
         }
-
-        // // Step 2: Delete associated images
-        // if (CaseStudyPage.cardsSection && CaseStudyPage.cardsSection.length > 0) {
-        //     CaseStudyPage.cardsSection.forEach((card) => {
-        //         const imagePath = path.join(__dirname, '../', card.cardImg.path);
-        //         // Check if file exists and delete
-        //         if (fs.existsSync(imagePath)) {
-        //             fs.unlinkSync(imagePath); // Delete the image file
-        //         }
-        //     });
-        // }
 
         // Step 3: Delete the CaseStudy page document
         await caseStudyPageModel.findByIdAndDelete(req.params.id);

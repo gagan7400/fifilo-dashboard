@@ -19,7 +19,6 @@ const MediaLibrary = ({ setSearchImage, searchImage, onSelectImage, imageUploade
 
   useEffect(() => {
     setFilteredImages([...images?.filter((a) => { return a.filename.includes(searchImage) })]);
-    console.log([...images?.filter((a) => { return a.filename.includes(searchImage) })])
   }, [searchImage])
 
   const handleImageClick = (image) => {

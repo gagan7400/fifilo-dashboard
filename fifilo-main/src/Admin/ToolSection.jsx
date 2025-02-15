@@ -13,7 +13,6 @@ export default function ToolSection({ tool, index, handleTools, removeTools }) {
 
     // Handle image selection
     const handleImageSelect = (image) => {
-        console.log(image)
         setSelectedImage(image); // Set the selected image data
         handleTools(index, { filename: image.filename, path: image.filePath })
         setIsModalOpen(false); // Close the modal

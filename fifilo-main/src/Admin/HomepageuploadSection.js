@@ -14,7 +14,6 @@ export default function HomepageuploadSection({ clientLogos, setClientLogos, too
     // Handle image selection
     const handleImageSelect = (image) => {
         setSelectedImage(image); // Set the selected image data
-        console.log(image)
         if (clientLogos) {
             setClientLogos([...clientLogos, { filename: image.filename, path: image.filePath }])
         } else if (toolsLogo) {

@@ -2,13 +2,10 @@ import React, { useEffect, useState } from 'react';
 import Sidebar from './Sidebar';
 import { NavLink } from 'react-router-dom';
 import SeoImg from './SeoImg';
+import axios from 'axios';
 
 const BlogPage = () => {
-    let getdata = async () => {
-        const { data } = await axios.get('http://localhost:5000/admin/casestudy/getcasestudypage');
-        setBlogPageData(data)
-    }
-    const [blogPageData, setBlogPageData] = useState({})
+    const [blogPageData, setBlogPageData] = useState({});
     const [heroSection, setHeroSection] = useState({
         heading: "",
     });
@@ -19,26 +16,35 @@ const BlogPage = () => {
         description: "",
         seoImg: { filename: "", path: "" },
     });
-    useEffect(() => {
-        getdata();
-    }, [])
+
+
+    let getPublishData = async () => {
+        const { data } = await axios.get('http://localhost:5000/admin/blogs/getpublishedblogpage');
+        setBlogPageData({ ...data.data })
+    }
 
     useEffect(() => {
-        if (publishedcasestudydata) {
-            setHeroSection({ ...publishedcasestudydata.heroSection });
-            setSeoSection({ ...publishedcasestudydata.seoSection });
+        getPublishData();
+    }, []);
+
+    useEffect(() => {
+         if (blogPageData) {
+            setHeroSection({ ...blogPageData.heroSection });
+            setSeoSection({ ...blogPageData.seoSection });
         }
-    }, [publishedcasestudydata]);
+    }, [blogPageData]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        dispatch(
-            updateCasestudyPageAction({
-                casestudydata: { heroSection, seoSection },
-                id: publishedcasestudydata._id,
-            })
+        await axios.put(`http://localhost:5000/admin/blogs/updateblogpage/${blogPageData._id}`, { heroSection, seoSection },
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    "x-auth-token": localStorage.getItem("token")
+                }
+            }
         );
-        alert("Case study updated successfully");
+        alert("Blog Page  updated successfully");
     };
 
     return (

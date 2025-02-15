@@ -1,10 +1,8 @@
-import React, { act, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import AOS from "aos";
 import DOMPurify from 'dompurify';
 import axios from 'axios';
-import { Copy } from 'lucide-react';
 import { NavLink, useLocation, useNavigate, useParams } from 'react-router-dom';
-import Loader from '../layout/Loader';
 export default function Singleblog() {
     let { name } = useParams();
     let [blog, setBlog] = useState(null);
@@ -35,6 +33,7 @@ export default function Singleblog() {
         }
     };
     let location = useLocation();
+
     useEffect(() => {
         getblog();
     }, [location]);
@@ -50,7 +49,6 @@ export default function Singleblog() {
             }
         } catch (error) {
             setBlog(null)
-
             nav("/not-found")
         }
     }
@@ -180,10 +178,9 @@ export default function Singleblog() {
 
                                 <div className="releted__blog"  >
                                     <h5>Related Blogs</h5>
-
                                     <div className="blogs__cards">
                                         {!blogsLoading && blogs && blogs.map((value, index) => {
-                                            if (value._id != blog._id) {
+                                            if (blog && value._id != blog._id) {
                                                 return (<div className="card__blog" key={index}>
                                                     <NavLink to={`/blogs/${value.blogUrl}/`}>
                                                         <div className="title">

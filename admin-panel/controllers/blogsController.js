@@ -104,10 +104,7 @@ const updateBlog = async (req, res) => {
     }
 };
 
-
-
 // blog page controllers 
-
 
 const getBlogPage = async (req, res) => {
     try {
@@ -130,11 +127,47 @@ const createBlogPage = async (req, res) => {
     }
 };
 
+const getPublishedBlogPage = async (req, res) => {
+    try {
+        const service = await blogPageModel.findOne({ published: true });
+        res.send({ data: service });
+    } catch (err) {
+        res.status(400).send(err);
+    }
+};
+const publishBlogPage = async (req, res) => {
+    try {
+        const newPublishedId = req.params.id;
+        await blogPageModel.updateMany({ published: true }, { $set: { published: false } });
+        const publishedData = await blogPageModel.findByIdAndUpdate(newPublishedId, { $set: { published: true } }, { new: true });
+        res.send(publishedData);
+    } catch (err) {
+        res.status(400).send(err);
+    }
+
+};
+
+const deleteBlogPage = async (req, res) => {
+    try {
+        // Step 1: Find the Blogpage page by ID
+        const BlogPage = await blogPageModel.findById(req.params.id);
+
+        if (!BlogPage) {
+            return res.status(404).json({ success: false, message: 'Blogpage page not found' });
+        }
+        await blogPageModel.findByIdAndDelete(req.params.id);
+        res.status(200).json({ success: true, message: 'Blogpage page and images deleted successfully' });
+    } catch (err) {
+        res.status(500).json({ success: false, message: err.message });
+    }
+};
+
+
 const updateBlogPage = async (req, res) => {
     try {
         const { id } = req.params; // we're updating the Blog page by ID
         const { heroSection, seoSection, } = req.body;
-        // Find the existing Blog page by ID
+
         const BlogPage = await blogPageModel.findById(id);
 
         if (!BlogPage) {
@@ -176,6 +209,9 @@ module.exports = {
     updateBlog,
     createBlogPage,
     updateBlogPage,
-    getBlogPage
+    getBlogPage,
+    getPublishedBlogPage,
+    publishBlogPage,
+    deleteBlogPage,
 };
 

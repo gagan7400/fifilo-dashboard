@@ -24,13 +24,15 @@ export default function Home() {
       let { data } = await axios.get('http://localhost:5000/admin/casestudy/getcasestudy');
       if (data.success) {
         setCasestudies(data.data);
+        setLoading(false)
       } else {
         setCasestudies(null);
         alert("error occured");
+        setLoading(false)
       }
     } catch (error) {
-      setCasestudies(null)
       setCasestudies(null);
+      setLoading(false)
     }
   }
   useEffect(() => {
@@ -156,7 +158,7 @@ export default function Home() {
     };
   }, [publishedhomepage]);
 
- 
+
   return (
     <>
       <Helmet>
@@ -206,7 +208,6 @@ export default function Home() {
           <div className="inner__gapTop row">
             {!loading && casestudies && casestudies.map((card, index) => {
               let ca = ["TribeStays", "Cure Hub", "SPV Mortgages"];
-              console.log(ca.includes(card.heroSection.casestudyName))
               if (ca.includes(card.heroSection.casestudyName)) {
                 return (<div className="col-12" key={index} data-aos={index % 2 === 0 ? "fade-right" : "fade-left"} data-aos-duration="800">
                   <div className="card__caseStudies">

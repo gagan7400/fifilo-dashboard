@@ -289,15 +289,14 @@ const Casestudy = () => {
                 }
             });
             if (data.success) {
-                console.log(data)
+
                 alert("updated succesfully")
             } else {
-                console.log(data)
+
                 alert("error occured");
             }
 
         } catch (error) {
-            console.log(error)
             alert("Error Occured")
         }
     };

@@ -76,3 +76,15 @@ export const updateBlogAction = ({ casestudydata, id }) => async (dispatch) => {
         handleError(error, dispatch, "UPDATE_BLOG_FAIL");
     }
 };
+
+// Fetch Published casestudy Page Data
+export const getPublishBlogPage = () => async (dispatch) => {
+    try {
+        dispatch({ type: "ALL_GETPUBLISHBLOGPAGE_REQUEST" });
+        const { data } = await axios.get('http://localhost:5000/admin/blogs/getpublishedblogpage');
+        dispatch({ type: "ALL_GETPUBLISHBLOGPAGE_SUCCESS", payload: data.data });
+    } catch (error) {
+        handleError(error, dispatch, "ALL_GETPUBLISHBLOGPAGE_FAIL");
+    }
+};
+

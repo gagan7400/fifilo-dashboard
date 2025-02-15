@@ -1400,7 +1400,7 @@ export default function Services() {
                 </div>
               </div>
             </div> */}
-            <div className="animation-wrapper">
+            <div className="animation-wrapper service-anmation">
               <div className='animationsphare'>
                 <div className='ring1'></div>
                 <div className='ring2'></div>

@@ -27,6 +27,7 @@ const CasestudyPage = () => {
         },
         coreIssue: { heading: "", description: "" },
         Strategy: { heading: "", description: "" },
+        StrategyImages: String
     });
 
 
@@ -69,6 +70,7 @@ const CasestudyPage = () => {
     const [updatedLook, setUpdatedLook] = useState({
         heading: "",
         description: "",
+        updatedLookImages:"" ,
         imgs: [{ filename: "", path: "" }],
     });
     const [seoSection, setSeoSection] = useState({
@@ -572,6 +574,16 @@ const CasestudyPage = () => {
                                                         />
                                                     </div>
                                                 </div>
+                                                <div className="col-lg-12">
+                                                    <div className="input__inr">
+                                                        <label htmlFor="StrategyImages">Strategy Images (If Required) </label>
+                                                        <JoditEditor
+                                                            ref={editor}
+                                                            value={overviewSection.StrategyImages}
+                                                            onChange={(newContent) => setOverviewSection({ ...overviewSection, StrategyImages: newContent })} // Save content on every keystroke
+                                                        />
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div className="update__block">
                                                 <NavLink className="btn btn__cancel" to="/casestudies">Cancel</NavLink>
@@ -983,6 +995,17 @@ const CasestudyPage = () => {
                                                         onChange={(e) => setUpdatedLook({ ...updatedLook, description: e.target.value })}
                                                         placeholder="Enter Description"
                                                     />
+                                                </div>
+                                            </div>
+                                            <div className="col-lg-12">
+                                                <div className="input__inr">
+                                                    <label htmlFor="updatedLookImages" className="form-label">Updated Look Images (If Required!)</label>
+                                                    <JoditEditor
+                                                        ref={editor}
+                                                        value={updatedLook.updatedLookImages}
+                                                        onChange={(newContent) => setUpdatedLook({ ...updatedLook, updatedLookImages: newContent })} // Save content on every keystroke
+                                                    />
+
                                                 </div>
                                             </div>
                                             <div className="col-lg-12">

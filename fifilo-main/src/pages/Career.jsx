@@ -12,7 +12,8 @@ import Job from "./Job";
 import Careerform from "./CareerForm";
 
 export default function Career() {
-  let dispatch = useDispatch();
+  let dispatch = useDispatch(); 
+  let [jobApply,setJobApply] = useState("")
   let { jobs, jobloading } = useSelector((state) => state.jobs);
   let { publishedcareerdata, publishedcareerloading } = useSelector((state) => state.careerpage);
   useEffect(() => {
@@ -22,7 +23,7 @@ export default function Career() {
     dispatch(getjobs());
     dispatch(getpublishCareerPage());
   }, [])
-
+ 
   useEffect(() => {
     const $modal = $("#careerModal");
 
@@ -421,7 +422,7 @@ export default function Career() {
             <div className="rows inner__gapTop grid" data-aos="fade-up" data-aos-duration="800">
               {jobs && filteredJobs.map((job, index) => {
                 if (job.jobStatus == "Active") {
-                  return <Job job={job} key={index} isVisible={visibleDetails === job._id} toggleDetails={toggleDetails} />
+                  return <Job job={job} setJobApply={setJobApply} key={index} isVisible={visibleDetails === job._id} toggleDetails={toggleDetails} />
                 }
               })}
             </div>
@@ -433,12 +434,12 @@ export default function Career() {
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
             <div className="modal-header">
-              <h5>Let's Talk</h5>
+              <h5>Excited to Join Us? Let's Talk!</h5>
               <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
             </div>
             <div className="modal-body">
               <div className="contact_formModal">
-                <Careerform closemodel={closemodel} />
+                <Careerform closemodel={closemodel} jobApply={jobApply} />
               </div>
             </div>
           </div>

@@ -32,6 +32,7 @@ const Casestudy = () => {
         },
         coreIssue: { heading: "", description: "" },
         Strategy: { heading: "", description: "" },
+        StrategyImages: ""
     });
 
     const [designProcessSection, setDesignProcessSection] = useState({
@@ -604,6 +605,16 @@ const Casestudy = () => {
                                                         />
                                                     </div>
                                                 </div>
+                                                <div className="col-lg-12">
+                                                    <div className="input__inr">
+                                                        <label htmlFor="StrategyImages">Strategy Images (If Required!)</label>
+                                                        <JoditEditor
+                                                            ref={editor}
+                                                            value={overviewSection.StrategyImages}
+                                                            onChange={(newContent) => setOverviewSection({ ...overviewSection, StrategyImages: newContent })} // Save content on every keystroke
+                                                        />
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div className="update__block">
                                                 <NavLink className="btn btn__cancel" to="/casestudies">Cancel</NavLink>
@@ -1020,7 +1031,7 @@ const Casestudy = () => {
                                             </div>
                                             <div className="col-lg-12">
                                                 <div className="input__inr">
-                                                    <label htmlFor="updatedLookImages" className="form-label">Updated Look Images</label>
+                                                    <label htmlFor="updatedLookImages" className="form-label">Updated Look Images (If Required!)</label>
                                                     <JoditEditor
                                                         ref={editor}
                                                         value={updatedLook.updatedLookImages}

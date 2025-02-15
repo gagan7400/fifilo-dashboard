@@ -2263,6 +2263,12 @@ ul li {
   row-gap: 88px;
 }
 
+.caseStudies__overview .casestudies__info {
+  display: flex;
+  flex-direction: column;
+  gap: 88px;
+}
+
 .caseStudies__overview .row .row {
   row-gap: 48px;
 }

@@ -159,6 +159,13 @@ export default function Casestudy() {
                                 </div>
                             </div>
                         </div>
+                        {
+                            (!loading && casestudy && casestudy.overviewSection.StrategyImages) &&
+                            <div className="col-lg-10" dangerouslySetInnerHTML={{
+                                __html: DOMPurify.sanitize(!loading && casestudy ? casestudy.overviewSection.StrategyImages : ``)
+                            }} />
+                        }
+
                     </div>
                 </div>
             </div>
@@ -266,7 +273,7 @@ export default function Casestudy() {
 
                 </>}
 
-                <div className="container">
+                <div className="container casestudies__info">
                     <div className="row justify-content-center">
                         <div className="col-lg-10">
                             <div className="content__box" data-aos="fade-up" data-aos-duration="800">
@@ -348,7 +355,8 @@ export default function Casestudy() {
                                 </div>
                             </div>
                         </div>
-
+                    </div>
+                    <div className="row justify-content-center">
                         <div className="col-lg-10">
                             <div className="content__box" data-aos="fade-up" data-aos-duration="800">
                                 <h3 dangerouslySetInnerHTML={{
@@ -360,8 +368,15 @@ export default function Casestudy() {
                             </div>
                         </div>
                     </div>
+                    {
+                        !loading && casestudy && casestudy.updatedLook.updatedLookImages &&
+                        <div className="row justify-content-center" dangerouslySetInnerHTML={{
+                            __html: DOMPurify.sanitize(!loading && casestudy && casestudy.updatedLook.updatedLookImages)
+                        }} />
+                    }
                 </div>
                 {!loading && casestudy && casestudy.updatedLook.imgs.map((img, index) => (
+
                     <div className="img__fullWidth" data-aos="fade-up" data-aos-duration="800" key={index}>
                         <img src={img && img.filename && `http://localhost:5000/images/${img.filename}`} alt="" />
                     </div>

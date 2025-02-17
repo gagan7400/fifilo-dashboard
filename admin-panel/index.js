@@ -12,6 +12,7 @@ const contactRoute = require("./routes/contactRoute");
 const servicesRoute = require("./routes/servicesRoute");
 const aboutRoute = require("./routes/aboutRoute");
 const faqRoute = require("./routes/faqRoute");
+const privacyRoute = require("./routes/privacyRoute");
 const pagesRoute = require("./routes/pagesRoute");
 const mediaRoute = require("./routes/mediaRoute.js");
 const caseStudyRoute = require("./routes/caseStudyRoute.js");
@@ -58,6 +59,7 @@ app.use('/api/media', mediaRoute);
 app.use('/admin/casestudy/', caseStudyRoute);
 app.use('/admin/footer/', footerRoute);
 app.use('/admin/blogs/', blogsRoute);
+app.use('/admin/privacy/', privacyRoute);
 
 
 let server = app.listen(port, (err) => {

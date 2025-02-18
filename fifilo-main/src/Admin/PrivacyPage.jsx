@@ -18,7 +18,7 @@ const PrivacyPage = () => {
     }, [dispatch]);
 
     useEffect(() => {
-        if (privacyloading && publishedprivacydata) {
+        if (!privacyloading && publishedprivacydata) {
             setHeroSection({ heading: publishedprivacydata.heroSection.heading, });
             setContent(publishedprivacydata.content);
         }

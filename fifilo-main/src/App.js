@@ -97,7 +97,7 @@ function App() {
         <Route path="/pages/career/" element={<ProtectedRoute Component={<Careerpage />} />} />
         <Route path="/section/job/" element={<ProtectedRoute Component={<Jobpage />} />} />
         <Route path="/pages/about/" element={<ProtectedRoute Component={<Aboutpage />} />} />
-        <Route path="/pages/privacy-policy/" element={<ProtectedRoute Component={<PrivacyPage />} />} />
+        <Route path="/pages/privacypolicy/" element={<ProtectedRoute Component={<PrivacyPage />} />} />
         <Route path="/pages/contact/" element={<ProtectedRoute Component={<Contactpage />} />} />
         <Route path="/pages/services/" element={<ProtectedRoute Component={<Servicespage />} />} />
         <Route path="/section/faq/" element={<ProtectedRoute Component={<Faqpage />} />} />

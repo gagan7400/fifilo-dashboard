@@ -84,13 +84,13 @@ import axios from 'axios'
 //     }
 // };
 export const getPublishPrivacyPage = () => async (dispatch) => {
+
     try {
         dispatch({ type: "ALL_GETPUBLISHPRIVACYPAGE_REQUEST" });
 
         const { data } = await axios.get('http://localhost:5000/admin/privacy/getpublishedprivacypage');
 
         if (data.success) {
-
             dispatch({
                 type: "ALL_GETPUBLISHPRIVACYPAGE_SUCCESS",
                 payload: data.data,

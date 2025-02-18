@@ -25,7 +25,6 @@ export const privacyPageReducer = (state = {
             return {
                 ...state,
                 privacyloading: true,
-                publishedprivacydata: null
             };
         case "ALL_GETPUBLISHPRIVACYPAGE_SUCCESS":
             return {

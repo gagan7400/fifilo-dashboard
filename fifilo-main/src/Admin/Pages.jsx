@@ -60,10 +60,10 @@ export default function Dashboard() {
                             <tbody>
                                 {allData.map((v, i) => {
                                     return <tr key={i}>
-                                        <td>{v.pageName.split("p").join(" P")}</td>
+                                        <td>{v.pageName.split("Page").join(" Page").split("page").join(" Page")}</td>
                                         <td>{v.createdAt && dateformat(v.createdAt)}</td>
                                         <td>{v.updatedAt && dateformat(v.updatedAt)}</td>
-                                        <td> <NavLink to={`/pages/${v.pageName.split(" ").join("").split("page")[0].toLowerCase()}`} onClick={() => { dispatch(pageAction({ ...v })) }} className="btn"> <img src="/assets/imgs/edit.svg" alt="Edit icon" /></NavLink> </td>
+                                        <td> <NavLink to={`/pages/${v.pageName.toLowerCase().split(" ").join("").split("page")[0].toLowerCase()}`} onClick={() => { dispatch(pageAction({ ...v })) }} className="btn"> <img src="/assets/imgs/edit.svg" alt="Edit icon" /></NavLink> </td>
                                     </tr>
                                 })}
                             </tbody>

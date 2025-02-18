@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import $ from "jquery"; // import jQuery
 import AOS from "aos";
@@ -8,6 +8,7 @@ import { NavLink } from "react-router-dom";
 import useCursorPosition from "../layout/useCursorPosition";
 import { useDispatch, useSelector } from "react-redux";
 import { getPublishAboutPage } from "../redux/actions/aboutAction";
+import Loader from "./Loader";
 function Point(x, y, z) {
   this.x = x;
   this.y = y;
@@ -29,7 +30,10 @@ export default function About() {
   let dispatch = useDispatch();
   let { publishedData, publishedLoading } = useSelector((state) => state.about);
   useEffect(() => {
-    dispatch(getPublishAboutPage());
+    if (!publishedData) {
+      dispatch(getPublishAboutPage());
+    }
+
   }, [dispatch])
   useEffect(() => {
     $(document).ready(function () {
@@ -303,99 +307,72 @@ export default function About() {
 
   return (
     <>
-      <Helmet>
-        <title>{(!publishedLoading && publishedData) && publishedData.seoSection.title}</title>
-        <meta name="keywords" content={(!publishedLoading && publishedData) && publishedData.seoSection.keywords}></meta>
-        <meta name="description" content={(!publishedLoading && publishedData) && publishedData.seoSection.description}></meta>
-        {(!publishedLoading && publishedData) && publishedData.seoSection.seoImg.filename && <meta property="og:image" content={`http://localhost:5000/images/${(!publishedLoading && publishedData) && publishedData.seoSection.seoImg.filename}`} />}
-        <meta property="og:image:alt" content="Description of the feature image" />
-      </Helmet>
-      <div className="comn__bnr about__bnr">
-        <div className="container">
-          <div className="bnr__content">
-            <div className="left__bx" data-aos="fade-up" data-aos-duration="800">
-              <h2 dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(!publishedLoading && publishedData ? publishedData.heroSection.heading : ``)
-              }} />
-              <h6 dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(!publishedLoading && publishedData ? publishedData.heroSection.subHeading : ``)
-              }} />
-            </div>
-
-            <div data-aos="fade-up" data-aos-duration="800">
-              <NavLink to={`${!publishedLoading && publishedData ? publishedData.heroSection.heroButtons.CTA1.url : ""}`} className="btn">{!publishedLoading && publishedData ? publishedData.heroSection.heroButtons.CTA1.name : ''} <span></span ></NavLink>
-            </div>
-
-            <div id="canvas-about" className="animation-wrapper">
-              <canvas ref={canvasRef} />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="about__fifilo rn__section__gapTop">
-        <div className="container">
-          <div className="main__heading" data-aos="fade-up" data-aos-duration="800">
-            <p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(!publishedLoading && publishedData ? publishedData.aboutSection.preHeading : "") }} />
-            <h2 dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(!publishedLoading && publishedData ? publishedData.aboutSection.heading : ``)
-            }} />
-          </div>
-          <div className="row gx-lg-4 gx-md-3 inner__gapTop">
-            <div className="col-12">
-              <div className="top__bx" data-aos="fade-up" data-aos-duration="800">
-                <h6 dangerouslySetInnerHTML={{
-                  __html: DOMPurify.sanitize(!publishedLoading && publishedData ? publishedData.aboutSection.description : ``)
+      {publishedLoading && !publishedData ? <Loader /> : <>
+        <Helmet>
+          <title>{(!publishedLoading && publishedData) && publishedData.seoSection.title}</title>
+          <meta name="keywords" content={(!publishedLoading && publishedData) && publishedData.seoSection.keywords}></meta>
+          <meta name="description" content={(!publishedLoading && publishedData) && publishedData.seoSection.description}></meta>
+          {(!publishedLoading && publishedData) && publishedData.seoSection.seoImg.filename && <meta property="og:image" content={`http://localhost:5000/images/${(!publishedLoading && publishedData) && publishedData.seoSection.seoImg.filename}`} />}
+          <meta property="og:image:alt" content="Description of the feature image" />
+        </Helmet>
+        <div className="comn__bnr about__bnr">
+          <div className="container">
+            <div className="bnr__content">
+              <div className="left__bx" data-aos="fade-up" data-aos-duration="800">
+                <h2 dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(!publishedLoading && publishedData?.heroSection.heading)
                 }} />
+                <h6 dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(!publishedLoading && publishedData?.heroSection.subHeading)
+                }} />
+              </div>
+
+              <div data-aos="fade-up" data-aos-duration="800">
+                {!publishedLoading && publishedData?.heroSection && <NavLink to={`${!publishedLoading && publishedData?.heroSection.heroButtons.CTA1.url}`} className="btn">{!publishedLoading && publishedData?.heroSection.heroButtons.CTA1.name} <span></span ></NavLink>
+                }  </div>
+
+              <div id="canvas-about" className="animation-wrapper">
+                <canvas ref={canvasRef} />
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div className="our__process rn__section__gapTop dark__bnr">
-        <div className="container">
-          <div className="main__heading" data-aos="fade-up" data-aos-duration="800">
-            <p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(!publishedLoading && publishedData ? publishedData.processSection.preHeading : "") }} />
-            <h2 dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(!publishedLoading && publishedData ? publishedData.processSection.heading : "") }} />
+        <div className="about__fifilo rn__section__gapTop">
+          <div className="container">
+            <div className="main__heading" data-aos="fade-up" data-aos-duration="800">
+              <p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(!publishedLoading && publishedData ? publishedData.aboutSection.preHeading : "") }} />
+              <h2 dangerouslySetInnerHTML={{
+                __html: DOMPurify.sanitize(!publishedLoading && publishedData ? publishedData.aboutSection.heading : ``)
+              }} />
+            </div>
+            <div className="row gx-lg-4 gx-md-3 inner__gapTop">
+              <div className="col-12">
+                <div className="top__bx" data-aos="fade-up" data-aos-duration="800">
+                  <h6 dangerouslySetInnerHTML={{
+                    __html: DOMPurify.sanitize(!publishedLoading && publishedData ? publishedData.aboutSection.description : ``)
+                  }} />
+                </div>
+              </div>
+            </div>
           </div>
+        </div>
 
-          <div className="inner__gapTop row justify-content-center">
-            {!publishedLoading && publishedData?.processSection && publishedData.processSection.content.map((v, i) => {
-              return <div className="col-lg-12" key={i}>
-                <div className="row">
-                  {i % 2 === 0 ? <>
-                    <div className="col-lg-1 col-md-1 col-2 center__bx">
-                      <div className="border-section">
-                        <div className="stroke-circle">
-                          <img src={(v.icon && v.icon.filename) ? `http://localhost:5000/images/${v.icon.filename}` : ""} alt="icon" />
-                        </div>
-                        <div className="stroke-border">
-                          <div className="arrow-down">
-                            <img src="assets/img/arrow-down.svg" alt="" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-xl-3 col-lg-4 col-md-5 col-10 offset-md-7" data-aos="fade-up" data-aos-duration="800">
-                      <div className="card__bx">
-                        <h5>{v.heading ? v.heading : ""}</h5>
-                        <p>{v.description ? v.description : ``}</p>
-                      </div>
-                    </div>
-                  </>
-                    :
-                    <>
-                      <div className="col-xl-3 col-lg-4 col-md-5 col-10 offset-xl-2 offset-lg-1" data-aos="fade-up" data-aos-duration="800">
-                        <div className="card__bx">
-                          <h5>{v.heading ? v.heading : ""}</h5>
-                          <p>{v.description ? v.description : ``}</p>
-                        </div>
-                      </div>
-                      <div className="col-lg-1 col-2 center__bx">
+        <div className="our__process rn__section__gapTop dark__bnr">
+          <div className="container">
+            <div className="main__heading" data-aos="fade-up" data-aos-duration="800">
+              <p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(!publishedLoading && publishedData ? publishedData.processSection.preHeading : "") }} />
+              <h2 dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(!publishedLoading && publishedData ? publishedData.processSection.heading : "") }} />
+            </div>
+
+            <div className="inner__gapTop row justify-content-center">
+              {!publishedLoading && publishedData?.processSection && publishedData.processSection.content.map((v, i) => {
+                return <div className="col-lg-12" key={i}>
+                  <div className="row">
+                    {i % 2 === 0 ? <>
+                      <div className="col-lg-1 col-md-1 col-2 center__bx">
                         <div className="border-section">
                           <div className="stroke-circle">
-
                             <img src={(v.icon && v.icon.filename) ? `http://localhost:5000/images/${v.icon.filename}` : ""} alt="icon" />
                           </div>
                           <div className="stroke-border">
@@ -405,56 +382,85 @@ export default function About() {
                           </div>
                         </div>
                       </div>
-                    </>}
-                </div>
-              </div>
-            })}
-          </div>
-        </div>
-      </div>
+                      <div className="col-xl-3 col-lg-4 col-md-5 col-10 offset-md-7" data-aos="fade-up" data-aos-duration="800">
+                        <div className="card__bx">
+                          <h5>{v.heading ? v.heading : ""}</h5>
+                          <p>{v.description ? v.description : ``}</p>
+                        </div>
+                      </div>
+                    </>
+                      :
+                      <>
+                        <div className="col-xl-3 col-lg-4 col-md-5 col-10 offset-xl-2 offset-lg-1" data-aos="fade-up" data-aos-duration="800">
+                          <div className="card__bx">
+                            <h5>{v.heading ? v.heading : ""}</h5>
+                            <p>{v.description ? v.description : ``}</p>
+                          </div>
+                        </div>
+                        <div className="col-lg-1 col-2 center__bx">
+                          <div className="border-section">
+                            <div className="stroke-circle">
 
-      <div className="our__team rn__section__gapTop">
-        <div className="container">
-          <div className="row gx-3 gx-xl-4">
-            <div className="col-lg-3 col-md-12">
-              <div className="main__heading" data-aos="fade-up" data-aos-duration="800">
-                <p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(!publishedLoading && publishedData ? publishedData.teamSection.preHeading : "") }} />
-                <h2 dangerouslySetInnerHTML={{
-                  __html: DOMPurify.sanitize(!publishedLoading && publishedData ? publishedData.teamSection.heading : ``)
-                }} />
-                <span className="title" dangerouslySetInnerHTML={{
-                  __html: DOMPurify.sanitize(!publishedLoading && publishedData ? publishedData.teamSection.description : ``)
-                }} />
-              </div>
-            </div>
-            {(!publishedLoading && publishedData) && publishedData.membersCard.map((member, index) => {
-              return <div className="col-lg-3 col-md-6 col-6" key={index + 1}>
-                <div className="team__card" data-aos="fade-up" data-aos-duration="800">
-                  <div className="img__team">
-                    <img src={member.memberImg && member.memberImg.filename ? "http://localhost:5000/images/" + member.memberImg.filename : "assets/img/img_fullsize.png"} alt="our-team" />
-                  </div>
-                  <div className="team__detail">
-                    <div>
-                      <p>{member.name}</p>
-                      <span>{member.designation}</span>
-                    </div>
-                    <NavLink to={member.linkedinUrl} target="_blank">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
-                        <rect width="32" height="32" rx="16" fill="#0A66C2" />
-                        <path
-                          d="M23.501 7.2002H8.49942C8.15484 7.2002 7.82438 7.33708 7.58073 7.58073C7.33708 7.82438 7.2002 8.15484 7.2002 8.49942V23.501C7.2002 23.8455 7.33708 24.176 7.58073 24.4197C7.82438 24.6633 8.15484 24.8002 8.49942 24.8002H23.501C23.8455 24.8002 24.176 24.6633 24.4197 24.4197C24.6633 24.176 24.8002 23.8455 24.8002 23.501V8.49942C24.8002 8.15484 24.6633 7.82438 24.4197 7.58073C24.176 7.33708 23.8455 7.2002 23.501 7.2002ZM12.446 22.1932H9.79986V13.788H12.446V22.1932ZM11.1211 12.6232C10.8209 12.6215 10.528 12.5309 10.2793 12.3629C10.0305 12.1949 9.83714 11.957 9.72351 11.6792C9.60987 11.4014 9.58107 11.0961 9.64075 10.8019C9.70043 10.5078 9.84592 10.2379 10.0588 10.0263C10.2718 9.81474 10.5426 9.67099 10.8371 9.6132C11.1317 9.55541 11.4367 9.58616 11.7138 9.70158C11.9909 9.81701 12.2276 10.0119 12.394 10.2617C12.5604 10.5115 12.6491 10.805 12.6489 11.1052C12.6517 11.3062 12.614 11.5056 12.5381 11.6917C12.4622 11.8778 12.3496 12.0467 12.2071 12.1884C12.0645 12.33 11.8949 12.4415 11.7083 12.5162C11.5217 12.5909 11.322 12.6273 11.1211 12.6232ZM22.1993 22.2005H19.5544V17.6086C19.5544 16.2544 18.9788 15.8364 18.2356 15.8364C17.451 15.8364 16.681 16.428 16.681 17.6429V22.2005H14.0349V13.7941H16.5795V14.9589H16.6138C16.8692 14.4419 17.7639 13.5582 19.1291 13.5582C20.6055 13.5582 22.2005 14.4345 22.2005 17.0012L22.1993 22.2005Z"
-                          fill="#FBFDFF"
-                        />
-                      </svg>
-                    </NavLink>
+                              <img src={(v.icon && v.icon.filename) ? `http://localhost:5000/images/${v.icon.filename}` : ""} alt="icon" />
+                            </div>
+                            <div className="stroke-border">
+                              <div className="arrow-down">
+                                <img src="assets/img/arrow-down.svg" alt="" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </>}
                   </div>
                 </div>
-              </div>
-            })
-            }
+              })}
+            </div>
           </div>
         </div>
-      </div>
+
+        <div className="our__team rn__section__gapTop">
+          <div className="container">
+            <div className="row gx-3 gx-xl-4">
+              <div className="col-lg-3 col-md-12">
+                <div className="main__heading" data-aos="fade-up" data-aos-duration="800">
+                  <p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(!publishedLoading && publishedData ? publishedData.teamSection.preHeading : "") }} />
+                  <h2 dangerouslySetInnerHTML={{
+                    __html: DOMPurify.sanitize(!publishedLoading && publishedData ? publishedData.teamSection.heading : ``)
+                  }} />
+                  <span className="title" dangerouslySetInnerHTML={{
+                    __html: DOMPurify.sanitize(!publishedLoading && publishedData ? publishedData.teamSection.description : ``)
+                  }} />
+                </div>
+              </div>
+              {(!publishedLoading && publishedData) && publishedData.membersCard.map((member, index) => {
+                return <div className="col-lg-3 col-md-6 col-6" key={index + 1}>
+                  <div className="team__card" data-aos="fade-up" data-aos-duration="800">
+                    <div className="img__team">
+                      <img src={member.memberImg && member.memberImg.filename ? "http://localhost:5000/images/" + member.memberImg.filename : "assets/img/img_fullsize.png"} alt="our-team" />
+                    </div>
+                    <div className="team__detail">
+                      <div>
+                        <p>{member.name}</p>
+                        <span>{member.designation}</span>
+                      </div>
+                      <NavLink to={member.linkedinUrl} target="_blank">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+                          <rect width="32" height="32" rx="16" fill="#0A66C2" />
+                          <path
+                            d="M23.501 7.2002H8.49942C8.15484 7.2002 7.82438 7.33708 7.58073 7.58073C7.33708 7.82438 7.2002 8.15484 7.2002 8.49942V23.501C7.2002 23.8455 7.33708 24.176 7.58073 24.4197C7.82438 24.6633 8.15484 24.8002 8.49942 24.8002H23.501C23.8455 24.8002 24.176 24.6633 24.4197 24.4197C24.6633 24.176 24.8002 23.8455 24.8002 23.501V8.49942C24.8002 8.15484 24.6633 7.82438 24.4197 7.58073C24.176 7.33708 23.8455 7.2002 23.501 7.2002ZM12.446 22.1932H9.79986V13.788H12.446V22.1932ZM11.1211 12.6232C10.8209 12.6215 10.528 12.5309 10.2793 12.3629C10.0305 12.1949 9.83714 11.957 9.72351 11.6792C9.60987 11.4014 9.58107 11.0961 9.64075 10.8019C9.70043 10.5078 9.84592 10.2379 10.0588 10.0263C10.2718 9.81474 10.5426 9.67099 10.8371 9.6132C11.1317 9.55541 11.4367 9.58616 11.7138 9.70158C11.9909 9.81701 12.2276 10.0119 12.394 10.2617C12.5604 10.5115 12.6491 10.805 12.6489 11.1052C12.6517 11.3062 12.614 11.5056 12.5381 11.6917C12.4622 11.8778 12.3496 12.0467 12.2071 12.1884C12.0645 12.33 11.8949 12.4415 11.7083 12.5162C11.5217 12.5909 11.322 12.6273 11.1211 12.6232ZM22.1993 22.2005H19.5544V17.6086C19.5544 16.2544 18.9788 15.8364 18.2356 15.8364C17.451 15.8364 16.681 16.428 16.681 17.6429V22.2005H14.0349V13.7941H16.5795V14.9589H16.6138C16.8692 14.4419 17.7639 13.5582 19.1291 13.5582C20.6055 13.5582 22.2005 14.4345 22.2005 17.0012L22.1993 22.2005Z"
+                            fill="#FBFDFF"
+                          />
+                        </svg>
+                      </NavLink>
+                    </div>
+                  </div>
+                </div>
+              })
+              }
+            </div>
+          </div>
+        </div>
+      </>}
     </>
   );
 }

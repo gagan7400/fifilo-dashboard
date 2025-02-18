@@ -9,7 +9,10 @@ export default function FreqentlyAsk() {
   let dispatch = useDispatch();
   let { publishedfaqdata, publishedfaqloading } = useSelector((state) => state.faq);
   useEffect(() => {
-    dispatch(getPublishFaqPage());
+    if(!publishedfaqdata){
+      dispatch(getPublishFaqPage());
+    }
+    
   }, [dispatch])
 
   useEffect(() => {

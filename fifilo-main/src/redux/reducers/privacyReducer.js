@@ -1,6 +1,5 @@
 
 export const privacyPageReducer = (state = {
-    privacyloading: true,
     updateprivacyerror: null,
     privacydata: null,
     publishedprivacydata: null,

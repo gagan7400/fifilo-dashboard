@@ -7,17 +7,14 @@ import HomepageServiceCard from './HomepageServicecard';
 import HomepageClients from './HomepageClients';
 import HomepageuploadSection from './HomepageuploadSection';
 import SeoImg from './SeoImg';
-import { NavLink, useNavigate } from 'react-router-dom';
-// import { oldData } from '../redux/actions/pagedataAction';
-import Loader from '../layout/Loader';
-import { pageAction } from '../redux/actions/pagedataAction';
+import { NavLink, } from 'react-router-dom';
 
 const Homepage = () => {
     let dispatch = useDispatch();
     useEffect(() => {
         dispatch(getpublishHomePage())
     }, [])
-    const { publishedhomepage, homeloading } = useSelector((state) => state.homepage);
+    const { publishedhomepage } = useSelector((state) => state.homepage);
 
     const [heroSection, setHeroSection] = useState({
         heading: "",
@@ -141,35 +138,6 @@ const Homepage = () => {
             setServicesCardSection(values);
         }
 
-    };
-    // Handle input for CardList
-    const handleCardListChange = (index, listIndex, e) => {
-        const { value } = e.target;
-        const values = servicesCardSection.map((card) => ({
-            ...card,
-            servicePointList: [...card.servicePointList], // Copy each servicePointList as well
-        }));
-        values[index].servicePointList[listIndex] = value;
-        setServicesCardSection(values);
-    };
-    // Add new CardList entry
-    const addCardList = (index) => {
-        const values = servicesCardSection.map((card, i) =>
-            i === index
-                ? { ...card, servicePointList: [...card.servicePointList, ""] }
-                : card
-        );
-        setServicesCardSection(values);
-    };
-
-    const handleRemoveServicesCardList = (index, listIndex) => {
-        const values = servicesCardSection.map((card) => ({
-            ...card,
-            servicePointList: [...card.servicePointList], // Copy each servicePointList array
-        }));
-
-        values[index].servicePointList.splice(listIndex, 1); // Remove the card at the given index
-        setServicesCardSection(values);
     };
 
     const handleReviewCardChange = (index, event, data) => {

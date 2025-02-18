@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Home from "./pages/Home.jsx";
 import About from "./pages/About.jsx";
 import Services from "./pages/Services.jsx";
 import CaseStudies from "./pages/CaseStudies.jsx";
 import ContactUs from "./pages/ContactUs.jsx";
-import { Routes, Route, NavLink } from "react-router-dom";
-import $ from "jquery"; // import jQuery
+import { Routes, Route, } from "react-router-dom";
+import $ from "jquery";
 import anime from "animejs";
 import Career from "./pages/Career.jsx";
 import ThankYou from "./pages/ThankYou.jsx";
@@ -71,14 +71,6 @@ function App() {
   useEffect(() => {
     dispatch(loaduser())
   }, [dispatch])
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null);
-
-  // Open the modal to select an image
-  const openMediaLibrary = () => setIsModalOpen(true);
-
-  // Close the modal
-  const closeMediaLibrary = () => setIsModalOpen(false);
   return (
     <Layout>
       <ScrollToTop />
@@ -101,7 +93,7 @@ function App() {
         <Route path="/pages/contact/" element={<ProtectedRoute Component={<Contactpage />} />} />
         <Route path="/pages/services/" element={<ProtectedRoute Component={<Servicespage />} />} />
         <Route path="/section/faq/" element={<ProtectedRoute Component={<Faqpage />} />} />
-        <Route path="/section/media/" element={<ProtectedRoute Component={<MediaSection isOpen={isModalOpen} onClose={closeMediaLibrary} />} />} />
+        <Route path="/section/media/" element={<ProtectedRoute Component={<MediaSection />} />} />
         <Route path="/admin/" element={<Login />} />
         <Route path="/" element={<Home />} />
         <Route path="/about/" element={<About />} />

@@ -1,22 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import Sidebar from './Sidebar';
-import { useDispatch, useSelector } from 'react-redux';
-import { getHomePage, openHomePage } from '../redux/actions/homeAction';
+import { useDispatch } from 'react-redux';
+import { getHomePage } from '../redux/actions/homeAction';
 import { NavLink } from 'react-router-dom';
 import { pageAction } from '../redux/actions/pagedataAction';
 
 export default function Dashboard() {
     const [allData, setAllData] = useState([]);
-    const [loading, setLoading] = useState(true);
-    let alldata = async () => {
+     let alldata = async () => {
         try {
             let { data } = await axios.get('http://localhost:5000/admin/pages/getallpages');
             setAllData(data.data);
-            setLoading(false)
         } catch (error) {
             console.error(error);
-            setLoading(false)
         }
     }
     useEffect(() => {

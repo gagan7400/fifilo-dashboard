@@ -7,6 +7,7 @@ import DOMPurify from 'dompurify';
 import { useSelector, useDispatch } from 'react-redux'
 import { contactus, getPublishContactPage } from '../redux/actions/contactAction';
 import { useNavigate } from 'react-router-dom';
+import Loader from './Loader';
 export default function ContactUs() {
   let nav = useNavigate()
   let dispatch = useDispatch();
@@ -29,7 +30,10 @@ export default function ContactUs() {
   }, [handleWindowLaod, publishedcontactloading])
 
   useEffect(() => {
-    dispatch(getPublishContactPage());
+    if(!publishedcontactdata){
+
+    
+    dispatch(getPublishContactPage());}
   }, [dispatch])
 
   useEffect(() => {
@@ -94,13 +98,6 @@ export default function ContactUs() {
         body: formdata,
       })
       await dispatch(contactus({ name: Name, email: Email, phonenumber: Number, message: Message }))
-      // if (success) {
-      //   setEmail('')
-      //   setMessage("")
-      //   setNumber("");
-      //   setName("")
-      //   nav("/thank-you")
-      // }
     }
   }
   useEffect(() => {
@@ -115,7 +112,8 @@ export default function ContactUs() {
 
 
   return (
-    <>
+  <>
+  {publishedcontactloading && !publishedcontactdata ? <Loader/> :  <>
       <Helmet>
         <title>{(!publishedcontactloading && publishedcontactdata) && publishedcontactdata.seoSection.title}</title>
         <meta name="keywords" content={(!publishedcontactloading && publishedcontactdata) && publishedcontactdata.seoSection.keywords} />
@@ -148,7 +146,7 @@ export default function ContactUs() {
                                 <img src={contact && contact.icon && contact.icon.filename && `http://localhost:5000/images/${contact.icon.filename}`} alt="mail" />
                                 {contact.value}  </a>
                               :
-                              contact.name === "phonenumber" ? <a href={contact.name == "phonenumber" ? `tel:${contact.value}` : "/"}>
+                              contact.name === "phonenumber" ? <a href={contact.name === "phonenumber" ? `tel:${contact.value}` : "/"}>
                                 <img src={contact && contact.icon && contact.icon.filename && `http://localhost:5000/images/${contact.icon.filename}`} alt="phonenumber" />
                                 {contact.value}  </a>
                                 :
@@ -256,7 +254,8 @@ export default function ContactUs() {
           </div>
         </div>
       </div >
-    </>
+    </> }
+  </>
   )
 }
 

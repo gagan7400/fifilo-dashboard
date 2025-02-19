@@ -8,7 +8,7 @@ import { pageAction } from '../redux/actions/pagedataAction';
 
 export default function Dashboard() {
     const [allData, setAllData] = useState([]);
-     let alldata = async () => {
+    let alldata = async () => {
         try {
             let { data } = await axios.get('http://localhost:5000/admin/pages/getallpages');
             setAllData(data.data);

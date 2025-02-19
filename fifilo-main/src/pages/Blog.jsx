@@ -46,7 +46,7 @@ export default function Blog() {
                 <div className="blogs__bnr">
                     <div className="container" data-aos="fade-up" data-aos-duration="800">
                         <h2 dangerouslySetInnerHTML={{
-                            __html: DOMPurify.sanitize(!blogloading && publishedblogdata?.heroSection.heading)
+                            __html: DOMPurify.sanitize(publishedblogdata?.heroSection.heading)
                         }} />
                     </div>
                 </div>

@@ -28,7 +28,7 @@ const storage = multer.diskStorage({
     },
     filename: (req, file, cb) => {
         const ext = path.extname(file.originalname);
-        const name = path.basename(file.originalname, ext);
+        const name = path.basename(file.originalname.trim().split(" ").join("-"), ext);
         let finalName = file.originalname;
 
         // Check if a file with the same name already exists
@@ -81,7 +81,6 @@ router.delete("/:id", async (req, res) => {
         if (!image) {
             return res.status(404).json({ message: "Image not found", success: false });
         }
-
         const filePath = path.join(__dirname, "..", image.filePath);
         if (fs.existsSync(filePath)) {
             fs.unlinkSync(filePath);
@@ -94,7 +93,7 @@ router.delete("/:id", async (req, res) => {
     }
 });
 
- 
+
 
 
 

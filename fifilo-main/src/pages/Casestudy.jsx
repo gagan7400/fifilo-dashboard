@@ -85,7 +85,7 @@ export default function Casestudy() {
     let classes = ["large", "medium", "normal", "small"]
     return (
         <>
-            {loading && !casestudy ? <Loader /> : <>
+          
                 <Helmet>
                     <title>{(!loading && casestudy && casestudy.seoSection) && casestudy.seoSection.title}</title>
                     <meta name="keywords" content={(!loading && casestudy && casestudy.seoSection) && casestudy.seoSection.keywords}></meta>
@@ -454,7 +454,7 @@ export default function Casestudy() {
                     </div>
                 </div>
 
-            </>}
+            
         </>
     );
 }

@@ -37,14 +37,7 @@ const MediaLibrary = ({ setSearchImage, searchImage, onSelectImage, imageUploade
             </div>
           </li>
         )).reverse()}
-        {/* {images.map((image, index) => (
-          <li key={index} className={` ${selectedImage && selectedImage._id === image._id ? 'selected' : ''}`}>
-            <div className="thumbnail"
-              onClick={() => handleImageClick(image)} >
-              <img src={`http://localhost:5000/images/${image.filename}`} alt={image.filename} />
-            </div>
-          </li>
-        )).reverse()} */}
+
       </ul> : <h5>No Image Found</h5>}
     </>
   );

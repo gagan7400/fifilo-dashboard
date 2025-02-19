@@ -1,102 +1,107 @@
 import React, { useState, useRef } from "react";
 import axios from "axios";
 
-const ImageUpload = ({ setImageUplaoded }) => {
-    const [altText, setAltText] = useState("");
-    const [loading, setLoading] = useState(false); // New state for loading
-    const fileInputRef = useRef(null);
+const ImageUpload = ({ setImageUplaoded, selectedImage, setSelectedImage }) => {
+  const [altText, setAltText] = useState("");
+  const [loading, setLoading] = useState(false); // New state for loading
+  const fileInputRef = useRef(null);
 
-    const handleFileChange = async (e) => {
-        const files = e.target.files;
+  const handleFileChange = async (e) => {
+    const files = e.target.files;
 
-        if (files.length > 0) {
-            if (files.length > 10) {
-                alert("length exceeded; Only 10 Images at a time");
-            } else {
-                setLoading(true); // Start loading when upload starts
-                await handleUpload(files);
-                e.target.value = ""; // Reset the file input
-            }
+    if (files.length > 0) {
+      if (files.length > 10) {
+        alert("length exceeded; Only 10 Images at a time");
+      } else {
+        setLoading(true); // Start loading when upload starts
+        await handleUpload(files);
+        e.target.value = ""; // Reset the file input
+      }
+    }
+  };
+
+  const handleDivClick = () => {
+    fileInputRef.current.click(); // Trigger file input click
+  };
+
+  const handleUpload = async (files) => {
+    const formData = new FormData();
+    for (let file of files) {
+      formData.append("images", file);
+    }
+    formData.append("altText", altText);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/media/upload",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            "x-auth-token": localStorage.getItem("token"),
+          },
         }
-    };
+      );
+      setImageUplaoded(response.data.images);
+      console.log(response.data.images)
 
-    const handleDivClick = () => {
-        fileInputRef.current.click(); // Trigger file input click
-    };
+      // alert("Images uploaded successfully");
+    } catch (error) {
+      console.error("Error uploading images", error);
+    } finally {
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+    }
+  };
 
-    const handleUpload = async (files) => {
-        const formData = new FormData();
-        for (let file of files) {
-            formData.append("images", file);
-        }
-        formData.append("altText", altText);
-
-        try {
-            const response = await axios.post(
-                "http://localhost:5000/api/media/upload",
-                formData,
-                {
-                    headers: { "Content-Type": "multipart/form-data" },
-                }
-            );
-            setImageUplaoded(response.data.images);
-            // alert("Images uploaded successfully");
-        } catch (error) {
-            console.error("Error uploading images", error);
-        } finally {
-            setTimeout(() => {
-                setLoading(false);
-            }, 2000);
-        }
-    };
-
-    return (
-        <>
-            <div className="edit__tools">
-                <div className="upload__section">
-                    <div className="upload__container" onClick={handleDivClick}>
-                        <input
-                            type="file"
-                            multiple
-                            id="fileInput"
-                            ref={fileInputRef}
-                            accept=".svg,.png,.jpg,.jpeg,.gif"
-                            hidden={true}
-                            onChange={handleFileChange}
-                        />
-                        <div className="upload__area" id="uploadArea">
-                            {loading ? ( // Show loader if loading is true
-                                <div className="hacker-loader">
-                                    <div className="loader-text">
-                                        <span data-text="Uploading..." className="text-glitch">Uploading...</span>
-                                    </div>
-                                    <div className="loader-bar">
-                                        <div className="bar-fill"></div>
-                                        <div className="bar-glitch"></div>
-                                    </div>
-                                    <div className="particles">
-                                        <div className="particle"></div>
-                                        <div className="particle"></div>
-                                        <div className="particle"></div>
-                                        <div className="particle"></div>
-                                        <div className="particle"></div>
-                                    </div>
-                                </div>
-                            ) : (
-                                <>
-                                    <div className="upload__icon">
-                                        <img src="assets/imgs/upload-cloud.svg" alt="" />
-                                    </div>
-                                    <p><span>Click to upload</span></p>
-                                    <p>Only SVG, PNG, JPG (Max 10 Images)</p>
-                                </>
-                            )}
-                        </div>
-                    </div>
+  return (
+    <>
+      <div className="edit__tools">
+        <div className="upload__section">
+          <div className="upload__container" onClick={handleDivClick}>
+            <input
+              type="file"
+              multiple
+              id="fileInput"
+              ref={fileInputRef}
+              accept=".svg,.png,.jpg,.jpeg,.gif"
+              hidden={true}
+              onChange={handleFileChange}
+            />
+            <div className="upload__area" id="uploadArea">
+              {loading ? (
+                <div className="hacker-loader">
+                  <div className="loader-text">
+                    <span data-text="Uploading..." className="text-glitch">Uploading...</span>
+                  </div>
+                  <div className="loader-bar">
+                    <div className="bar-fill"></div>
+                    <div className="bar-glitch"></div>
+                  </div>
+                  <div className="particles">
+                    <div className="particle"></div>
+                    <div className="particle"></div>
+                    <div className="particle"></div>
+                    <div className="particle"></div>
+                    <div className="particle"></div>
+                  </div>
                 </div>
+              ) : (
+                <>
+                  <div className="upload__icon">
+                    <img src="assets/imgs/upload-cloud.svg" alt="" />
+                  </div>
+                  <p><span>Click to upload</span></p>
+                  <p>Only SVG, PNG, JPG (Max 10 Images)</p>
+                </>
+              )}
             </div>
-            <style>
-                {`/* From Uiverse.io by jeremyssocial */ 
+          </div>
+        </div>
+      </div>
+      <style>
+        {`/* From Uiverse.io by jeremyssocial */ 
 .hacker-loader {
   position: relative;
   width: 24em;
@@ -163,7 +168,7 @@ const ImageUpload = ({ setImageUplaoded }) => {
   width: 0;
   height: 100%;
   background-color: #00ff00;
-  animation: bar-fill-animation 3s  1  ease-in-out forwards;
+  animation: bar-fill-animation 1s  1  ease-in-out forwards;
 }
 
 .bar-glitch {
@@ -329,9 +334,9 @@ const ImageUpload = ({ setImageUplaoded }) => {
   }
 }
 `}
-            </style>
-        </>
-    );
+      </style>
+    </>
+  );
 };
 
 export default ImageUpload;

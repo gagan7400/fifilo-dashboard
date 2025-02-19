@@ -80,7 +80,8 @@ const MediaLibraryModal = ({ isOpen, onClose, onSelectImage }) => {
                             </ul>
                             <div className="tab-content" id="myTabContent">
                                 <div className="tab-pane fade" id="upload-file" role="tabpanel" aria-labelledby="upload-file-tab">
-                                    <ImageUpload imageUploaded={imageUploaded} setImageUplaoded={setImageUplaoded} />
+                                    <ImageUpload imageUploaded={imageUploaded} setImageUplaoded={setImageUplaoded} selectedImage={selectedImage}
+                                        setSelectedImage={setSelectedImage} />
                                 </div>
                                 <div className="tab-pane fade  show active" id="media" role="tabpanel" aria-labelledby="media-tab">
                                     <div className="row gx-0">

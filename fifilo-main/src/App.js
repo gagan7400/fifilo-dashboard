@@ -115,7 +115,7 @@ function App() {
     if (!publishedprivacydata) {
       dispatch(getPublishPrivacyPage());
     }
-  }, [dispatch])
+  }, [])
   useEffect(() => {
     $(document).ready(function () {
       function fitElementToParent(el, padding) {

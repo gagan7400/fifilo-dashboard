@@ -30,10 +30,11 @@ export default function ContactUs() {
   }, [handleWindowLaod, publishedcontactloading])
 
   useEffect(() => {
-    if(!publishedcontactdata){
+    if (!publishedcontactdata) {
 
-    
-    dispatch(getPublishContactPage());}
+
+      dispatch(getPublishContactPage());
+    }
   }, [dispatch])
 
   useEffect(() => {
@@ -112,8 +113,8 @@ export default function ContactUs() {
 
 
   return (
-  <>
- 
+    <>
+
       <Helmet>
         <title>{(!publishedcontactloading && publishedcontactdata) && publishedcontactdata.seoSection.title}</title>
         <meta name="keywords" content={(!publishedcontactloading && publishedcontactdata) && publishedcontactdata.seoSection.keywords} />
@@ -254,8 +255,8 @@ export default function ContactUs() {
           </div>
         </div>
       </div >
-     
-  </>
+
+    </>
   )
 }
 

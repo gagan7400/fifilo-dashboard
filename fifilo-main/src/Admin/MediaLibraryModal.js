@@ -56,6 +56,9 @@ const MediaLibraryModal = ({ isOpen, onClose, onSelectImage }) => {
             setMessage(false)
         }, 3000)
     }, [message]);
+    let openmedi = () => {
+        document.getElementById("media-tab").click()
+    }
     const baseUrl = `${window.location.protocol}//${window.location.host}`;
     if (!isOpen) return null;
     return (
@@ -80,7 +83,7 @@ const MediaLibraryModal = ({ isOpen, onClose, onSelectImage }) => {
                             </ul>
                             <div className="tab-content" id="myTabContent">
                                 <div className="tab-pane fade" id="upload-file" role="tabpanel" aria-labelledby="upload-file-tab">
-                                    <ImageUpload imageUploaded={imageUploaded} setImageUplaoded={setImageUplaoded} selectedImage={selectedImage}
+                                    <ImageUpload  openmedi={openmedi} imageUploaded={imageUploaded} setImageUplaoded={setImageUplaoded} selectedImage={selectedImage}
                                         setSelectedImage={setSelectedImage} />
                                 </div>
                                 <div className="tab-pane fade  show active" id="media" role="tabpanel" aria-labelledby="media-tab">

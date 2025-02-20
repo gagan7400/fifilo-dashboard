@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hacker Loader</title>
+    <style>
+        .hacker-loader {
+            width: 100%;
+            max-width: 800px;
+            margin-top: 24px;
+        }
+
+        .loader-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #003300;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            width: 0%;
+            height: 100%;
+            background-color: #00ff00;
+            text-align: center;
+            line-height: 20px;
+            font-weight: bold;
+            color: black;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .percentage-text {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            font-size: 14px;
+            color: white;
+            font-weight: bold;
+            z-index: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="hacker-loader">
+        <div class="loader-bar">
+            <div class="bar-fill" id="barFill"></div>
+        </div>
+    </div>
+
+    <script>
+        function animateLoader() {
+            let progress = 0;
+            let barFill = document.getElementById("barFill");
+            let interval = setInterval(() => {
+                if (progress >= 100) {
+                    clearInterval(interval);
+                } else {
+                    progress++;
+                    barFill.style.width = progress + "%";
+                    barFill.innerText = progress + "%";
+                }
+            }, 20); // 20ms per step, total ~2s animation
+        }
+
+        animateLoader();
+    </script>
+</body>
+
+</html>
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hacker Loader</title>
+    <style>
+        .hacker-loader {
+            width: 100%;
+            max-width: 800px;
+            margin-top: 24px;
+        }
+
+        .loader-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #003300;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            width: 0%;
+            height: 100%;
+            background-color: #00ff00;
+            text-align: center;
+            line-height: 20px;
+            font-weight: bold;
+            color: black;
+            transition: width 1s ease-in-out;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="hacker-loader">
+        <div class="loader-bar">
+            <div class="bar-fill" id="barFill"></div>
+        </div>
+    </div>
+
+    <script>
+        function animateLoader() {
+            let progress = 0;
+            let barFill = document.getElementById("barFill");
+            let interval = setInterval(() => {
+                if (progress >= 100) {
+                    clearInterval(interval);
+                } else {
+                    progress += 1;
+                    barFill.style.width = progress + "%";
+                    barFill.innerText = progress + "%";
+                }
+            }, 10);
+        }
+        animateLoader();
+    </script>
+</body>
+
+</html> -->

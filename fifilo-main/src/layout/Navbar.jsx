@@ -17,12 +17,6 @@ export default function Navbar() {
       $(document).on("click", ".menu-open a, .menu-open button", function (e) {
         $(".menu-btn").removeClass("active");
         $("body").removeClass("open overflow-hidden");
-        $(".menu-open").hide();
-      });
-
-      // Prevent closing the menu when clicking inside the menu
-      $(".menu-open").on("click", function (e) {
-        e.stopPropagation();
       });
     });
 
@@ -103,7 +97,7 @@ export default function Navbar() {
 
   const location = useLocation();
   const path = location.pathname.replace(/\//g, '') || 'home';
- 
+
   return (
     <>
       <header className={`${headerFixed ? "fixed" : ""} header ${path}`}>

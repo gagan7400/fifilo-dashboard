@@ -43,7 +43,7 @@ import NewBlog from "./Admin/NewBlog.js";
 import BlogUpdate from "./Admin/BlogUpdate.js";
 import BlogPage from "./Admin/BlogPage.js";
 import PrivacyPage from "./Admin/PrivacyPage.jsx";
-import { getPublishCasestudyPage } from "./redux/actions/casestudyAction.js";
+import { getCaseStudies, getPublishCasestudyPage } from "./redux/actions/casestudyAction.js";
 import { getjobs, getpublishCareerPage } from "./redux/actions/careeraction.js";
 import { getPublishContactPage } from "./redux/actions/contactAction.js";
 import { getPublishPrivacyPage } from "./redux/actions/privacyAction.js";
@@ -53,7 +53,7 @@ import { getBlogs, getPublishBlogPage } from "./redux/actions/blogAction.js";
 import { getPublishAboutPage } from "./redux/actions/aboutAction.js";
 function App() {
   let dispatch = useDispatch();
-  let { publishedcasestudydata, casestudyloading } = useSelector((state) => state.casestudy);
+  let { publishedcasestudydata, casestudyloading  ,casestudies} = useSelector((state) => state.casestudy);
   let { publishedprivacydata, privacyloading } = useSelector((state) => state.privacy);
   let { jobs, jobloading } = useSelector((state) => state.jobs);
   let { publishedcareerdata, publishedcareerloading } = useSelector((state) => state.careerpage);
@@ -109,6 +109,9 @@ function App() {
   useEffect(() => {
     if (!publishedcasestudydata) {
       dispatch(getPublishCasestudyPage());
+    }
+    if (!casestudies) {
+      dispatch(getCaseStudies());
     }
   }, [])
   useEffect(() => {

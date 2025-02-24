@@ -99,3 +99,30 @@ export const updateCasestudyPageAction = ({ casestudydata, id }) => async (dispa
         handleError(error, dispatch, "UPDATE_CASESTUDYPAGE_FAIL");
     }
 };
+
+
+export const getCaseStudies = () => async (dispatch) => {
+    try {
+        dispatch({ type: "ALL_GETCASESTUDIES_REQUEST" });
+        const { data } = await axios.get('http://localhost:5000/admin/casestudy/getcasestudy');
+        dispatch({ type: "ALL_GETCASESTUDIES_SUCCESS", payload: data.data });
+    } catch (error) {
+        handleError(error, dispatch, "ALL_GETCASESTUDIES_FAIL");
+    }
+};
+
+// let getCaseStudy= async () => {
+//     try {
+//       let { data } = await axios.get('http://localhost:5000/admin/casestudy/getcasestudy');
+//       if (data.success) {
+//         setCasestudy(data.data);
+//         setLoading(false)
+//       } else {
+//         setCasestudy(null);
+//         alert("error occured");
+//       }
+//     } catch (error) {
+//       setCasestudy(null)
+//       setCasestudy(null);
+//     }
+//   }

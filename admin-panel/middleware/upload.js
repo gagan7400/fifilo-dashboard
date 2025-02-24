@@ -8,6 +8,7 @@ var storage = multer.diskStorage({
         let ext = path.extname(file.originalname)
         cb(null, file.originalname)
     }
+
 })
 
 var upload = multer({

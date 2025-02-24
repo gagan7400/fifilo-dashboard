@@ -106,6 +106,10 @@ export default function Careerform({ closemodel, jobApply }) {
                     body: formdata,
                 });
                 let result = await data.json();
+                if (data.status === 400) {
+                    alert("Error Occured");
+                    setLoading(false)
+                }
                 if (result.Status) {
                     setLoading(false)
                     setEmail('')

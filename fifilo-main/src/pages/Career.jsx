@@ -27,7 +27,6 @@ export default function Career() {
     if (!jobs.length) {
       dispatch(getjobs());
     }
-
   }, [])
 
 

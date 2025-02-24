@@ -723,6 +723,7 @@ const contactusController = async (req, res) => {
 
 const jobapplicantController = async (req, res) => {
     let { name, email, phonenumber, message, jobRole, resume } = req.body;
+    console.log("object", resume)
     if (name && email && phonenumber) {
         try {
             let date = new Date().toLocaleDateString();
@@ -730,7 +731,7 @@ const jobapplicantController = async (req, res) => {
             if (req.file) {
                 data.resume = req.file.path
             } else {
-                return res.json({ "status": "error", "message": "pdf not found" })
+                return res.status(400).send({ "status": "error", "message": "pdf not found" })
             }
             await sendEmail({
                 for: "admin",
@@ -968,7 +969,7 @@ const jobapplicantController = async (req, res) => {
             res.send({ "Status": "failed", "message": error })
         }
     } else {
-        res.send({ "status": "failed", "message": "all fields required" })
+        res.status(400).send({ "status": "failed", "message": "all fields required" })
     }
 }
 

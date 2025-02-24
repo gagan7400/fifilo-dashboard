@@ -7,14 +7,12 @@ import "aos/dist/aos.css";
 import { NavLink, useLocation, useNavigate, useParams } from "react-router-dom";
 import axios from 'axios';
 import DOMPurify from 'dompurify';
-import Loader from "./Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { getCaseStudies } from "../redux/actions/casestudyAction";
 export default function Casestudy() {
     let { name } = useParams();
     let [casestudy, setCasestudy] = useState(null);
-    // let [casestudies, setCasestudies] = useState(null);
-    let {   casestudyloading, casestudies } = useSelector((state) => state.casestudy);
+    let { casestudyloading, casestudies } = useSelector((state) => state.casestudy);
     let [loading, setLoading] = useState(true);
     let nav = useNavigate();
     let location = useLocation();
@@ -37,24 +35,10 @@ export default function Casestudy() {
             nav("/not-found")
         }
     }
-    // let alldata = async () => {
-    //     try {
-    //         let { data } = await axios.get('http://localhost:5000/admin/casestudy/getcasestudy');
-    //         if (data.success) {
-    //             setCasestudies(data.data);
-    //             setLoading(false)
-    //         } else {
-    //             setCasestudies(null);
-    //             alert("error occured");
-    //         }
-    //     } catch (error) {
-    //         setCasestudy(null)
-    //         setCasestudy(null);
-    //     }
-    // }
+
     useEffect(() => {
         getCasestudy();
-        if(!casestudies){
+        if (!casestudies) {
             dispatch(getCaseStudies())
         }
     }, [])
@@ -90,7 +74,6 @@ export default function Casestudy() {
     let classes = ["large", "medium", "normal", "small"]
     return (
         <>
-
             <Helmet>
                 <title>{(!loading && casestudy && casestudy.seoSection) && casestudy.seoSection.title}</title>
                 <meta name="keywords" content={(!loading && casestudy && casestudy.seoSection) && casestudy.seoSection.keywords}></meta>

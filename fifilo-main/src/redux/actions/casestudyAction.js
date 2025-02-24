@@ -111,18 +111,4 @@ export const getCaseStudies = () => async (dispatch) => {
     }
 };
 
-// let getCaseStudy= async () => {
-//     try {
-//       let { data } = await axios.get('http://localhost:5000/admin/casestudy/getcasestudy');
-//       if (data.success) {
-//         setCasestudy(data.data);
-//         setLoading(false)
-//       } else {
-//         setCasestudy(null);
-//         alert("error occured");
-//       }
-//     } catch (error) {
-//       setCasestudy(null)
-//       setCasestudy(null);
-//     }
-//   }
+ 

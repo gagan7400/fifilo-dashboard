@@ -5,38 +5,18 @@ import $ from "jquery";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { NavLink } from "react-router-dom";
-import Loader from "../layout/Loader";
 import useCursorPosition from "../layout/useCursorPosition";
 import { getpublishHomePage } from "../redux/actions/homeAction";
 import { useDispatch, useSelector } from "react-redux";
 import DOMPurify from 'dompurify';
-import axios from "axios";
 import { getCaseStudies } from "../redux/actions/casestudyAction";
 
 export default function Home() {
   useCursorPosition('dark__bnr');
   let dispatch = useDispatch();
   let { publishedhomepage, homeloading } = useSelector((state) => state.homepage);
-  let {   casestudyloading, casestudies } = useSelector((state) => state.casestudy);
-  // let [casestudies, setCasestudies] = useState(null);
-  const [loading, setLoading] = useState(true);
+  let { casestudyloading, casestudies } = useSelector((state) => state.casestudy);
 
-  // let alldata = async () => {
-  //   try {
-  //     let { data } = await axios.get('http://localhost:5000/admin/casestudy/getcasestudy');
-  //     if (data.success) {
-  //       setCasestudies(data.data);
-  //       setLoading(false)
-  //     } else {
-  //       setCasestudies(null);
-  //       alert("error occured");
-  //       setLoading(false)
-  //     }
-  //   } catch (error) {
-  //     setCasestudies(null);
-  //     setLoading(false)
-  //   }
-  // }
   useEffect(() => {
     if (!publishedhomepage) {
       dispatch(getpublishHomePage());

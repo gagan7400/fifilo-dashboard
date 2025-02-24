@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Helmet } from "react-helmet";
 import $ from "jquery";
 import anime from "animejs";
@@ -6,9 +6,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
 import DOMPurify from 'dompurify';
-import Loader from "../layout/Loader";
 import { getCaseStudies, getPublishCasestudyPage } from "../redux/actions/casestudyAction";
 export default function Work() {
   let dispatch = useDispatch();
@@ -18,26 +16,7 @@ export default function Work() {
     if (!publishedcasestudydata) {
       dispatch(getPublishCasestudyPage());
     }
-
   }, [])
-  let [casestudy, setCasestudy] = useState(null);
-  let [loading, setLoading] = useState(true)
-  let alldata = async () => {
-    try {
-      let { data } = await axios.get('http://localhost:5000/admin/casestudy/getcasestudy');
-      if (data.success) {
-        setCasestudy(data.data);
-        setLoading(false)
-      } else {
-        setCasestudy(null);
-        alert("error occured");
-      }
-    } catch (error) {
-      setCasestudy(null)
-      setCasestudy(null);
-    }
-  }
-
   useEffect(() => {
     if (!casestudies) {
       dispatch(getCaseStudies())
@@ -147,16 +126,7 @@ export default function Work() {
   useEffect(() => {
     AOS.init();
   }, []);
-  useEffect(() => {
-    const loadData = async () => {
-      setLoading(false);
-    };
 
-    loadData();
-    return () => {
-    };
-
-  }, []);
   return (
     <>
       <Helmet>

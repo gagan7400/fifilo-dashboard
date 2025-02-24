@@ -29,7 +29,7 @@ export const casestudyReducer = (state = {
         case "ALL_GETPUBLISHCASESTUDYPAGE_SUCCESS":
             return { ...state, casestudyloading: false, publishedcasestudydata: action.payload };
         // casestudies success case
-            case "ALL_GETCASESTUDIES_SUCCESS":
+        case "ALL_GETCASESTUDIES_SUCCESS":
             return { ...state, casestudyloading: false, casestudies: action.payload };
 
         case "DELETE_CASESTUDYPAGE_SUCCESS":

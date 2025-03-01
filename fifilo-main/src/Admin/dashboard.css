@@ -456,6 +456,7 @@
 /********Upload CSS******/
 .edit__tools .upload__section .upload__container {
     width: 100%;
+    margin-bottom: 16px;
 }
 
 .edit__tools .upload__section .upload__area {

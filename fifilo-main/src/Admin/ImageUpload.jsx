@@ -20,7 +20,7 @@ const ImageUpload = ({ setImageUplaoded, selectedImage, setSelectedImage, openme
       } else {
         setLoading(true); // Start loading when upload starts
         setName(files[0].name);
-        setSize(Math.floor(files[0].size  ));
+        setSize(Math.floor(files[0].size));
         await handleUpload(files);
         e.target.value = ""; // Reset the file input
       }

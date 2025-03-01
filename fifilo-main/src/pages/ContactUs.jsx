@@ -7,7 +7,6 @@ import DOMPurify from 'dompurify';
 import { useSelector, useDispatch } from 'react-redux'
 import { contactus, getPublishContactPage } from '../redux/actions/contactAction';
 import { useNavigate } from 'react-router-dom';
-import Loader from './Loader';
 export default function ContactUs() {
   let nav = useNavigate()
   let dispatch = useDispatch();
@@ -23,7 +22,6 @@ export default function ContactUs() {
   }, []);
   useEffect(() => {
     window.addEventListener("load", handleWindowLaod);
-
     return () => {
       window.removeEventListener("load", handleWindowLaod);
     }
@@ -31,8 +29,6 @@ export default function ContactUs() {
 
   useEffect(() => {
     if (!publishedcontactdata) {
-
-
       dispatch(getPublishContactPage());
     }
   }, [dispatch])
@@ -71,10 +67,8 @@ export default function ContactUs() {
 
   useEffect(() => {
     if (showErrors) {
-
       setShowErrors(false);
       setErrors({});
-
       return () => { };
     }
   }, [Name, Email, Number, Message]);

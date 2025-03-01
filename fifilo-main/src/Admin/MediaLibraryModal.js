@@ -83,7 +83,7 @@ const MediaLibraryModal = ({ isOpen, onClose, onSelectImage }) => {
                             </ul>
                             <div className="tab-content" id="myTabContent">
                                 <div className="tab-pane fade" id="upload-file" role="tabpanel" aria-labelledby="upload-file-tab">
-                                    <ImageUpload  openmedi={openmedi} imageUploaded={imageUploaded} setImageUplaoded={setImageUplaoded} selectedImage={selectedImage}
+                                    <ImageUpload openmedi={openmedi} imageUploaded={imageUploaded} setImageUplaoded={setImageUplaoded} selectedImage={selectedImage}
                                         setSelectedImage={setSelectedImage} />
                                 </div>
                                 <div className="tab-pane fade  show active" id="media" role="tabpanel" aria-labelledby="media-tab">
@@ -134,7 +134,7 @@ const MediaLibraryModal = ({ isOpen, onClose, onSelectImage }) => {
                             </div>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn__update" onClick={() => onSelectImage(selectedImage)}>Set Feautured Image</button>
+                            {<button type="button" className="btn btn__update" onClick={() => onSelectImage(selectedImage)}>Set Feautured Image</button>}
                         </div>
                     </div>
                 </div>

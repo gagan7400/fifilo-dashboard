@@ -1,19 +1,26 @@
 import React, { useState, useRef } from "react";
 import axios from "axios";
+import ImageLoader from "./ImageLoader";
 
 const ImageUpload = ({ setImageUplaoded, selectedImage, setSelectedImage, openmedi }) => {
   const [altText, setAltText] = useState("");
+  const [filedata, setFiledata] = useState(false); // New state for loading
   const [loading, setLoading] = useState(false); // New state for loading
+  const [name, setName] = useState(false); // New state for name
+  const [size, setSize] = useState(false); // New state for name
+  const [uploadComplete, setUploadComplete] = useState(false); // New state for name
   const fileInputRef = useRef(null);
 
   const handleFileChange = async (e) => {
     const files = e.target.files;
-
     if (files.length > 0) {
+      setFiledata(Array.from(files))
       if (files.length > 10) {
         alert("length exceeded; Only 10 Images at a time");
       } else {
         setLoading(true); // Start loading when upload starts
+        setName(files[0].name);
+        setSize(Math.floor(files[0].size  ));
         await handleUpload(files);
         e.target.value = ""; // Reset the file input
       }
@@ -25,6 +32,8 @@ const ImageUpload = ({ setImageUplaoded, selectedImage, setSelectedImage, openme
   };
 
   const handleUpload = async (files) => {
+
+    setLoading(true);
     const formData = new FormData();
     for (let file of files) {
       formData.append("images", file);
@@ -50,11 +59,21 @@ const ImageUpload = ({ setImageUplaoded, selectedImage, setSelectedImage, openme
       console.error("Error uploading images", error);
     } finally {
       setTimeout(() => {
-        setLoading(false);
-        openmedi();
+        // setLoading(false);
+        if (openmedi) {
+          openmedi();
+        }
       }, 1000);
     }
   };
+
+  let clearfun = () => {
+    setName("");
+    setSize("");
+    setImageUplaoded(false);
+    setLoading(false);
+  }
+
 
   return (
     <>
@@ -77,58 +96,12 @@ const ImageUpload = ({ setImageUplaoded, selectedImage, setSelectedImage, openme
                 </div>
                 <p><span>Click to upload</span></p>
                 <p>Only SVG, PNG, JPG (Max 10 Images)</p>
-                {true &&
-                  <div class="hacker-loader">
-                    <div class="loader-bar">
-                      <div class="bar-fill" id="barFill"></div>
-                    </div>
-                  </div>}
+                {loading && <ImageLoader filedata={filedata} setFiledata={setFiledata} clearfun={clearfun} name={name} size={size} setUploadComplete={setUploadComplete} uploadComplete={uploadComplete} />}
               </>
             </div>
           </div>
         </div>
       </div>
-      <style>
-        {`/* From Uiverse.io by jeremyssocial */ 
- .hacker-loader {
-            width: 100%;
-            max-width: 800px;
-            margin-top: 24px;
-        }
-
-        .loader-bar {
-            width: 100%;
-            height: 20px;
-            background-color: #003300;
-            border-radius: 8px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .bar-fill {
-            width: 0%;
-            height: 100%;
-            background-color: #00ff00;
-            text-align: center;
-            line-height: 20px;
-            font-weight: bold;
-            color: black;
-            position: absolute;
-            left: 0;
-            top: 0;
-        }
-
-        .percentage-text {
-            position: absolute;
-            width: 100%;
-            text-align: center;
-            font-size: 14px;
-            color: white;
-            font-weight: bold;
-            z-index: 1;
-        }
-`}
-      </style>
     </>
   );
 };
